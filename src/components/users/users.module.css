@@ -1,0 +1,9 @@
+.users {
+  padding: 20px;
+}
+.users__form {
+  margin-bottom: 10px;
+}
+.users__paginator {
+  padding-bottom: 10px;
+}

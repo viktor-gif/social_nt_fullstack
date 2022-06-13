@@ -1,0 +1,10 @@
+.paginator__pageButton {
+  display: inline-block;
+  margin-right: 5px;
+  padding: 5px;
+  background-color: #50f0f0;
+  cursor: pointer;
+}
+.paginator__pageButton:last-child {
+  margin-right: 0;
+}
