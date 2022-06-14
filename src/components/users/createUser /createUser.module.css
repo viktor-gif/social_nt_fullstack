@@ -1,0 +1,10 @@
+.createUser {
+  padding: 20px;
+}
+.createUser__formItem {
+  margin-bottom: 20px;
+}
+.createUser__error {
+  color: red;
+  font-size: 1.5em;
+}

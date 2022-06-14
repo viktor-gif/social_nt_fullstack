@@ -34,5 +34,5 @@ type actionsTypes = inferActionsTypes<typeof usersActions>
 // action-creators
 export const usersActions = {
     setUsers: (users: UserType[]) => ({ type: SET_USERS, users } as const),
-    setTotalUsersCount: (count: number) => ({type: SET_TOTAL_USERS_COUNT, count} as const)
+    setTotalUsersCount: (count: number) => ({ type: SET_TOTAL_USERS_COUNT, count } as const)
 }

@@ -1,9 +1,11 @@
 import { combineReducers, createStore } from "redux";
+import { authReducer } from "./authReducer";
 import { usersReducer } from "./usersReducer";
 
 
 const rootReducer = combineReducers({
-    usersPage: usersReducer
+    usersPage: usersReducer,
+    auth: authReducer
 });
 
 type rootReducerType = typeof rootReducer

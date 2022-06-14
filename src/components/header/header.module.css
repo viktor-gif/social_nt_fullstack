@@ -1,0 +1,17 @@
+.header {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.header__logo {
+  width: 50px;
+}
+.header__actions_item {
+  text-decoration: none;
+  cursor: pointer;
+  color: #333;
+  background-color: antiquewhite;
+  padding: 5px;
+  margin: 2px;
+  border-radius: 5px;
+}

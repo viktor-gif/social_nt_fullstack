@@ -1,0 +1,10 @@
+.login {
+  padding: 20px;
+}
+.login__formItem {
+  margin-bottom: 20px;
+}
+.login__error {
+  color: red;
+  font-size: 1.5em;
+}
