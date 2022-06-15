@@ -8,6 +8,8 @@ import { Paginator } from "../common/paginator/paginator";
 import { usersActions } from "../../redux/usersReducer";
 import store, { appStateType } from "../../redux/redux-store";
 import { connect } from "react-redux";
+import { profileDataType } from "../../ts/profile";
+import { profileActions } from "../../redux/profileReducer";
 
 type PropsType = {
   users: UserType[] | null
@@ -15,6 +17,7 @@ type PropsType = {
 
   getUsers: (users: UserType[]) => void
   getTotalUsersCount: (count: number) => void
+  getUserProfile: (data: profileDataType) => void
 }
 
 export const Users = React.memo((props: PropsType) => {
@@ -31,9 +34,10 @@ export const Users = React.memo((props: PropsType) => {
           props.getTotalUsersCount(res.data.totalCount)
         }) 
     }, [currentPage])
-    const usersItems = props.users?.map((u: any) => {
-        return <User id={u.id} key={u.id} fullName={u.fullName}
-            location={u.location} status={u.status} photos={u.photos} />
+  const usersItems = props.users?.map((u: any) => {
+      return <User id={u.id} key={u.id} fullName={u.fullName}
+        location={u.location} status={u.status} photos={u.photos}
+        getUserProfile={props.getUserProfile} />
     })
     return <div className={s.users}>
         <div className={s.users__nav}>
@@ -80,5 +84,6 @@ const mapStateToProps = (state: appStateType) => ({
 })
 export default connect(mapStateToProps, {
   getUsers: usersActions.setUsers,
-  getTotalUsersCount: usersActions.setTotalUsersCount
+  getTotalUsersCount: usersActions.setTotalUsersCount,
+  getUserProfile: profileActions.setProfileData
 })(Users)

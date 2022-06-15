@@ -10,7 +10,6 @@ type PropsType = {
     ownerData: AuthDataType | null
 }
 const Header = (props: PropsType) => {
-    console.log(props.ownerData);
     
     const logoutClick = () => {
         logout().then((res) => console.log(res))

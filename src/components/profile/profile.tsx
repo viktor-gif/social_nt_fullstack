@@ -6,6 +6,7 @@ import {profileActions} from "../../redux/profileReducer"
 import { profileDataType } from "../../ts/profile"
 import avatar from "../../img/ava_male.jpeg"
 import s from "./profile.module.css"
+import { useParams, Navigate } from "react-router-dom"
 
 type PropsType = {
     ownerId: string | undefined
@@ -15,8 +16,17 @@ type PropsType = {
 
 const Profile = (props: PropsType) => {
     const profile = props.profileData
+
+    let params = useParams()
+    console.log(params)
     
-    const userId = props.ownerId
+    let userId = params.userId
+    if (!userId) {
+        <Navigate replace to={`/profile/${props.ownerId}`} />
+        // userId = props.ownerId
+        // if (!userId)
+    } 
+        
     useEffect(() => {
         userId && getProfile(userId)
             .then(res => props.getUserProfile(res.data))
@@ -24,12 +34,13 @@ const Profile = (props: PropsType) => {
     const profileContacts = profile?.contacts
     const profileContactsKeys = profile ? Object.keys(profile.contacts) : null
     const contactsItems = profileContactsKeys?.map(p => {
-        
-        return <li>
+        return <li key={p}>
         {/* @ts-ignore */}
             <span>{p}</span>: {profileContacts[p]}
         </li>
     })
+
+
     return <div className={s.profile}>
         <div>
             <img className={s.profile__pic} src={profile?.photos.large || avatar} alt="User-avatar" />

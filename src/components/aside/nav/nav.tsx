@@ -1,12 +1,23 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import { connect } from "react-redux"
+import { NavLink } from "react-router-dom"
 import s from "./nav.module.css"
+import { appStateType } from "../../../redux/redux-store"
 
-export const Nav = () => {
+type PropsType = {
+    ownerId: string | undefined
+}
+
+const Nav = (props: PropsType) => {
     return <div>
         <ul className={s.navList}>
             <NavLink className={s.active} to="/users"><li>Користувачі</li></NavLink>
-            <NavLink className={s.active} to="/profile"><li>Профіль</li></NavLink>
+            <NavLink className={s.active} to={`/profile/${props.ownerId}`}><li>Профіль</li></NavLink>
         </ul>
     </div>
 }
+
+const mapStateToProps = (state: appStateType) => ({
+    ownerId: state.auth.ownerData?.id
+})
+
+export default connect(mapStateToProps, {})(Nav)
