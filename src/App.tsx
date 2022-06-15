@@ -11,6 +11,7 @@ import { authActions } from './redux/authReducer';
 import { connect } from 'react-redux';
 import { appStateType } from './redux/redux-store';
 import { AuthDataType } from './ts/auth';
+import Profile from './components/profile/profile';
 
 type PropsType = {
   authData: AuthDataType | null
@@ -20,7 +21,7 @@ type PropsType = {
 function App(props: PropsType) {
   useEffect(() => {
     me().then(res => props.getAuthData(res.data))
-  }, [props.authData])
+  }, [])
   return (
     <BrowserRouter>
       <div className="app">
@@ -32,6 +33,7 @@ function App(props: PropsType) {
             <Route path='/users' element={<Users />} />
             <Route path='/user/add' element={<CreateUser />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/profile' element={<Profile />} />
           </Routes>
         </main>
         <aside className="app__aside">
