@@ -21,16 +21,18 @@ const Profile = (props: PropsType) => {
     console.log(params)
     
     let userId = params.userId
-    if (!userId) {
-        <Navigate replace to={`/profile/${props.ownerId}`} />
-        // userId = props.ownerId
-        // if (!userId)
-    } 
-        
+    console.log(typeof userId);
+
     useEffect(() => {
         userId && getProfile(userId)
             .then(res => props.getUserProfile(res.data))
-    }, [])
+    }, [userId])
+    
+    if (userId === 'undefined') {
+        return <Navigate replace to={'/login'} />
+    } 
+        
+    
     const profileContacts = profile?.contacts
     const profileContactsKeys = profile ? Object.keys(profile.contacts) : null
     const contactsItems = profileContactsKeys?.map(p => {
