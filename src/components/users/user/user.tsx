@@ -1,10 +1,7 @@
 import { LocationType, PhotosType } from "../../../ts/users";
 import avatar from "../../../img/ava_male.jpeg"
 import s from "./user.module.css"
-import { getProfile } from "../../../api/profile";
 import { profileDataType } from "../../../ts/profile";
-import { useState } from "react";
-import { Navigate } from "react-router";
 import { NavLink } from "react-router-dom";
 
 type PropsType = {

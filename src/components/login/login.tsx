@@ -2,7 +2,7 @@ import s from "./login.module.css"
 import { Formik, Form, Field } from 'formik';
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { login, me } from "../../api/auth";
+import { authAPI } from "../../api/auth";
 import { authActions } from "../../redux/authReducer";
 import { connect } from "react-redux";
 import { appStateType } from "../../redux/redux-store";
@@ -24,9 +24,9 @@ export const Login = React.memo((props: PropsType) => {
            
             }}
             onSubmit={(val: any) => {
-                login(val.login, val.email, val.password)
+                authAPI.login(val.login, val.email, val.password)
                     .then(res => {
-                        me().then(res => {
+                        authAPI.me().then(res => {
                             props.getAuthData(res.data)
                             console.log(res.data)
                             // setLoggedIn(true)

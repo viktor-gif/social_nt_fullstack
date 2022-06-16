@@ -1,7 +1,7 @@
 
 import s from "./createUser.module.css"
 import { Formik, Form, Field } from 'formik';
-import {createUser} from "../../../api/users"
+import {usersAPI} from "../../../api/users"
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export const CreateUser = (props: PropsType) => {
            
             }}
             onSubmit={(val: any) => {
-                createUser(val.login, val.email, val.password, val.fullName)
+                usersAPI.createUser(val.login, val.email, val.password, val.fullName)
                     .then(res => {
                         if (res.data.values) {
                             setError(res.data.values);

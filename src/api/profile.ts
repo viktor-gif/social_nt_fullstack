@@ -1,5 +1,8 @@
+
 import { axiosCreate } from "./api";
 
-export const getProfile = (userId: string) => {
-    return axiosCreate.get(`/profile/${userId}`)
+export const profileAPI = {
+    getProfile(userId: string) {
+        return axiosCreate.get(`/profile/${userId}`)
+    }
 }

@@ -4,7 +4,7 @@ import s from "./header.module.css"
 import logo from "../../img/logo.png"
 import { NavLink } from "react-router-dom"
 import { AuthDataType } from "../../ts/auth"
-import {logout} from "../../api/auth"
+import {authAPI} from "../../api/auth"
 
 type PropsType = {
     ownerData: AuthDataType | null
@@ -12,7 +12,7 @@ type PropsType = {
 const Header = (props: PropsType) => {
     
     const logoutClick = () => {
-        logout().then((res) => console.log(res))
+        authAPI.logout().then((res) => console.log(res))
     }
     
     return <div className={s.header}>

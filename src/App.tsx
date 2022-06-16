@@ -6,7 +6,7 @@ import Nav from './components/aside/nav/nav';
 import Header from './components/header/header';
 import { CreateUser} from './components/users/createUser /createUser';
 import Login from './components/login/login';
-import { me } from './api/auth';
+import { authAPI } from './api/auth';
 import { authActions } from './redux/authReducer';
 import { connect } from 'react-redux';
 import { appStateType } from './redux/redux-store';
@@ -20,7 +20,7 @@ type PropsType = {
 
 function App(props: PropsType) {
   useEffect(() => {
-    me().then(res => props.getAuthData(res.data))
+    authAPI.me().then(res => props.getAuthData(res.data))
     
   }, [])
 

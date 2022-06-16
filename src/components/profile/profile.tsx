@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
-import { getProfile } from "../../api/profile"
+import { profileAPI } from "../../api/profile"
 import { appStateType } from "../../redux/redux-store"
 import {profileActions} from "../../redux/profileReducer"
 import { profileDataType } from "../../ts/profile"
@@ -24,7 +24,7 @@ const Profile = (props: PropsType) => {
     console.log(typeof userId);
 
     useEffect(() => {
-        userId && getProfile(userId)
+        userId && profileAPI.getProfile(userId)
             .then(res => props.getUserProfile(res.data))
     }, [userId])
     

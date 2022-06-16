@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getUsers } from "../../api/users";
+import { usersAPI } from "../../api/users";
 import { User } from "./user/user";
 import s from "./users.module.css";
 import { Formik, Form, Field } from 'formik';
@@ -29,7 +29,7 @@ export const Users = React.memo((props: PropsType) => {
   
 
     useEffect(() => {
-        getUsers(pageSize, currentPage, '').then(res => {
+        usersAPI.getUsers(pageSize, currentPage, '').then(res => {
           props.getUsers(res.data.items)
           props.getTotalUsersCount(res.data.totalCount)
         }) 
@@ -62,7 +62,7 @@ const UsersForm = (props: FormPropsType) => {
     return <Formik
        initialValues={{ term: '' }}
        onSubmit={(val) => {
-         getUsers(props.pageSize, 1, val.term).then(res => {
+         usersAPI.getUsers(props.pageSize, 1, val.term).then(res => {
             
             props.getUsers(res.data.items)
         })

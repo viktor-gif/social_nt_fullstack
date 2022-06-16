@@ -1,4 +1,5 @@
-import { combineReducers, createStore } from "redux";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+// import thunk from "redux-thunk"
 import { authReducer } from "./authReducer";
 import { profileReducer } from "./profileReducer";
 import { usersReducer } from "./usersReducer";
@@ -18,7 +19,7 @@ type propertiesTypes<T> = T extends{[key: string]: infer U} ? U : never
 export type inferActionsTypes<T extends{[key: string]: (...args: any[]) => any}> = ReturnType<propertiesTypes<T>>
 
 export const store = createStore(rootReducer);
-
+// , applyMiddleware(thunk)
 //@ts-ignore
 window.store = store
 
