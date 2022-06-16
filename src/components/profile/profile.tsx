@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
-import { appStateType } from "../../redux/redux-store"
+import { AppStateType } from "../../redux/redux-store"
 import {getProfile} from "../../redux/profileReducer"
-import { profileDataType } from "../../ts/profile"
+import { ProfileDataType } from "../../ts/profile"
 import avatar from "../../img/ava_male.jpeg"
 import s from "./profile.module.css"
 import { useParams, Navigate } from "react-router-dom"
 
 type PropsType = {
     ownerId: string | undefined
-    profileData: profileDataType | null
+    profileData: ProfileDataType | null
     getProfile: (userId: string) => void
 }
 
@@ -59,7 +59,7 @@ const Profile = (props: PropsType) => {
     </div>
 }
 
-const mapStateToProps = (state: appStateType) => ({
+const mapStateToProps = (state: AppStateType) => ({
     ownerId: state.auth.ownerData?.id,
     profileData: state.profilePage.profileData
 })

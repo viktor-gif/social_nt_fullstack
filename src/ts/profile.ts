@@ -10,7 +10,7 @@ export type ContactsType = {
     linkedin: string | null
 }
 
-export type profileDataType = {
+export type ProfileDataType = {
     photos: PhotosType
     location: LocationType
     contacts: ContactsType

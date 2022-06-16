@@ -1,7 +1,7 @@
 import { Dispatch } from "react"
 import { usersAPI } from "../api/users"
 import { UserType } from "../ts/users"
-import { inferActionsTypes } from "./redux-store"
+import { InferActionsTypes } from "./redux-store"
 
 const SET_USERS = 'Viktor-gif/users/SET_USERS'
 const SET_TOTAL_USERS_COUNT = 'Viktor-gif/users/SET_TOTAL_USERS_COUNT'
@@ -32,7 +32,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: act
     }
 }
 
-type actionsTypes = inferActionsTypes<typeof usersActions>
+type actionsTypes = InferActionsTypes<typeof usersActions>
 // action-creators
 export const usersActions = {
     setUsers: (users: UserType[]) => ({ type: SET_USERS, users } as const),

@@ -1,7 +1,7 @@
 import { LocationType, PhotosType } from "../../../ts/users";
 import avatar from "../../../img/ava_male.jpeg"
 import s from "./user.module.css"
-import { profileDataType } from "../../../ts/profile";
+import { ProfileDataType } from "../../../ts/profile";
 import { NavLink } from "react-router-dom";
 
 type PropsType = {
@@ -11,7 +11,7 @@ type PropsType = {
     status: string | null
     photos: PhotosType
     location: LocationType
-    getUserProfile: (data: profileDataType) => void
+    getUserProfile: (data: ProfileDataType) => void
 }
 
 export const User = (props: PropsType) => {

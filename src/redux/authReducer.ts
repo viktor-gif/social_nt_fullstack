@@ -1,7 +1,7 @@
 import { Dispatch } from "react"
 import { authAPI } from "../api/auth"
 import { AuthDataType } from "../ts/auth"
-import { inferActionsTypes } from "./redux-store"
+import { InferActionsTypes } from "./redux-store"
 
 const SET_AUTH_DATA = 'Viktor-gif/auth/SET_AUTH_DATA'
 //const SET_TOTAL_USERS_COUNT = 'Viktor-gif/users/SET_TOTAL_USERS_COUNT'
@@ -26,7 +26,7 @@ export const authReducer = (state: InitialStateType = initialState, action: acti
         default: return state
     }
 }
-type actionsTypes = inferActionsTypes<typeof authActions>
+type actionsTypes = InferActionsTypes<typeof authActions>
 // action-creators
 export const authActions = {
     setAuthData: (data: AuthDataType) => ({ type: SET_AUTH_DATA, payload: data } as const),

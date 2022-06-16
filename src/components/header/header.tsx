@@ -1,5 +1,5 @@
 import { connect } from "react-redux"
-import { appStateType } from "../../redux/redux-store"
+import { AppStateType } from "../../redux/redux-store"
 import s from "./header.module.css"
 import logo from "../../img/logo.png"
 import { NavLink } from "react-router-dom"
@@ -28,7 +28,7 @@ const Header = (props: PropsType) => {
     </div>
 }
 
-const mapStateToProps = (state: appStateType) => ({
+const mapStateToProps = (state: AppStateType) => ({
     ownerData: state.auth.ownerData
 })
 

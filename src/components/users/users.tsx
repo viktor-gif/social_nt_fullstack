@@ -5,9 +5,9 @@ import { Formik, Form, Field } from 'formik'
 import { UserType } from "../../ts/users"
 import { Paginator } from "../common/paginator/paginator"
 import { getUsers, getTotalUsersCount } from "../../redux/usersReducer"
-import store, { appStateType } from "../../redux/redux-store"
+import store, { AppStateType } from "../../redux/redux-store"
 import { connect } from "react-redux"
-import { profileDataType } from "../../ts/profile"
+import { ProfileDataType } from "../../ts/profile"
 import { profileActions } from "../../redux/profileReducer"
 
 type PropsType = {
@@ -15,7 +15,7 @@ type PropsType = {
   totalUsersCount: number | null
 
   getUsers: (pageSize: number, currentPage: number, term: string) => void
-  getUserProfile: (data: profileDataType) => void
+  getUserProfile: (data: ProfileDataType) => void
 }
 
 export const Users = React.memo((props: PropsType) => {
@@ -70,7 +70,7 @@ const UsersForm = (props: FormPropsType) => {
        )}
      </Formik>
 }
-const mapStateToProps = (state: appStateType) => ({
+const mapStateToProps = (state: AppStateType) => ({
   users: state.usersPage.users,
   totalUsersCount: state.usersPage.totalUsersCount
 })

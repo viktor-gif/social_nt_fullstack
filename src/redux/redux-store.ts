@@ -11,12 +11,12 @@ const rootReducer = combineReducers({
     profilePage: profileReducer
 });
 
-type rootReducerType = typeof rootReducer
-export type appStateType = ReturnType<rootReducerType>
+type RootReducerType = typeof rootReducer
+export type AppStateType = ReturnType<RootReducerType>
 
-type propertiesTypes<T> = T extends{[key: string]: infer U} ? U : never
+type PropertiesTypes<T> = T extends{[key: string]: infer U} ? U : never
 
-export type inferActionsTypes<T extends{[key: string]: (...args: any[]) => any}> = ReturnType<propertiesTypes<T>>
+export type InferActionsTypes<T extends{[key: string]: (...args: any[]) => any}> = ReturnType<PropertiesTypes<T>>
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 

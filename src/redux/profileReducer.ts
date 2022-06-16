@@ -1,14 +1,14 @@
 import { Dispatch } from "react"
 import { profileAPI } from "../api/profile"
-import { profileDataType } from "../ts/profile"
-import { inferActionsTypes } from "./redux-store"
+import { ProfileDataType } from "../ts/profile"
+import { InferActionsTypes } from "./redux-store"
 
 const SET_PROFILE_DATA = 'Viktor-gif/users/SET_PROFILE_DATA'
 
 type InitialStateType = typeof initialState
 
 const initialState = {
-    profileData: null as profileDataType | null
+    profileData: null as ProfileDataType | null
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: actionsTypes) => {
@@ -25,7 +25,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: a
     }
 }
 
-type actionsTypes = inferActionsTypes<typeof profileActions>
+type actionsTypes = InferActionsTypes<typeof profileActions>
 // action-creators
 export const profileActions = {
     setProfileData: (data: any) => ({ type: SET_PROFILE_DATA, payload: data } as const),

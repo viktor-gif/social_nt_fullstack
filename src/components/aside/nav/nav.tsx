@@ -1,7 +1,7 @@
 import { connect } from "react-redux"
 import { NavLink } from "react-router-dom"
 import s from "./nav.module.css"
-import { appStateType } from "../../../redux/redux-store"
+import { AppStateType } from "../../../redux/redux-store"
 
 type PropsType = {
     ownerId: string | undefined
@@ -16,7 +16,7 @@ const Nav = (props: PropsType) => {
     </div>
 }
 
-const mapStateToProps = (state: appStateType) => ({
+const mapStateToProps = (state: AppStateType) => ({
     ownerId: state.auth.ownerData?.id
 })
 

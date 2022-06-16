@@ -1,11 +1,10 @@
 import s from "./login.module.css"
-import { Formik, Form, Field } from 'formik';
-import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
-import { login } from "../../redux/authReducer";
-import { connect } from "react-redux";
-import { appStateType } from "../../redux/redux-store";
-import { AuthDataType } from "../../ts/auth";
+import { Formik, Form, Field } from 'formik'
+import React, { useState } from "react"
+import { Navigate } from "react-router-dom"
+import { login } from "../../redux/authReducer"
+import { connect } from "react-redux"
+import { AppStateType } from "../../redux/redux-store"
 
 type PropsType = {
     login: (login: string, email: string, password: string) => void
@@ -48,7 +47,7 @@ export const Login = React.memo((props: PropsType) => {
 
 })
 
-const mapStateToProps = (state: appStateType) => ({
+const mapStateToProps = (state: AppStateType) => ({
 
 })
 

@@ -9,7 +9,7 @@ import Login from './components/login/login';
 import { authAPI } from './api/auth';
 import { authActions } from './redux/authReducer';
 import { connect } from 'react-redux';
-import { appStateType } from './redux/redux-store';
+import { AppStateType } from './redux/redux-store';
 import { AuthDataType } from './ts/auth';
 import Profile from './components/profile/profile'
 
@@ -49,7 +49,7 @@ function App(props: PropsType) {
   );
 }
 
-const mapStateToProps = (state: appStateType) => ({
+const mapStateToProps = (state: AppStateType) => ({
   authData: state.auth.ownerData
 })
 
