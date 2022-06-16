@@ -16,7 +16,6 @@ export type ProfileDataType = {
     contacts: ContactsType
     _id: string
     fullname: string
-    status: string | null
     aboutMe: string | null
     lookingForAjob: boolean
     lookingForAJobDescription: string | null
