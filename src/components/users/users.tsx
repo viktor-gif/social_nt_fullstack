@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { usersAPI } from "../../api/users";
-import { User } from "./user/user";
-import s from "./users.module.css";
-import { Formik, Form, Field } from 'formik';
-import { UserType } from "../../ts/users";
-import { Paginator } from "../common/paginator/paginator";
-import { usersActions } from "../../redux/usersReducer";
-import store, { appStateType } from "../../redux/redux-store";
-import { connect } from "react-redux";
-import { profileDataType } from "../../ts/profile";
-import { profileActions } from "../../redux/profileReducer";
+import React, { useEffect, useState } from "react"
+import { User } from "./user/user"
+import s from "./users.module.css"
+import { Formik, Form, Field } from 'formik'
+import { UserType } from "../../ts/users"
+import { Paginator } from "../common/paginator/paginator"
+import { getUsers, getTotalUsersCount } from "../../redux/usersReducer"
+import store, { appStateType } from "../../redux/redux-store"
+import { connect } from "react-redux"
+import { profileDataType } from "../../ts/profile"
+import { profileActions } from "../../redux/profileReducer"
 
 type PropsType = {
   users: UserType[] | null
   totalUsersCount: number | null
 
-  getUsers: (users: UserType[]) => void
-  getTotalUsersCount: (count: number) => void
+  getUsers: (pageSize: number, currentPage: number, term: string) => void
   getUserProfile: (data: profileDataType) => void
 }
 
@@ -28,11 +26,8 @@ export const Users = React.memo((props: PropsType) => {
   const totalUsersCount = store.getState().usersPage.totalUsersCount
   
 
-    useEffect(() => {
-        usersAPI.getUsers(pageSize, currentPage, '').then(res => {
-          props.getUsers(res.data.items)
-          props.getTotalUsersCount(res.data.totalCount)
-        }) 
+  useEffect(() => {
+        props.getUsers(pageSize, currentPage, '')
     }, [currentPage])
   const usersItems = props.users?.map((u: any) => {
       return <User id={u.id} key={u.id} fullName={u.fullName}
@@ -55,17 +50,14 @@ export const Users = React.memo((props: PropsType) => {
 })
 
 type FormPropsType = {
-    getUsers: (users: UserType[]) => void
+    getUsers: (pageSize: number, pageNumber: number, term: string) => void
     pageSize: number
 }
 const UsersForm = (props: FormPropsType) => {
     return <Formik
        initialValues={{ term: '' }}
        onSubmit={(val) => {
-         usersAPI.getUsers(props.pageSize, 1, val.term).then(res => {
-            
-            props.getUsers(res.data.items)
-        })
+         props.getUsers(props.pageSize, 1, val.term)
        }}
      >
        {({ isSubmitting }) => (
@@ -83,7 +75,7 @@ const mapStateToProps = (state: appStateType) => ({
   totalUsersCount: state.usersPage.totalUsersCount
 })
 export default connect(mapStateToProps, {
-  getUsers: usersActions.setUsers,
-  getTotalUsersCount: usersActions.setTotalUsersCount,
+  getUsers,
+  getTotalUsersCount,
   getUserProfile: profileActions.setProfileData
 })(Users)

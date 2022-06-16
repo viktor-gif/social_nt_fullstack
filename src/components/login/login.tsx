@@ -2,14 +2,13 @@ import s from "./login.module.css"
 import { Formik, Form, Field } from 'formik';
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { authAPI } from "../../api/auth";
-import { authActions } from "../../redux/authReducer";
+import { login } from "../../redux/authReducer";
 import { connect } from "react-redux";
 import { appStateType } from "../../redux/redux-store";
 import { AuthDataType } from "../../ts/auth";
 
 type PropsType = {
-    getAuthData: (data: AuthDataType) => void
+    login: (login: string, email: string, password: string) => void
 }
 
 export const Login = React.memo((props: PropsType) => {
@@ -24,16 +23,7 @@ export const Login = React.memo((props: PropsType) => {
            
             }}
             onSubmit={(val: any) => {
-                authAPI.login(val.login, val.email, val.password)
-                    .then(res => {
-                        authAPI.me().then(res => {
-                            props.getAuthData(res.data)
-                            console.log(res.data)
-                            // setLoggedIn(true)
-                        })
-                        
-                })
-                
+                props.login(val.login, val.email, val.password)
             }}
         >
         {({ isSubmitting }) => (
@@ -63,5 +53,5 @@ const mapStateToProps = (state: appStateType) => ({
 })
 
 export default connect(mapStateToProps, {
-    getAuthData: authActions.setAuthData
+    login
 })(Login)

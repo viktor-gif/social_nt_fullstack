@@ -4,15 +4,16 @@ import s from "./header.module.css"
 import logo from "../../img/logo.png"
 import { NavLink } from "react-router-dom"
 import { AuthDataType } from "../../ts/auth"
-import {authAPI} from "../../api/auth"
+import {logout} from "../../redux/authReducer"
 
 type PropsType = {
     ownerData: AuthDataType | null
+    logout: () => void
 }
 const Header = (props: PropsType) => {
     
     const logoutClick = () => {
-        authAPI.logout().then((res) => console.log(res))
+        props.logout()
     }
     
     return <div className={s.header}>
@@ -31,4 +32,6 @@ const mapStateToProps = (state: appStateType) => ({
     ownerData: state.auth.ownerData
 })
 
-export default connect(mapStateToProps, {})(Header)
+export default connect(mapStateToProps, {
+    logout
+})(Header)

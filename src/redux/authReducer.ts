@@ -1,3 +1,5 @@
+import { Dispatch } from "react"
+import { authAPI } from "../api/auth"
 import { AuthDataType } from "../ts/auth"
 import { inferActionsTypes } from "./redux-store"
 
@@ -28,4 +30,19 @@ type actionsTypes = inferActionsTypes<typeof authActions>
 // action-creators
 export const authActions = {
     setAuthData: (data: AuthDataType) => ({ type: SET_AUTH_DATA, payload: data } as const),
+}
+
+// redux-thunk
+type DispatchType = Dispatch<actionsTypes>
+
+export const login = (login: string, email: string, password: string) => (dispatch: DispatchType) => {
+    authAPI.login(login, email, password)
+        .then(res => {
+            authAPI.me().then(res => {
+                dispatch(authActions.setAuthData(res.data))
+            })
+    })
+}
+export const logout = () => (dispath: DispatchType) => {
+    authAPI.logout().then((res) => console.log(res))
 }

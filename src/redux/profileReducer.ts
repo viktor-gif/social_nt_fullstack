@@ -1,5 +1,6 @@
+import { Dispatch } from "react"
+import { profileAPI } from "../api/profile"
 import { profileDataType } from "../ts/profile"
-import { UserType } from "../ts/users"
 import { inferActionsTypes } from "./redux-store"
 
 const SET_PROFILE_DATA = 'Viktor-gif/users/SET_PROFILE_DATA'
@@ -28,4 +29,12 @@ type actionsTypes = inferActionsTypes<typeof profileActions>
 // action-creators
 export const profileActions = {
     setProfileData: (data: any) => ({ type: SET_PROFILE_DATA, payload: data } as const),
+}
+
+// redux-thunk
+type DispatchType = Dispatch<actionsTypes>
+export const getProfile = (userId: string) => (dispatch: DispatchType) => {
+    profileAPI.getProfile(userId).then(res => {
+        dispatch(profileActions.setProfileData(res.data))
+    })
 }

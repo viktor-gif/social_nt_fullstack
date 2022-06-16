@@ -1,3 +1,5 @@
+import { Dispatch } from "react"
+import { usersAPI } from "../api/users"
 import { UserType } from "../ts/users"
 import { inferActionsTypes } from "./redux-store"
 
@@ -35,4 +37,16 @@ type actionsTypes = inferActionsTypes<typeof usersActions>
 export const usersActions = {
     setUsers: (users: UserType[]) => ({ type: SET_USERS, users } as const),
     setTotalUsersCount: (count: number) => ({ type: SET_TOTAL_USERS_COUNT, count } as const)
+}
+
+// redux-thunk
+type DispatchType = Dispatch<actionsTypes>
+export const getUsers = (pageSize: number, currentPage: number, term: string) => (dispatch: DispatchType) => {
+    usersAPI.getUsers(pageSize, currentPage, term).then(res => {
+      dispatch(usersActions.setUsers(res.data.items))
+      dispatch(usersActions.setTotalUsersCount(res.data.totalCount))
+    })
+}
+export const getTotalUsersCount = (users: number) => (dispatch: DispatchType) => {
+
 }

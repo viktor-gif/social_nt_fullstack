@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
-import { profileAPI } from "../../api/profile"
 import { appStateType } from "../../redux/redux-store"
-import {profileActions} from "../../redux/profileReducer"
+import {getProfile} from "../../redux/profileReducer"
 import { profileDataType } from "../../ts/profile"
 import avatar from "../../img/ava_male.jpeg"
 import s from "./profile.module.css"
@@ -11,7 +10,7 @@ import { useParams, Navigate } from "react-router-dom"
 type PropsType = {
     ownerId: string | undefined
     profileData: profileDataType | null
-    getUserProfile: (data: profileDataType) => void
+    getProfile: (userId: string) => void
 }
 
 const Profile = (props: PropsType) => {
@@ -24,8 +23,7 @@ const Profile = (props: PropsType) => {
     console.log(typeof userId);
 
     useEffect(() => {
-        userId && profileAPI.getProfile(userId)
-            .then(res => props.getUserProfile(res.data))
+        userId && props.getProfile(userId)
     }, [userId])
     
     if (userId === 'undefined') {
@@ -67,5 +65,5 @@ const mapStateToProps = (state: appStateType) => ({
 })
 
 export default connect(mapStateToProps, {
-    getUserProfile: profileActions.setProfileData
+    getProfile
 })(Profile)
