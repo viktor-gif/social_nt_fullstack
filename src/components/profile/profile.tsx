@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
-import {getProfile, getStatus, updateStatus} from "../../redux/profileReducer"
+import {getProfile, getStatus, updateStatus, updatePhoto} from "../../redux/profileReducer"
 import { ProfileDataType } from "../../ts/profile"
 import avatar from "../../img/ava_male.jpeg"
 import s from "./profile.module.css"
@@ -15,6 +15,7 @@ type PropsType = {
     getProfile: (userId: string) => void
     getStatus: (userId: string) => void
     updateStatus: (status: string) => void
+    updatePhoto: (photoFile: any) => void
 }
 
 const Profile = (props: PropsType) => {
@@ -63,9 +64,16 @@ const Profile = (props: PropsType) => {
         </li>
     })
 
+    const onUpdatePhoto = (e: any) => {
+        if (e.target.files.length && userId) {
+            props.updatePhoto(e.target.files[0])
+        } 
+    }
+
     return <div className={s.profile}>
         <div>
             <img className={s.profile__pic} src={profile?.photos.large || avatar} alt="User-avatar" />
+            <input type="file" onChange={onUpdatePhoto} />
         </div>
         
         <div>
@@ -99,5 +107,6 @@ const mapStateToProps = (state: AppStateType) => ({
 export default connect(mapStateToProps, {
     getProfile,
     getStatus,
-    updateStatus
+    updateStatus,
+    updatePhoto
 })(Profile)

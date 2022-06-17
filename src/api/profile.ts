@@ -14,7 +14,13 @@ export const profileAPI = {
     updateStatus(status: string) {
         return axiosCreate.put(`/profile/status`, {status})
     },
-    updateAvatoar() {
-        return axiosCreate.put(`/profile/photo`)
+    updateAvatar(photoFile: any) {
+        const photoData = new FormData()
+        photoData.append("avatar", photoFile)
+        return axiosCreate.put(`/profile/photo`, photoData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
     }
 }

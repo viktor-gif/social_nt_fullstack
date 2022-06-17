@@ -57,3 +57,8 @@ export const getProfile = (userId: string) => (dispatch: DispatchType) => {
         dispatch(profileActions.setProfileData(res.data))
     })
 }
+export const updatePhoto = (photoFile: any) => (dispatch: DispatchType) => {
+    profileAPI.updateAvatar(photoFile).then(res => {
+        console.log(res)
+    })
+}
