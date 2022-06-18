@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
-import {getProfile, getStatus, updateStatus, updatePhoto} from "../../redux/profileReducer"
+import {getProfile, getStatus, updateStatus, updatePhoto, updateProfile} from "../../redux/profileReducer"
 import { ProfileDataType } from "../../ts/profile"
 import avatar from "../../img/ava_male.jpeg"
 import s from "./profile.module.css"
 import { useParams, Navigate } from "react-router-dom"
+import { ProfileInfo } from "./profileInfo.tsx/profileInfo"
 
 type PropsType = {
     ownerId: string | undefined
@@ -16,6 +17,7 @@ type PropsType = {
     getStatus: (userId: string) => void
     updateStatus: (status: string) => void
     updatePhoto: (photoFile: any) => void
+    updateProfile: (data: ProfileDataType) => void
 }
 
 const Profile = (props: PropsType) => {
@@ -23,8 +25,6 @@ const Profile = (props: PropsType) => {
     const [profileStatus, setProfileStatus] = useState(props.status)
     console.log(props.status);
     
-    
-
     const profile = props.profileData
 
     let params = useParams()
@@ -73,7 +73,7 @@ const Profile = (props: PropsType) => {
     return <div className={s.profile}>
         <div>
             <img className={s.profile__pic} src={profile?.photos.large || avatar} alt="User-avatar" />
-            <input type="file" onChange={onUpdatePhoto} />
+            {(props.ownerId === profile?._id) && <input type="file" onChange={onUpdatePhoto} />}
         </div>
         
         <div>
@@ -84,17 +84,8 @@ const Profile = (props: PropsType) => {
             }
         </div>
         <div></div>
-
-        <div>{profile?.fullname}</div>
-        <div>{profile?.aboutMe || '-------------------'}</div>
-        <div>Шукаю роботу: {profile?.lookingForAjob ? 'так' : 'ні'}</div>
-        {profile?.lookingForAjob && <div>Описання майбутньої роботи: {profile?.lookingForAJobDescription}</div>}
-        {(profile?.location.city || profile?.location.country)
-            && <div>Місце проживання: {profile?.location.city} {profile?.location.country}</div>
-        }
-        <ul>Контакти: 
-            {contactsItems}
-        </ul>
+        <ProfileInfo profile={profile} ownerId={props.ownerId}
+            updateProfile={props.updateProfile} getProfile={props.getProfile} />
     </div>
 }
 
@@ -108,5 +99,6 @@ export default connect(mapStateToProps, {
     getProfile,
     getStatus,
     updateStatus,
-    updatePhoto
+    updatePhoto,
+    updateProfile
 })(Profile)

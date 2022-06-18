@@ -15,9 +15,9 @@ export type ProfileDataType = {
     location: LocationType
     contacts: ContactsType
     _id: string
-    fullname: string
+    fullName: string
     aboutMe: string | null
-    lookingForAjob: boolean
+    lookingForAJob: boolean
     lookingForAJobDescription: string | null
     created: string
 }

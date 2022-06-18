@@ -62,3 +62,8 @@ export const updatePhoto = (photoFile: any) => (dispatch: DispatchType) => {
         console.log(res)
     })
 }
+export const updateProfile = (data: ProfileDataType) => (dispatch: DispatchType) => {
+    profileAPI.updateProfile(data).then(res => {
+        console.log(res)
+    })
+}

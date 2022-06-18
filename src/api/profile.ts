@@ -1,12 +1,13 @@
 
+import { ProfileDataType } from "../ts/profile";
 import { axiosCreate } from "./api";
 
 export const profileAPI = {
     getProfile(userId: string) {
         return axiosCreate.get(`/profile/${userId}`)
     },
-    updateProfile() {
-        return axiosCreate.put(`/profile`)
+    updateProfile(data: ProfileDataType) {
+        return axiosCreate.put(`/profile`, {data})
     },
     getStatus(userId: string) {
         return axiosCreate.get(`/profile/status/${userId}`)
