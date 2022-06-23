@@ -1,0 +1,9 @@
+.messages__text {
+  display: inline-block;
+  padding: 0.8em;
+  background-color: rgba(250, 235, 215, 0.5);
+  margin: 10px;
+  border-radius: 0.5em;
+  color: #333;
+  font-style: italic;
+}

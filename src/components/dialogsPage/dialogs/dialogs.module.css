@@ -1,6 +1,8 @@
 .dialogs {
   display: flex;
   flex-direction: column;
+  border-right: 2px solid #333;
+  padding-right: 20px;
 }
 .dialogs__pic {
   width: 50px;
