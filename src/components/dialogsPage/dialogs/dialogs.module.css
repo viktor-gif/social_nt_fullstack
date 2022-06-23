@@ -1,0 +1,7 @@
+.dialogs {
+  display: flex;
+  flex-direction: column;
+}
+.dialogs__pic {
+  width: 50px;
+}

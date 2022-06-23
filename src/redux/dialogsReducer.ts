@@ -1,16 +1,14 @@
 import { Dispatch } from "react"
 import { dialogsAPI } from "../api/dialogs"
-import { usersAPI } from "../api/users"
-import { UserType } from "../ts/users"
+import { DialogType } from "../ts/dialogs"
 import { InferActionsTypes } from "./redux-store"
 
 const SET_DIALOGS = 'Viktor-gif/dialogs/SET_DIALOGS'
-const SET_TOTAL_USERS_COUNT = 'Viktor-gif/dialogs/SET_TOTAL_USERS_COUNT'
 
 type InitialStateType = typeof initialState
 
 const initialState = {
-    dialogs: null as UserType[] | null,
+    dialogs: null as DialogType[] | null,
 }
 
 export const dialogsReducer = (state: InitialStateType = initialState, action: actionsTypes) => {
@@ -20,6 +18,7 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: a
             
             return {
                 ...state,
+                dialogs: action.payload
             }
         default: return state
     }
@@ -28,16 +27,15 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: a
 type actionsTypes = InferActionsTypes<typeof dialogsActions>
 // action-creators
 export const dialogsActions = {
-    setDialogs: () => ({ type: SET_DIALOGS} as const),
+    setDialogs: (dialogs: DialogType[]) => ({ type: SET_DIALOGS, payload: dialogs} as const),
 }
 
 // redux-thunk
 type DispatchType = Dispatch<actionsTypes>
 export const getDialogs = () => (dispatch: DispatchType) => {
-    // dialogsAPI.getUsers(pageSize, currentPage, term).then(res => {
-    //   dispatch(usersActions.setUsers(res.data.items))
-    //   dispatch(usersActions.setTotalUsersCount(res.data.totalCount))
-    // })
+    dialogsAPI.getDialogs().then(res => {
+        dispatch(dialogsActions.setDialogs(res.data.items))
+    })
 }
 export const createDialog = (userId: string) => (diapatch: DispatchType) => {
     dialogsAPI.createDialog(userId).then(res => {
