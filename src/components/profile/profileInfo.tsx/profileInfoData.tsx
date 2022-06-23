@@ -1,3 +1,4 @@
+
 import { ProfileDataType } from "../../../ts/profile"
 import s from "./profileInfo.module.css"
 
@@ -5,6 +6,7 @@ type PropsType = {
     profile: ProfileDataType | null
     ownerId: string | undefined
     setEditProfile: (isEdit: boolean) => void
+    createDialog: (userId: string) => void
 }
 
 export const ProfileInfoData = (props: PropsType) => {
@@ -20,9 +22,14 @@ export const ProfileInfoData = (props: PropsType) => {
         </li>
     })
 
+    const onWriteMessage = () => {
+        profile && props.createDialog(profile._id)
+    }
 
     return <div className={s.profileInfoData}>
 
+        {(props.ownerId && props.ownerId !== profile?._id)
+            && <button onClick={onWriteMessage}>Надіслати приватне повідомлення</button>}
         <div>{profile?.fullName}</div>
         <div>{profile?.aboutMe || '-------------------'}</div>
         <div>Шукаю роботу: {profile?.lookingForAJob ? 'так' : 'ні'}</div>

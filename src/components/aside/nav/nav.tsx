@@ -12,6 +12,7 @@ const Nav = (props: PropsType) => {
         <ul className={s.navList}>
             <NavLink className={s.active} to="/users"><li>Користувачі</li></NavLink>
             <NavLink className={s.active} to={`/profile/${props.ownerId}`}><li>Профіль</li></NavLink>
+            <NavLink className={s.active} to="/dialogs"><li>Діалоги</li></NavLink>
         </ul>
     </div>
 }

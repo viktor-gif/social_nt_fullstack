@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
-import {getProfile, getStatus, updateStatus, updatePhoto, updateProfile} from "../../redux/profileReducer"
+import { getProfile, getStatus, updateStatus, updatePhoto, updateProfile } from "../../redux/profileReducer"
+import { createDialog } from "../../redux/dialogsReducer"
 import { ProfileDataType } from "../../ts/profile"
 import avatar from "../../img/ava_male.jpeg"
 import s from "./profile.module.css"
@@ -18,6 +19,7 @@ type PropsType = {
     updateStatus: (status: string) => void
     updatePhoto: (photoFile: any) => void
     updateProfile: (data: ProfileDataType) => void
+    createDialog: (userId: string) => void
 }
 
 const Profile = (props: PropsType) => {
@@ -85,7 +87,8 @@ const Profile = (props: PropsType) => {
         </div>
         <div></div>
         <ProfileInfo profile={profile} ownerId={props.ownerId}
-            updateProfile={props.updateProfile} getProfile={props.getProfile} />
+            updateProfile={props.updateProfile} getProfile={props.getProfile}
+        createDialog={props.createDialog} />
     </div>
 }
 
@@ -100,5 +103,6 @@ export default connect(mapStateToProps, {
     getStatus,
     updateStatus,
     updatePhoto,
-    updateProfile
+    updateProfile,
+    createDialog
 })(Profile)

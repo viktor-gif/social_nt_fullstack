@@ -9,6 +9,7 @@ type PropsType = {
     ownerId: string | undefined
     updateProfile: (data: ProfileDataType) => void
     getProfile: (userId: string) => void
+    createDialog: (userId: string) => void
 }
 
 export const ProfileInfo = (props: PropsType) => {
@@ -20,6 +21,7 @@ export const ProfileInfo = (props: PropsType) => {
     </div>
     }
     return <div className={s.profileInfo}>
-        <ProfileInfoData profile={props.profile} ownerId={props.ownerId} setEditProfile={setEditProfile} />
+        <ProfileInfoData profile={props.profile} ownerId={props.ownerId} setEditProfile={setEditProfile}
+                createDialog={props.createDialog} />
     </div>
 }
