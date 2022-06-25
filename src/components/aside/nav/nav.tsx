@@ -4,21 +4,21 @@ import s from "./nav.module.css"
 import { AppStateType } from "../../../redux/redux-store"
 
 type PropsType = {
-    ownerId: string | undefined
+    authId: string | undefined
 }
 
 const Nav = (props: PropsType) => {
     return <div>
         <ul className={s.navList}>
             <NavLink className={s.active} to="/users"><li>Користувачі</li></NavLink>
-            <NavLink className={s.active} to={`/profile/${props.ownerId}`}><li>Профіль</li></NavLink>
+            <NavLink className={s.active} to={`/profile/${props.authId}`}><li>Профіль</li></NavLink>
             <NavLink className={s.active} to="/dialogs"><li>Діалоги</li></NavLink>
         </ul>
     </div>
 }
 
 const mapStateToProps = (state: AppStateType) => ({
-    ownerId: state.auth.ownerData?.id
+    authId: state.auth.authData?.id
 })
 
 export default connect(mapStateToProps, {})(Nav)

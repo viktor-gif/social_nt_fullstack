@@ -95,7 +95,7 @@ const Profile = (props: PropsType) => {
 }
 
 const mapStateToProps = (state: AppStateType) => ({
-    ownerId: state.auth.ownerData?.id,
+    ownerId: state.auth.authData?.id,
     profileData: state.profilePage.profileData,
     status: state.profilePage.status,
     isAuth: state.auth.isAuth

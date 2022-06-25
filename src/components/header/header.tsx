@@ -8,7 +8,7 @@ import { logout } from "../../redux/authReducer"
 import { Navigate } from "react-router-dom"
 
 type PropsType = {
-    ownerData: AuthDataType | null
+    authData: AuthDataType | null
     isAuth: boolean
 
     logout: () => void
@@ -22,7 +22,7 @@ const Header = (props: PropsType) => {
     
     return <div className={s.header}>
         <img src={logo} className={s.header__logo} />
-        {!props.ownerData?.id ? <div className={s.header__actions}>
+        {!props.authData?.id ? <div className={s.header__actions}>
             <NavLink to="/user/add" className={s.header__actions_item}>Створити нового користувача</NavLink>
             <NavLink to="/login" className={s.header__actions_item}>Зайти на свою сторінку</NavLink>
         </div>
@@ -33,7 +33,7 @@ const Header = (props: PropsType) => {
 }
 
 const mapStateToProps = (state: AppStateType) => ({
-    ownerData: state.auth.ownerData,
+    authData: state.auth.authData,
     isAuth: state.auth.isAuth
 })
 

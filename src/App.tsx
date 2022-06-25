@@ -52,7 +52,7 @@ function App(props: PropsType) {
 }
 
 const mapStateToProps = (state: AppStateType) => ({
-  authData: state.auth.ownerData
+  authData: state.auth.authData
 })
 
 export default connect(mapStateToProps, {

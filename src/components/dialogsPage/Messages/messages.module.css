@@ -7,3 +7,16 @@
   color: #333;
   font-style: italic;
 }
+.messageAvatar img {
+  width: 30px;
+}
+.messages__deleteIcon {
+  width: 30px;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
+  position: relative;
+  top: 10px;
+}
+.messages__deleteIcon:hover {
+  opacity: 0.5;
+}

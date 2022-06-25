@@ -17,4 +17,5 @@ export type MessageType = {
 export type CurrentDialogInfoType = {
     dialogId: string
     userName: string
+    userImg: string | null
 }

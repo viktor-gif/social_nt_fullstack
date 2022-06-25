@@ -53,7 +53,7 @@ export const Login = React.memo((props: PropsType) => {
 const mapStateToProps = (state: AppStateType) => ({
     loginError: state.auth.loginError,
     isAuth: state.auth.isAuth,
-    authData: state.auth.ownerData
+    authData: state.auth.authData
 })
 
 export default connect(mapStateToProps, {

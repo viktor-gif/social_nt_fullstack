@@ -5,7 +5,7 @@ import s from "./messages.module.css"
 
 type PropsPage = {
     currentDialogInfo: CurrentDialogInfoType | null
-    sendDialogMessage: (dialogId: string, userName: string, message: string) => void
+    sendDialogMessage: (dialogId: string, userName: string, userImg: string | null, message: string) => void
 }
 
 export const MessagesForm = (props: PropsPage) => {
@@ -13,7 +13,7 @@ export const MessagesForm = (props: PropsPage) => {
        initialValues={{ textMessage: '' }}
         onSubmit={(val) => {
         //    @ts-ignore
-         props.sendDialogMessage(props.currentDialogInfo.dialogId, props.currentDialogInfo.userName, val.textMessage)
+         props.sendDialogMessage(props.currentDialogInfo?.dialogId, props.currentDialogInfo?.userName, props.currentDialogInfo?.userImg, val.textMessage)
        }}
      >
        {({ isSubmitting }) => (

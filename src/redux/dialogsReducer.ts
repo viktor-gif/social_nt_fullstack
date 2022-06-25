@@ -59,15 +59,17 @@ export const createDialog = (userId: string) => (diapatch: DispatchType) => {
         console.log(res)
     })
 }
-export const getDialogMessages = (dialogId: string, userName: string) => (dispatch: DispatchType) => {
+export const getDialogMessages = (dialogId: string, userName: string, userImg: string | null) => (dispatch: DispatchType) => {
     dialogsAPI.getDialogMessages(dialogId).then(res => {
         dispatch(dialogsActions.setMessages(res.data))
-        dispatch(dialogsActions.setCurrentDialogInfo({dialogId, userName}))
+        console.log(res.data)
+        dispatch(dialogsActions.setCurrentDialogInfo({ dialogId, userName, userImg }))
+        
     })
 }
-export const sendDialogMessage = (dialogId: string, userName: string, message: string) => (dispatch: DialogType) => {
+export const sendDialogMessage = (dialogId: string, userName: string, userImg: string | null, message: string) => (dispatch: DialogType) => {
     dialogsAPI.sendMessage(dialogId, message).then(res => {
         // @ts-ignore
-        dispatch(getDialogMessages(dialogId, userName))
+        dispatch(getDialogMessages(dialogId, userName, userImg))
     })
 }
