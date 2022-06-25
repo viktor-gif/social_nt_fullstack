@@ -8,11 +8,13 @@ import avatar from "../../img/ava_male.jpeg"
 import s from "./profile.module.css"
 import { useParams, Navigate } from "react-router-dom"
 import { ProfileInfo } from "./profileInfo.tsx/profileInfo"
+import { ConnectionPoolClearedEvent } from "mongodb"
 
 type PropsType = {
     ownerId: string | undefined
     profileData: ProfileDataType | null
     status: string | null
+    isAuth: boolean
 
     getProfile: (userId: string) => void
     getStatus: (userId: string) => void
@@ -52,7 +54,7 @@ const Profile = (props: PropsType) => {
         setProfileStatus(e.target.value)
     }
     
-    if (userId === 'undefined') {
+    if (!props.isAuth) {
         return <Navigate replace to={'/login'} />
     } 
         
@@ -95,7 +97,8 @@ const Profile = (props: PropsType) => {
 const mapStateToProps = (state: AppStateType) => ({
     ownerId: state.auth.ownerData?.id,
     profileData: state.profilePage.profileData,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    isAuth: state.auth.isAuth
 })
 
 export default connect(mapStateToProps, {

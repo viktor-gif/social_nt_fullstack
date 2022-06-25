@@ -5,16 +5,19 @@ import { Navigate } from "react-router-dom"
 import { login } from "../../redux/authReducer"
 import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
+import { AuthDataType } from "../../ts/auth"
 
 type PropsType = {
+    loginError: string | null
+    isAuth: boolean
+    authData: AuthDataType | null
+
     login: (login: string, email: string, password: string) => void
 }
 
 export const Login = React.memo((props: PropsType) => {
-    const [isLoggedIn, setLoggedIn] = useState(false)
-    const [error, setError] = useState(null)
 
-    if (isLoggedIn) return <Navigate replace to="/profile" />
+    if (props.isAuth && props.authData) return <Navigate replace to={`/profile/${props.authData.id}`} />
     
     return <div className={s.login}>
         <Formik
@@ -36,7 +39,7 @@ export const Login = React.memo((props: PropsType) => {
                     <div className={s.login__formItem}>Пароль: 
                         <Field type="password" name="password" id="password" placeholder="Ваш пароль..." />
                     </div>
-                    {error && <div className={s.login__error}>{error}</div>}
+                    {props.loginError && <div className={s.login__error}>{props.loginError}</div>}
                 <button type="submit">
                     Submit
                 </button>
@@ -48,7 +51,9 @@ export const Login = React.memo((props: PropsType) => {
 })
 
 const mapStateToProps = (state: AppStateType) => ({
-
+    loginError: state.auth.loginError,
+    isAuth: state.auth.isAuth,
+    authData: state.auth.ownerData
 })
 
 export default connect(mapStateToProps, {

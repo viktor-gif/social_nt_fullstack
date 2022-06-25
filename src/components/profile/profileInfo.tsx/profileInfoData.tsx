@@ -1,4 +1,6 @@
 
+import { useState } from "react"
+import { Navigate } from "react-router-dom"
 import { ProfileDataType } from "../../../ts/profile"
 import s from "./profileInfo.module.css"
 
@@ -10,6 +12,7 @@ type PropsType = {
 }
 
 export const ProfileInfoData = (props: PropsType) => {
+    const [isWriteMessage, setWriteMessage] = useState(false)
     
     const profile = props.profile
     
@@ -24,7 +27,10 @@ export const ProfileInfoData = (props: PropsType) => {
 
     const onWriteMessage = () => {
         profile && props.createDialog(profile._id)
+        setWriteMessage(true)
     }
+
+    if (isWriteMessage) return <Navigate replace to="/dialogs" />
 
     return <div className={s.profileInfoData}>
 

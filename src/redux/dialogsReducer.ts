@@ -69,6 +69,5 @@ export const sendDialogMessage = (dialogId: string, userName: string, message: s
     dialogsAPI.sendMessage(dialogId, message).then(res => {
         // @ts-ignore
         dispatch(getDialogMessages(dialogId, userName))
-        console.log(res)
     })
 }
