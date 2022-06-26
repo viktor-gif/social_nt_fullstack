@@ -7,7 +7,7 @@ import Header from './components/header/header';
 import { CreateUser} from './components/users/createUser /createUser';
 import Login from './components/login/login';
 import { authAPI } from './api/auth';
-import { authActions } from './redux/authReducer';
+import { authActions, authMe } from './redux/authReducer';
 import { connect } from 'react-redux';
 import { AppStateType } from './redux/redux-store';
 import { AuthDataType } from './ts/auth';
@@ -16,13 +16,16 @@ import DialogsPage from './components/dialogsPage/dialogsPage';
 
 type PropsType = {
   authData: AuthDataType | null
-  getAuthData: (data: AuthDataType) => void
+  //getAuthData: (data: AuthDataType) => void
+  authMe: () => void
 }
 
 function App(props: PropsType) {
   useEffect(() => {
-    authAPI.me().then(res => props.getAuthData(res.data))
-    
+    // authAPI.me().then(res => {
+    //   props.getAuthData(res.data)
+    // }) 
+    props.authMe()
   }, [])
 
   return (
@@ -56,5 +59,6 @@ const mapStateToProps = (state: AppStateType) => ({
 })
 
 export default connect(mapStateToProps, {
-  getAuthData: authActions.setAuthData
+  //getAuthData: authActions.setAuthData
+  authMe
 })(App);

@@ -1,0 +1,155 @@
+.message__wrapper {
+  max-width: 400px;
+}
+
+.message {
+  display: grid;
+  max-width: 400px;
+  grid-template-columns: 50px 1fr;
+  grid-template-areas:
+    "avatar userName"
+    "message message";
+}
+.message__auth {
+  grid-template-columns: 1fr 50px;
+  grid-template-areas:
+    "userName avatar"
+    "message message";
+  justify-items: end;
+}
+.messageAvatar {
+  grid-area: avatar;
+}
+.message__userName {
+  grid-area: userName;
+}
+.message__authName {
+  text-align: right;
+}
+.message__text {
+  grid-area: message;
+  display: inline-block;
+  width: fit-content;
+  padding: 0.8em;
+  background-color: rgba(250, 235, 215, 0.5);
+  margin: 10px 0;
+  border-radius: 0 0.5em 0.5em 0.5em;
+  color: #333;
+  font-style: italic;
+  position: relative;
+}
+.message__textAuth {
+  border-radius: 0.5em 0 0.5em 0.5em;
+}
+.messageAvatar img {
+  width: 30px;
+}
+.message__deleteIcon {
+  width: 30px;
+  cursor: pointer;
+  transition: opacity 0.3s linear;
+  position: relative;
+  top: 10px;
+}
+.message__deleteIcon:hover {
+  opacity: 0.5;
+}
+
+.message__menu {
+  width: 30px;
+  height: 15px;
+  border-radius: 0.5em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color, 0.3s linear;
+}
+.message__menu:hover {
+  background-color: #50ac79;
+}
+.message__menuAuth {
+  right: calc(100% - 30px);
+}
+.message__menuDots {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #666;
+  position: relative;
+}
+.message__menuDots::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #666;
+  position: absolute;
+  top: 0;
+  right: 7px;
+}
+.message__menuDots::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #666;
+  position: absolute;
+  top: 0;
+  left: 7px;
+}
+
+.message__options {
+  display: flex;
+  padding: 10px;
+  position: absolute;
+  top: 1em;
+  right: -5em;
+  max-width: 200px;
+  background-color: aliceblue;
+}
+.message__optionsAuth {
+  right: calc(100% - 2em);
+}
+.message__options_item img {
+  width: 20px;
+  margin-right: 5px;
+  padding-right: 5px;
+  border-right: 2px solid #d1d1d1;
+}
+.message__options_item {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 0.3s linear;
+}
+.message__options_item:hover {
+  background-color: #999;
+  color: #fff;
+}
+
+.message__deleteMenu {
+  max-width: 300px;
+  text-align: center;
+  color: #c7c5c5;
+  border: 2px solid red;
+  margin: 0 auto;
+  padding: 5px;
+  background-color: rgba(212, 71, 71, 0.7);
+}
+.message__deleteMenu_text {
+}
+.message__deleteMenu_buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.message__deleteMenu_buttons button {
+  max-width: 80px;
+  width: 100%;
+}

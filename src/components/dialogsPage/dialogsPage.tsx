@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
 import { getDialogs, getDialogMessages, sendDialogMessage } from "../../redux/dialogsReducer"
+import { getProfile } from "../../redux/profileReducer"
 import { AppStateType } from "../../redux/redux-store"
 import { AuthDataType } from "../../ts/auth"
 import { CurrentDialogInfoType, DialogType, MessageType } from "../../ts/dialogs"
@@ -17,7 +18,9 @@ type PropsType = {
     isAuth: boolean
     authData: AuthDataType | null
     authProfileData: ProfileDataType | null
+    userProfileData: ProfileDataType | null
 
+    getProfile: (userId: string) => void
     getDialogs: () => void
     getDialogMessages: (dialogId: string, userName: string, userImg: string | null) => void
     sendDialogMessage: (dialogId: string, userName: string, userImg: string | null, message: string) => void
@@ -33,7 +36,8 @@ const DialogsPage = (props: PropsType) => {
         <Dialogs dialogs={props.dialogs} getDialogMessages={props.getDialogMessages} />
         <Messages messages={props.messages} currentDialogInfo={props.currentDialogInfo}
             sendDialogMessage={props.sendDialogMessage} authData={props.authData}
-            authProfileData={props.authProfileData} />
+            authProfileData={props.authProfileData} userProfileData={props.userProfileData}
+            getProfile={props.getProfile} />
     </div>
 }
 
@@ -43,11 +47,13 @@ const mapStateToProps = (state: AppStateType) => ({
     currentDialogInfo: state.dialogsPage.currentDialogInfo,
     isAuth: state.auth.isAuth,
     authData: state.auth.authData,
-    authProfileData: state.auth.authProfileData
+    authProfileData: state.auth.authProfileData,
+    userProfileData: state.profilePage.profileData
 })
 
 export default connect(mapStateToProps, {
     getDialogs,
     getDialogMessages,
     sendDialogMessage,
+    getProfile,
 })(DialogsPage)

@@ -62,22 +62,26 @@ export const authActions = {
 type DispatchType = Dispatch<ActionsTypes>
 
 
+export const authMe = () => async (dispatch: DispatchType) => {
+    const res = await authAPI.me()
+    const resAuthProfile = await profileAPI.getProfile(res.data.id)
+    dispatch(authActions.setAuthData(res.data, resAuthProfile.data, true))
+}
+
 export const login = (login: string, email: string, password: string) => async (dispatch: DispatchType) => {
     try {
         dispatch(authActions.setLoginError(null))
         const res = await authAPI.login(login, email, password)
         if (res.data.resultCode === 2) {
-            const res = await authAPI.me()
-            const resAuthProfile = await profileAPI.getProfile(res.data.id)
-            console.log(resAuthProfile.data)
-            dispatch(authActions.setAuthData(res.data, resAuthProfile.data, true))
-            //dispatch(authActions.setAuthData(res.data, true))
+            // @ts-ignore
+            dispatch(authMe())
         } 
     } catch (err: any) {
         dispatch(authActions.setLoginError(err.response.data.message || "Помилка сервера"))
     }
     
 }
+
 export const logout = () => async (dispatch: DispatchType) => {
     try {
     const res = await authAPI.logout()
