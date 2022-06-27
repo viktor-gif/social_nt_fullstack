@@ -1,7 +1,10 @@
 import { useEffect } from "react"
 import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
-import { getDialogs, getDialogMessages, sendDialogMessage } from "../../redux/dialogsReducer"
+import {
+    getDialogs, getDialogMessages,
+    sendDialogMessage, deleteMessage
+} from "../../redux/dialogsReducer"
 import { getProfile } from "../../redux/profileReducer"
 import { AppStateType } from "../../redux/redux-store"
 import { AuthDataType } from "../../ts/auth"
@@ -24,6 +27,7 @@ type PropsType = {
     getDialogs: () => void
     getDialogMessages: (dialogId: string, userName: string, userImg: string | null) => void
     sendDialogMessage: (dialogId: string, userName: string, userImg: string | null, message: string) => void
+    deleteMessage: (dialogId: string, messageId: string) => void
 }
 
 const DialogsPage = (props: PropsType) => {
@@ -37,7 +41,7 @@ const DialogsPage = (props: PropsType) => {
         <Messages messages={props.messages} currentDialogInfo={props.currentDialogInfo}
             sendDialogMessage={props.sendDialogMessage} authData={props.authData}
             authProfileData={props.authProfileData} userProfileData={props.userProfileData}
-            getProfile={props.getProfile} />
+            getProfile={props.getProfile} deleteMessage={props.deleteMessage} />
     </div>
 }
 
@@ -56,4 +60,5 @@ export default connect(mapStateToProps, {
     getDialogMessages,
     sendDialogMessage,
     getProfile,
+    deleteMessage
 })(DialogsPage)

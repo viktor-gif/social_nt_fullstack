@@ -12,5 +12,8 @@ export const dialogsAPI = {
     },
     sendMessage(dialogId: string, message: string) {
         return axiosCreate.post(`dialogs/${dialogId}/messages`, { message: message })
+    },
+    deleteMessage(dialogId: string, messageId: string) {
+        return axiosCreate.delete(`/dialogs/${dialogId}/messages/${messageId}`)
     }
 }

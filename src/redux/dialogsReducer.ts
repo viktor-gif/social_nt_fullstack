@@ -73,3 +73,7 @@ export const sendDialogMessage = (dialogId: string, userName: string, userImg: s
         dispatch(getDialogMessages(dialogId, userName, userImg))
     })
 }
+export const deleteMessage = (dialogId: string, messageId: string) => (dispatch: DialogType) => {
+    dialogsAPI.deleteMessage(dialogId, messageId).then(res => console.log(res))
+
+}
