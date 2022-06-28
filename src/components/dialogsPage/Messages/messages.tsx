@@ -19,6 +19,8 @@ type PropsPage = {
     getProfile: (userId: string) => void
     sendDialogMessage: (dialogId: string, userName: string, userImg: string | null, message: string) => void
     deleteMessage: (dialogId: string, messageId: string) => void
+    setAsSpam: (dialogId: string, messageId: string) => void
+    restoreFromSpam: (dialogId: string, messageId: string) => void
 }
 
 export const Messages = React.memo((props: PropsPage) => {
@@ -29,7 +31,8 @@ export const Messages = React.memo((props: PropsPage) => {
             message={m.message} authProfileData={props.authProfileData}
             currentDialogInfo={props.currentDialogInfo} userProfileData={props.userProfileData}
             getProfile={props.getProfile} deleteMessage={props.deleteMessage}
-            messagesMustDelete={messagesMustDelete} setMessageMustDelete={setMustDeleteMessages} />
+            messagesMustDelete={messagesMustDelete} setMessageMustDelete={setMustDeleteMessages}
+            isSpam={m.isSpam} setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam} />
     })
     return <div className={s.messages}>
         <h3>{props.currentDialogInfo?.userName}</h3>

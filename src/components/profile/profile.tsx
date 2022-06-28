@@ -19,7 +19,7 @@ type PropsType = {
     getProfile: (userId: string) => void
     getStatus: (userId: string) => void
     updateStatus: (status: string) => void
-    updatePhoto: (photoFile: any) => void
+    updatePhoto: (photoFile: any, userId: string) => void
     updateProfile: (data: ProfileDataType) => void
     createDialog: (userId: string) => void
 }
@@ -70,24 +70,27 @@ const Profile = (props: PropsType) => {
 
     const onUpdatePhoto = (e: any) => {
         if (e.target.files.length && userId) {
-            props.updatePhoto(e.target.files[0])
+            props.updatePhoto(e.target.files[0], userId)
         } 
     }
 
     return <div className={s.profile}>
-        <div>
-            <img className={s.profile__pic} src={profile?.photos.large || avatar} alt="User-avatar" />
-            {(props.ownerId === profile?._id) && <input type="file" onChange={onUpdatePhoto} />}
-        </div>
-        
-        <div>
+        <div className={s.userStatus}>
             {isEditStatus ?
                 <input onBlur={saveNewStatus} onChange={changeStatus} type="text" placeholder="Ваш новий статус" value={profileStatus || ''} />
                 :
                 <span onDoubleClick={() => setEditStatus(true)}>{props.status || '-------------------'}</span>
             }
         </div>
-        <div></div>
+        <div className={s.profile__avatar}>
+            <img className={s.profile__pic} src={profile?.photos.large || avatar} alt="User-avatar" />
+            {(props.ownerId === profile?._id)
+                && <div className={s.profile__fileInput}>
+                    <label htmlFor="photoChange">Змінити фото</label>
+                    <input id="photoChange" type="file" onChange={onUpdatePhoto} />
+                </div>}
+        </div>
+    
         <ProfileInfo profile={profile} ownerId={props.ownerId}
             updateProfile={props.updateProfile} getProfile={props.getProfile}
         createDialog={props.createDialog} />

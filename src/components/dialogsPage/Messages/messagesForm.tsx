@@ -22,9 +22,11 @@ export const MessagesForm = (props: PropsPage) => {
        {({ isSubmitting }) => (
          <Form>
            <Field type="text" name="textMessage" component="textarea" value={currentMessage} onChange={(e: any) => setCurrentMessage(e.target.value)} />
-           <button type="submit">
-             Submit
-           </button>
+          <div>
+            <button type="submit">
+              Надіслати
+            </button>
+          </div>
          </Form>
        )}
      </Formik>

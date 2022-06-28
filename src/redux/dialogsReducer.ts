@@ -77,3 +77,15 @@ export const deleteMessage = (dialogId: string, messageId: string) => (dispatch:
     dialogsAPI.deleteMessage(dialogId, messageId).then(res => console.log(res))
 
 }
+export const setAsSpam = (dialogId: string, messageId: string) => async (dispatch: DispatchType) => {
+    const res = await dialogsAPI.setAsSpam(dialogId, messageId)
+    if (res.data.statusCode === 2) {
+        console.log(res.data.message)
+    }
+}
+export const restoreFromSpam = (dialogId: string, messageId: string) => async (dispatch: DispatchType) => {
+    const res = await dialogsAPI.restoreFromSpam(dialogId, messageId)
+    if (res.data.statusCode === 2) {
+        console.log(res.data.message)
+    }
+}

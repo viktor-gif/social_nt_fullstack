@@ -21,7 +21,7 @@ export const ProfileInfoData = (props: PropsType) => {
     const contactsItems = profileContactsKeys?.map(p => {
         return <li key={p}>
         {/* @ts-ignore */}
-            <span>{p}</span>: {profileContacts[p]}
+            <b>{p}</b>: <i>{profileContacts[p]}</i>
         </li>
     })
 
@@ -38,12 +38,12 @@ export const ProfileInfoData = (props: PropsType) => {
             && <button onClick={onWriteMessage}>Надіслати приватне повідомлення</button>}
         <div>{profile?.fullName}</div>
         <div>{profile?.aboutMe || '-------------------'}</div>
-        <div>Шукаю роботу: {profile?.lookingForAJob ? 'так' : 'ні'}</div>
-        {profile?.lookingForAJob && <div>Описання майбутньої роботи: {profile?.lookingForAJobDescription}</div>}
+        <div><b>Шукаю роботу</b>: {profile?.lookingForAJob ? 'так' : 'ні'}</div>
+        {profile?.lookingForAJob && <div><b>Описання майбутньої роботи</b>: {profile?.lookingForAJobDescription}</div>}
         {(profile?.location.city || profile?.location.country)
-            && <div>Місце проживання: {profile?.location.city} {profile?.location.country}</div>
+            && <div><b>Місце проживання</b>: {profile?.location.city}, {profile?.location.country}</div>
         }
-        <ul>Контакти: 
+        <ul><b>Контакти</b>: 
             {contactsItems}
         </ul>
         {(props.ownerId === profile?._id) && <button onClick={() => props.setEditProfile(true)}>Редагувати</button>}

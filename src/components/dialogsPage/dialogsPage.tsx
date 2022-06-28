@@ -3,7 +3,8 @@ import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
 import {
     getDialogs, getDialogMessages,
-    sendDialogMessage, deleteMessage
+    sendDialogMessage, deleteMessage,
+    setAsSpam, restoreFromSpam
 } from "../../redux/dialogsReducer"
 import { getProfile } from "../../redux/profileReducer"
 import { AppStateType } from "../../redux/redux-store"
@@ -28,6 +29,8 @@ type PropsType = {
     getDialogMessages: (dialogId: string, userName: string, userImg: string | null) => void
     sendDialogMessage: (dialogId: string, userName: string, userImg: string | null, message: string) => void
     deleteMessage: (dialogId: string, messageId: string) => void
+    setAsSpam: (dialogId: string, messageId: string) => void
+    restoreFromSpam: (dialogId: string, messageId: string) => void
 }
 
 const DialogsPage = (props: PropsType) => {
@@ -41,7 +44,8 @@ const DialogsPage = (props: PropsType) => {
         <Messages messages={props.messages} currentDialogInfo={props.currentDialogInfo}
             sendDialogMessage={props.sendDialogMessage} authData={props.authData}
             authProfileData={props.authProfileData} userProfileData={props.userProfileData}
-            getProfile={props.getProfile} deleteMessage={props.deleteMessage} />
+            getProfile={props.getProfile} deleteMessage={props.deleteMessage}
+            setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam} />
     </div>
 }
 
@@ -60,5 +64,7 @@ export default connect(mapStateToProps, {
     getDialogMessages,
     sendDialogMessage,
     getProfile,
-    deleteMessage
+    deleteMessage,
+    setAsSpam,
+    restoreFromSpam
 })(DialogsPage)

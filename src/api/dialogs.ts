@@ -15,5 +15,11 @@ export const dialogsAPI = {
     },
     deleteMessage(dialogId: string, messageId: string) {
         return axiosCreate.delete(`/dialogs/${dialogId}/messages/${messageId}`)
+    },
+    setAsSpam(dialogId: string, messageId: string) {
+        return axiosCreate.put(`/dialogs/${dialogId}/messages/${messageId}/set_spam`)
+    },
+    restoreFromSpam(dialogId: string, messageId: string) {
+        return axiosCreate.put(`/dialogs/${dialogId}/messages/${messageId}/restore_spam`)
     }
 }

@@ -4,6 +4,7 @@ import s from "./message.module.css"
 import avatar from "../../../../img/ava_male.jpeg"
 import React, { useEffect, useState } from "react"
 import deleteIcon from "../../../../img/icons/delete-icon.png"
+import spamIcon from "../../../../img/icons/spam-icon.png"
 import { AuthDataType } from "../../../../ts/auth"
 import { ProfileDataType } from "../../../../ts/profile"
 import { getProfile } from "../../../../redux/profileReducer"
@@ -17,10 +18,13 @@ type PropsPage = {
     currentDialogInfo: CurrentDialogInfoType | null
     userProfileData: ProfileDataType | null
     messagesMustDelete: string[]
+    isSpam: boolean
 
     getProfile: (userId: string) => void
     deleteMessage: (dialogId: string, messageId: string) => void
     setMessageMustDelete: (messagesIds: string[]) => void
+    setAsSpam: (dialogId: string, messageId: string) => void
+    restoreFromSpam: (dialogId: string, messageId: string) => void
 }
 
 export const Message = React.memo((props: PropsPage) => {
@@ -46,7 +50,7 @@ export const Message = React.memo((props: PropsPage) => {
             }
             
         }
-    }, [])
+    }, [props.isSpam])
     console.log(props.messagesMustDelete)
 
     const toggleMessageOptions = () => {
@@ -56,19 +60,31 @@ export const Message = React.memo((props: PropsPage) => {
         setDeleteMenuActive(true)
         setActiveMessageOptions(false)
     }
+    const toggleSpam = () => {
+        if (props.isSpam) {
+            // @ts-ignore
+            props.restoreFromSpam(props.currentDialogInfo?.dialogId, props.messageId)
+        } else {
+            // @ts-ignore
+            props.setAsSpam(props.currentDialogInfo?.dialogId, props.messageId)
+        }
+        setActiveMessageOptions(false)
+    }
 
     const userAvatar = senderIsAuthUser ? props.authProfileData?.photos.small : props.userProfileData?.photos.small
     const userName = senderIsAuthUser ? props.authProfileData?.fullName : props.userProfileData?.fullName
 
     if (messageMustDelete) {
-        return <div>
-            <div>Повідомлення видалено</div>
-            <button onClick={() => {
-                setMessageMustDelete(false)
-                setDeleteMenuActive(false)
-                props.setMessageMustDelete(props.messagesMustDelete.filter(item => item !== props.messageId))
-            }
-            }>Відновити</button>
+        return <div className={s.message__deleted}>
+            <span>Повідомлення видалено</span>
+            <div className={s.message__restoreButton}>
+                <button onClick={() => {
+                    setMessageMustDelete(false)
+                    setDeleteMenuActive(false)
+                    props.setMessageMustDelete(props.messagesMustDelete.filter(item => item !== props.messageId))
+                }
+                }>Відновити</button>
+            </div>
         </div>
     }
 
@@ -91,8 +107,13 @@ export const Message = React.memo((props: PropsPage) => {
                                 <img src={deleteIcon} alt="del-icon" />
                                 <span>Видалити</span>
                             </div>
+                            <div onClick={toggleSpam} className={s.message__options_item}>
+                                <img src={spamIcon} alt="spam-icon" />
+                                <span>Додати до спаму</span>
+                            </div>
                         </div>
                     }
+                    {props.isSpam && <div className={s.spam}>SPAM</div>}
                 </div>
             </div>
             :

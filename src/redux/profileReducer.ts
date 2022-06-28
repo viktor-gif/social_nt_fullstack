@@ -57,9 +57,10 @@ export const getProfile = (userId: string) => (dispatch: DispatchType) => {
         dispatch(profileActions.setProfileData(res.data))
     })
 }
-export const updatePhoto = (photoFile: any) => (dispatch: DispatchType) => {
+export const updatePhoto = (photoFile: any, userId: string) => (dispatch: DispatchType) => {
     profileAPI.updateAvatar(photoFile).then(res => {
-        console.log(res)
+        // @ts-ignore
+        dispatch(getProfile(userId))
     })
 }
 export const updateProfile = (data: ProfileDataType) => (dispatch: DispatchType) => {
