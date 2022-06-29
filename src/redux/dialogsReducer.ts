@@ -89,3 +89,9 @@ export const restoreFromSpam = (dialogId: string, messageId: string) => async (d
         console.log(res.data.message)
     }
 }
+export const setViewed = (dialogId: string, messageId: string, senderId: string) => async (dispatch: DispatchType) => {
+    const res = await dialogsAPI.setViewed(dialogId, messageId, senderId)
+    if (res.data.statusCode === 2) {
+        console.log(res.data.message)
+    }
+}

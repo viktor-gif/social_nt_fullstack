@@ -21,5 +21,8 @@ export const dialogsAPI = {
     },
     restoreFromSpam(dialogId: string, messageId: string) {
         return axiosCreate.put(`/dialogs/${dialogId}/messages/${messageId}/restore_spam`)
+    },
+    setViewed(dialogId: string, messageId: string, senderId: string) {
+        return axiosCreate.put(`/dialogs/${dialogId}/messages/${messageId}/setViewed?senderId=${senderId}`)
     }
 }

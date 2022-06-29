@@ -5,6 +5,7 @@ import avatar from "../../../../img/ava_male.jpeg"
 import React, { useEffect, useState } from "react"
 import deleteIcon from "../../../../img/icons/delete-icon.png"
 import spamIcon from "../../../../img/icons/spam-icon.png"
+import viewedIcon from "../../../../img/icons/check-mark-5291043.png"
 import { AuthDataType } from "../../../../ts/auth"
 import { ProfileDataType } from "../../../../ts/profile"
 import { getProfile } from "../../../../redux/profileReducer"
@@ -19,12 +20,14 @@ type PropsPage = {
     userProfileData: ProfileDataType | null
     messagesMustDelete: string[]
     isSpam: boolean
+    isViewed: boolean
 
     getProfile: (userId: string) => void
     deleteMessage: (dialogId: string, messageId: string) => void
     setMessageMustDelete: (messagesIds: string[]) => void
     setAsSpam: (dialogId: string, messageId: string) => void
     restoreFromSpam: (dialogId: string, messageId: string) => void
+    setViewed: (dialogId: string, messageId: string, senderId: string) => void
 }
 
 export const Message = React.memo((props: PropsPage) => {
@@ -50,7 +53,13 @@ export const Message = React.memo((props: PropsPage) => {
             }
             
         }
-    }, [props.isSpam])
+    }, [])
+    useEffect(() => {
+        if (props.senderId !== props.authProfileData?._id && !props.isViewed) {
+            // @ts-ignore
+            props.setViewed(props.currentDialogInfo?.dialogId, props.messageId, props.senderId)
+        }
+    }, [])
     console.log(props.messagesMustDelete)
 
     const toggleMessageOptions = () => {
@@ -109,10 +118,11 @@ export const Message = React.memo((props: PropsPage) => {
                             </div>
                             <div onClick={toggleSpam} className={s.message__options_item}>
                                 <img src={spamIcon} alt="spam-icon" />
-                                <span>Додати до спаму</span>
+                                <span>{props.isSpam ? "Вилучити зі спаму" : "Вважати спамом"}</span>
                             </div>
                         </div>
                     }
+                    {props.isViewed && <img className={s.message__viewed + " " + (senderIsAuthUser ? s.message__viewedAuth : "")} src={viewedIcon} alt="Viewed" />}
                     {props.isSpam && <div className={s.spam}>SPAM</div>}
                 </div>
             </div>

@@ -172,3 +172,12 @@
   justify-content: center;
   align-items: center;
 }
+.message__viewed {
+  position: absolute;
+  bottom: 0;
+  right: -20px;
+  width: 20px;
+}
+.message__viewedAuth {
+  right: 100%;
+}
