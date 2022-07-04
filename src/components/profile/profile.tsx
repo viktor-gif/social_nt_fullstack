@@ -1,33 +1,41 @@
 import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
-import { getProfile, getStatus, updateStatus, updatePhoto, updateProfile } from "../../redux/profileReducer"
+import {
+    getProfile, getStatus, updateStatus, updatePhoto, updateProfile,
+    getPosts, addPost, deletePost
+} from "../../redux/profileReducer"
 import { createDialog } from "../../redux/dialogsReducer"
 import { ProfileDataType } from "../../ts/profile"
 import avatar from "../../img/ava_male.jpeg"
 import s from "./profile.module.css"
 import { useParams, Navigate } from "react-router-dom"
 import { ProfileInfo } from "./profileInfo.tsx/profileInfo"
-import { ConnectionPoolClearedEvent } from "mongodb"
+import { PostType } from "../../ts/posts"
+import { Posts } from "./posts/posts"
 
 type PropsType = {
     ownerId: string | undefined
     profileData: ProfileDataType | null
     status: string | null
     isAuth: boolean
+    posts: PostType[]
+    authProfileData: ProfileDataType | null
 
+    getPosts: (userId: string) => void
     getProfile: (userId: string) => void
     getStatus: (userId: string) => void
     updateStatus: (status: string) => void
     updatePhoto: (photoFile: any, userId: string) => void
     updateProfile: (data: ProfileDataType) => void
     createDialog: (userId: string) => void
+    addPost: (userId: string, postText: string) => void
+    deletePost: (postId: string, userId: string) => void
 }
 
 const Profile = (props: PropsType) => {
     const [isEditStatus, setEditStatus] = useState(false)
     const [profileStatus, setProfileStatus] = useState(props.status)
-    console.log(props.status);
     
     const profile = props.profileData
 
@@ -93,7 +101,10 @@ const Profile = (props: PropsType) => {
     
         <ProfileInfo profile={profile} ownerId={props.ownerId}
             updateProfile={props.updateProfile} getProfile={props.getProfile}
-        createDialog={props.createDialog} />
+            createDialog={props.createDialog} />
+        <Posts posts={props.posts} getPosts={props.getPosts} profileData={props.profileData}
+            addPost={props.addPost} authProfileData={props.authProfileData}
+            deletePost={props.deletePost} />
     </div>
 }
 
@@ -101,7 +112,9 @@ const mapStateToProps = (state: AppStateType) => ({
     ownerId: state.auth.authData?.id,
     profileData: state.profilePage.profileData,
     status: state.profilePage.status,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    posts: state.profilePage.posts,
+    authProfileData: state.auth.authProfileData
 })
 
 export default connect(mapStateToProps, {
@@ -110,5 +123,8 @@ export default connect(mapStateToProps, {
     updateStatus,
     updatePhoto,
     updateProfile,
-    createDialog
+    createDialog,
+    getPosts,
+    addPost,
+    deletePost
 })(Profile)

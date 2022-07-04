@@ -1,0 +1,9 @@
+.post {
+  margin-bottom: 20px;
+}
+.post__avatar img {
+  width: 20px;
+}
+.post__heartIcon img {
+  width: 20px;
+}
