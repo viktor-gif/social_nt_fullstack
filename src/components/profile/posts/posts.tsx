@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from "formik"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { PostType } from "../../../ts/posts"
 import { ProfileDataType } from "../../../ts/profile"
 import { Post } from "./post/post"
@@ -15,7 +15,7 @@ type PropsType = {
     deletePost: (postId: string, userId: string) => void
 }
 
-export const Posts = (props: PropsType) => {
+export const Posts = React.memo((props: PropsType) => {
     const [currentPostText, setCurrentPostText] = useState('')
 
     useEffect(() => {
@@ -49,4 +49,4 @@ export const Posts = (props: PropsType) => {
        )}
      </Formik>
     </div>
-}
+})

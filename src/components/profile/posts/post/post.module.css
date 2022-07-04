@@ -1,9 +1,34 @@
 .post {
   margin-bottom: 20px;
+  position: relative;
 }
 .post__avatar img {
   width: 20px;
 }
 .post__heartIcon img {
   width: 20px;
+}
+
+/* postMenu-file */
+.postMenu {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  background-color: #dbe7f1;
+  padding: 10px;
+}
+.postMenu__item {
+  cursor: pointer;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: transparent;
+  transition: background-color 0.3s linear;
+}
+.postMenu__item:hover {
+  background-color: #fff;
+}
+.postMenu__item img {
+  width: 15px;
+  margin-right: 10px;
 }

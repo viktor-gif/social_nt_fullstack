@@ -9,6 +9,7 @@ import viewedIcon from "../../../../img/icons/check-mark-5291043.png"
 import { AuthDataType } from "../../../../ts/auth"
 import { ProfileDataType } from "../../../../ts/profile"
 import { getProfile } from "../../../../redux/profileReducer"
+import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
 
 type PropsPage = {
     messageId: string
@@ -106,9 +107,8 @@ export const Message = React.memo((props: PropsPage) => {
                 <div className={s.message__userName + " " + (senderIsAuthUser ? s.message__authName : "")}>{userName}</div>
                 <div className={s.message__text + " " + (senderIsAuthUser ? s.message__textAuth : "")}>
                     {props.message}
-                    <div className={s.message__menu + " " + (senderIsAuthUser ? s.message__menuAuth : "")}
-                        onClick={toggleMessageOptions} >
-                        <div className={s.message__menuDots}></div>
+                    <div className={(senderIsAuthUser ? s.message__authBurger : "")}>
+                        <BurgerMenu burgerClick={toggleMessageOptions} />
                     </div>
                     {isActiveMessageOptions &&
                         <div className={s.message__options + " " + (senderIsAuthUser ? s.message__optionsAuth : "")}>
