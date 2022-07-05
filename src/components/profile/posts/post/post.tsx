@@ -5,6 +5,7 @@ import { ProfileDataType } from "../../../../ts/profile"
 import s from "./post.module.css"
 import avatar from "../../../../img/ava_male.jpeg"
 import heart from "../../../../img/icons/heart.png"
+import greyHeart from "../../../../img/icons/heart_grey.png"
 import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
 import { PostMenu } from "./postMenu"
 
@@ -18,9 +19,11 @@ type PropsType = {
     created: string
     likesCount: number
     authProfileData: ProfileDataType | null
+    liked: boolean
 
     deletePost: (postId: string, userId: string) => void
     updatePost: (postId: string, postText: string, userId: string) => void
+    toggleLike: (postId: string, userId: string) => void
 }
 
 export const Post = (props: PropsType) => {
@@ -73,7 +76,9 @@ export const Post = (props: PropsType) => {
         <div>{props.postText}</div>
         <div>
             <span>{props.created}</span>
-            <span className={s.post__heartIcon}><img src={heart} alt="heart" /> {props.likesCount}</span>
+            <span onClick={() => props.toggleLike(props.postId, props.userId)} className={s.post__heartIcon}>
+                <img src={props.liked ? greyHeart : heart} alt="heart" /> {props.likesCount}
+            </span>
         </div>
         <div>
             <span>28 Коментарів</span><span>Упорядочити</span>

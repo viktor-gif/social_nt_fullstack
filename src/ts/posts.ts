@@ -3,6 +3,7 @@ export type PostType = {
     authorId: string
     profileId: string
     postText: string
+    likedUsers: string[]
     likesCount: number
     comments: CommentType[]
     creaded: string

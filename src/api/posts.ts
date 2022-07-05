@@ -12,5 +12,8 @@ export const postsAPI = {
     },
     updatePost: (postId: string, postText: string) => {
         return axiosCreate.put(`/posts/${postId}`, {postText})
+    },
+    toggleLike: (postId: string) => {
+        return axiosCreate.put(`/posts/${postId}/like`)
     }
 }

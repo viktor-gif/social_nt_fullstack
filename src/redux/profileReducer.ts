@@ -106,3 +106,10 @@ export const updatePost = (postId: string, postText: string, userId: string) => 
         dispatch(getPosts(userId))
     }
 }
+export const toggleLike = (postId: string, userId: string) => async (dispatch: DispatchType) => {
+    const res = await postsAPI.toggleLike(postId)
+    if (res.data.resultCode === 2) {
+        // @ts-ignore
+        dispatch(getPosts(userId))
+    }
+}
