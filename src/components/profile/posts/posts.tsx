@@ -13,6 +13,7 @@ type PropsType = {
     getPosts: (userId: string) => void
     addPost: (userId: string, postText: string) => void
     deletePost: (postId: string, userId: string) => void
+    updatePost: (postId: string, postText: string, userId: string) => void
 }
 
 export const Posts = React.memo((props: PropsType) => {
@@ -25,7 +26,7 @@ export const Posts = React.memo((props: PropsType) => {
         return <Post key={p._id} postId={p._id} postText={p.postText} authorId={p.authorId}
             comments={p.comments} created={p.creaded} userId={p.profileId}
           authProfileData={props.authProfileData} likesCount={p.likesCount}
-          deletePost={props.deletePost} />
+          deletePost={props.deletePost} updatePost={props.updatePost} />
     })
     return <div className={s.posts}>
         {postsElements}

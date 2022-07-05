@@ -83,12 +83,10 @@ export const updateProfile = (data: ProfileDataType) => (dispatch: DispatchType)
 export const getPosts = (userId: string) => (dispatch: DispatchType) => {
     postsAPI.getPosts(userId).then(res => {
         dispatch(profileActions.setPosts(res.data))
-        console.log(res.data)
     })
 }
 export const addPost = (userId: string, postText: string) => async (dispatch: DispatchType) => {
     const res = await postsAPI.createPost(userId, postText)
-    console.log(res.data)
     if (res.data.resultCode === 2) {
         // @ts-ignore
         dispatch(getPosts(userId))
@@ -96,8 +94,13 @@ export const addPost = (userId: string, postText: string) => async (dispatch: Di
 }
 export const deletePost = (postId: string, userId: string) => async (dispatch: DispatchType) => {
     const res = await postsAPI.deletePost(postId)
-    console.log(res.data)
-    
+    if (res.data.resultCode === 2) {
+        // @ts-ignore
+        dispatch(getPosts(userId))
+    }
+}
+export const updatePost = (postId: string, postText: string, userId: string) => async (dispatch: DispatchType) => {
+    const res = await postsAPI.updatePost(postId, postText)
     if (res.data.resultCode === 2) {
         // @ts-ignore
         dispatch(getPosts(userId))

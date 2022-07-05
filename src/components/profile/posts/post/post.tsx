@@ -20,12 +20,15 @@ type PropsType = {
     authProfileData: ProfileDataType | null
 
     deletePost: (postId: string, userId: string) => void
+    updatePost: (postId: string, postText: string, userId: string) => void
 }
 
 export const Post = (props: PropsType) => {
 
     const [userProfileData, setUserProfileData] = useState<ProfileDataType | null>(null)
     const [isMenuActive, setMenuActive] = useState(false)
+    const [isUpdate, setUpdate] = useState(false)
+    const [currentPostText, setCurrentPostText] = useState(props.postText)
 
     const authIsAuthorOfPost = props.authorId === props.authProfileData?._id
     const isAuthPosts = props.userId === props.authProfileData?._id
@@ -41,10 +44,25 @@ export const Post = (props: PropsType) => {
     const deletePost = () => {
         props.deletePost(props.postId, props.userId)
     }
+    const updatePost = () => {
+        props.updatePost(props.postId, currentPostText, props.userId)
+        setUpdate(false)
+        setMenuActive(false)
+    }
+
+    if (isUpdate) {
+        return <div className={s.post__update}>
+            <textarea id="updatePost" value={currentPostText} onChange={(e: any) => setCurrentPostText(e.target.value)}></textarea>
+            <div>
+                <button onClick={updatePost}>Застосувати зміни</button>
+            </div>
+        </div>
+    }
 
     return <div className={s.post}>
         <BurgerMenu burgerClick={() => { isMenuActive ? setMenuActive(false) : setMenuActive(true) }} />
-        {isMenuActive && <PostMenu canDeletePost={canDeletePost} deletePost={deletePost} />}
+        {isMenuActive && <PostMenu canDeletePost={canDeletePost} deletePost={deletePost}
+            canUpdatePost={authIsAuthorOfPost} setUpdate={setUpdate} />}
         <div className={s.post__avatar}>
             {/* @ts-ignore */}
             <img src={userProfileData?.photos.small || props.authProfileData?.photos.small || avatar} alt="userPhoto" />

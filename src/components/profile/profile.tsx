@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
 import {
     getProfile, getStatus, updateStatus, updatePhoto, updateProfile,
-    getPosts, addPost, deletePost
+    getPosts, addPost, deletePost, updatePost
 } from "../../redux/profileReducer"
 import { createDialog } from "../../redux/dialogsReducer"
 import { ProfileDataType } from "../../ts/profile"
@@ -31,6 +31,7 @@ type PropsType = {
     createDialog: (userId: string) => void
     addPost: (userId: string, postText: string) => void
     deletePost: (postId: string, userId: string) => void
+    updatePost: (postId: string, postText: string, userId: string) => void
 }
 
 const Profile = (props: PropsType) => {
@@ -104,7 +105,7 @@ const Profile = (props: PropsType) => {
             createDialog={props.createDialog} />
         <Posts posts={props.posts} getPosts={props.getPosts} profileData={props.profileData}
             addPost={props.addPost} authProfileData={props.authProfileData}
-            deletePost={props.deletePost} />
+            deletePost={props.deletePost} updatePost={props.updatePost} />
     </div>
 }
 
@@ -126,5 +127,6 @@ export default connect(mapStateToProps, {
     createDialog,
     getPosts,
     addPost,
-    deletePost
+    deletePost,
+    updatePost
 })(Profile)

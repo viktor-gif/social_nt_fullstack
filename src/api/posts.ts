@@ -9,5 +9,8 @@ export const postsAPI = {
     },
     deletePost: (postId: string) => {
         return axiosCreate.delete(`/posts/${postId}`)
+    },
+    updatePost: (postId: string, postText: string) => {
+        return axiosCreate.put(`/posts/${postId}`, {postText})
     }
 }

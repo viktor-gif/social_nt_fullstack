@@ -32,3 +32,14 @@
   width: 15px;
   margin-right: 10px;
 }
+
+.post__update {
+  margin-bottom: 20px;
+}
+.post__update textarea {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: fit-content;
+  height: fit-content;
+}
