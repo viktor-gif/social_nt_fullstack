@@ -1,0 +1,77 @@
+.postMenu {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  z-index: 10;
+  background-color: #dbe7f1;
+  padding: 10px;
+}
+.postMenu__item {
+  cursor: pointer;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  padding: 5px;
+  background-color: transparent;
+  transition: background-color 0.3s linear;
+}
+.postMenu__item:hover {
+  background-color: #fff;
+}
+.postMenu__item img {
+  width: 15px;
+  margin-right: 10px;
+}
+
+.post__update {
+  margin-bottom: 20px;
+}
+.post__update textarea {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: fit-content;
+  height: fit-content;
+}
+
+.commentItem {
+  margin-bottom: 20px;
+  font-size: 0.8em;
+  color: #666;
+  position: relative;
+  width: fit-content;
+  max-width: 250px;
+}
+.commentItem__menuBlock {
+  position: absolute;
+  width: fit-content;
+  top: 50%;
+  right: -35px;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+.commentItem:hover .commentItem__menuBlock {
+  opacity: 1;
+}
+.commentItemPic {
+  width: 15px;
+  cursor: pointer;
+}
+
+.changeCommentForm input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.changeCommentForm_submit button {
+  background-color: rgb(128, 204, 128);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #666;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+}
+.changeCommentForm_submit button:hover {
+  background-color: rgb(98, 151, 98);
+  color: #333;
+}

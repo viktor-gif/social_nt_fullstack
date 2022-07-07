@@ -15,6 +15,10 @@ type PropsType = {
     deletePost: (postId: string, userId: string) => void
     updatePost: (postId: string, postText: string, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
+    addComment: (postId: string, commentText: string, userId: string) => void
+    deleteComment: (postId: string, commentId: string, userId: string) => void
+    updateComment: (postId: string, commentId: string, commentText: string, userId: string) => void
+    toggleCommentLike: (postId: string, commentId: string, userId: string) => void
 }
 
 export const Posts = React.memo((props: PropsType) => {
@@ -29,7 +33,9 @@ export const Posts = React.memo((props: PropsType) => {
             comments={p.comments} created={p.creaded} userId={p.profileId}
           authProfileData={props.authProfileData} likesCount={p.likesCount}
           deletePost={props.deletePost} updatePost={props.updatePost}
-          toggleLike={props.toggleLike} liked={p.likedUsers.includes(props.authProfileData?._id || '')} />
+          toggleLike={props.toggleLike} liked={p.likedUsers.includes(props.authProfileData?._id || '')}
+          addComment={props.addComment} deleteComment={props.deleteComment}
+          updateComment={props.updateComment} toggleCommentLike={props.toggleCommentLike} />
     })
     return <div className={s.posts}>
         {postsElements}

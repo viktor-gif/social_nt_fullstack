@@ -5,7 +5,12 @@
 .post__avatar img {
   width: 20px;
 }
-.post__heartIcon img {
+
+.post__info {
+  margin-right: 20px;
+  cursor: pointer;
+}
+.post__info img {
   width: 20px;
 }
 
@@ -14,6 +19,7 @@
   position: absolute;
   top: 20px;
   right: 0;
+  z-index: 10;
   background-color: #dbe7f1;
   padding: 10px;
 }
@@ -42,4 +48,13 @@
   outline: none;
   width: fit-content;
   height: fit-content;
+}
+
+.commentsInput {
+  background-color: #c8c8c8;
+  color: rgb(32, 32, 32);
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }

@@ -3,7 +3,8 @@ import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
 import {
     getProfile, getStatus, updateStatus, updatePhoto, updateProfile,
-    getPosts, addPost, deletePost, updatePost, toggleLike
+    getPosts, addPost, deletePost, updatePost, toggleLike,
+    addComment, deleteComment, updateComment, toggleCommentLike
 } from "../../redux/profileReducer"
 import { createDialog } from "../../redux/dialogsReducer"
 import { ProfileDataType } from "../../ts/profile"
@@ -33,6 +34,10 @@ type PropsType = {
     deletePost: (postId: string, userId: string) => void
     updatePost: (postId: string, postText: string, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
+    addComment: (postId: string, commentText: string, userId: string) => void
+    deleteComment: (postId: string, commentId: string, userId: string) => void
+    updateComment: (postId: string, commentId: string, commentText: string, userId: string) => void
+    toggleCommentLike: (postId: string, commentId: string, userId: string) => void
 }
 
 const Profile = (props: PropsType) => {
@@ -107,7 +112,9 @@ const Profile = (props: PropsType) => {
         <Posts posts={props.posts} getPosts={props.getPosts} profileData={props.profileData}
             addPost={props.addPost} authProfileData={props.authProfileData}
             deletePost={props.deletePost} updatePost={props.updatePost}
-            toggleLike={props.toggleLike} />
+            toggleLike={props.toggleLike} addComment={props.addComment}
+            deleteComment={props.deleteComment} updateComment={props.updateComment}
+            toggleCommentLike={props.toggleCommentLike} />
     </div>
 }
 
@@ -131,5 +138,9 @@ export default connect(mapStateToProps, {
     addPost,
     deletePost,
     updatePost,
-    toggleLike
+    toggleLike,
+    addComment,
+    deleteComment,
+    updateComment,
+    toggleCommentLike
 })(Profile)

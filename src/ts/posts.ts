@@ -12,6 +12,7 @@ export type CommentType = {
     _id: string
     authorId: string
     commentText: string
+    likedUsers: string[]
     likesCount: number
     created: string
 }

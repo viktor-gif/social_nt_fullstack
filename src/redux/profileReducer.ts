@@ -113,3 +113,31 @@ export const toggleLike = (postId: string, userId: string) => async (dispatch: D
         dispatch(getPosts(userId))
     }
 }
+export const addComment = (postId: string, commentText: string, userId: string) => async (dispatch: DispatchType) => {
+    const res = await postsAPI.addComment(postId, commentText)
+    if (res.data.resultCode === 2) {
+        // @ts-ignore
+        dispatch(getPosts(userId))
+    }
+}
+export const updateComment = (postId: string, commentId: string, commentText: string, userId: string) => async (dispatch: DispatchType) => {
+    const res = await postsAPI.updateComment(postId, commentId, commentText)
+    if (res.data.resultCode === 2) {
+        // @ts-ignore
+        dispatch(getPosts(userId))
+    }
+}
+export const deleteComment = (postId: string, commentId: string, userId: string) => async (dispatch: DispatchType) => {
+    const res = await postsAPI.deleteComment(postId, commentId)
+    if (res.data.resultCode === 2) {
+        // @ts-ignore
+        dispatch(getPosts(userId))
+    }
+}
+export const toggleCommentLike = (postId: string, commentId: string, userId: string) => async (dispatch: DispatchType) => {
+    const res = await postsAPI.toggleCommentLike(postId, commentId)
+    if (res.data.resultCode === 2) {
+        // @ts-ignore
+        dispatch(getPosts(userId))
+    }
+}

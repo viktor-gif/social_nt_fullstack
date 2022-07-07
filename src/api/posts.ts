@@ -15,5 +15,17 @@ export const postsAPI = {
     },
     toggleLike: (postId: string) => {
         return axiosCreate.put(`/posts/${postId}/like`)
+    },
+    addComment: (postId: string, commentText: string) => {
+        return axiosCreate.post(`/posts/${postId}/comments`, {commentText})
+    },
+    updateComment: (postId: string, commentId: string, commentText: string) => {
+        return axiosCreate.put(`/posts/${postId}/comments/${commentId}/update`, {commentText})
+    },
+    deleteComment: (postId: string, commentId: string) => {
+        return axiosCreate.delete(`/posts/${postId}/comments/${commentId}`)
+    },
+    toggleCommentLike: (postId: string, commentId: string) => {
+        return axiosCreate.put(`/posts/${postId}/comments/${commentId}/like`)
     }
 }
