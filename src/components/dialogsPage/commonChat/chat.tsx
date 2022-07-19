@@ -10,6 +10,7 @@ type PropsType = {
 // let ws = new WebSocket('ws://localhost:4000')
 
 const Chat = React.memo((props: PropsType) => {
+    
 
     const [wsStatus, setWsStatus] = useState('DISCONNECTED')
     const [messages, setMessages] = useState([])
