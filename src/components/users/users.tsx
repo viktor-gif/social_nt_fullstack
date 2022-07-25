@@ -41,7 +41,7 @@ export const Users = React.memo((props: PropsType) => {
             </div>
             <div className={s.users__paginator}>
                 <Paginator pageSize={pageSize} totalUsersCount={props.totalUsersCount}
-                    setCurrentPage={setCurrentPage} />
+                    setCurrentPage={setCurrentPage} currentPage={currentPage} />
             </div>
         </div>
 

@@ -8,3 +8,39 @@
 .paginator__pageButton:last-child {
   margin-right: 0;
 }
+.paginator__currentpage {
+  background-color: gold;
+}
+.paginator__findPage {
+  cursor: pointer;
+  padding: 1px 3px 5px 3px;
+  margin: 0 5px;
+  font-size: 1.3em;
+  transition: all .3s linear;
+  position: relative;
+}
+.paginator__findPage:hover {
+  background-color: #50f0f0;
+  color: gold;
+}
+.paginator__allPages {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #ececec;
+  display: none;
+  flex-direction: column;
+  max-height: 100px;
+  overflow: scroll;
+}
+.paginator__allPagesActive {
+  display: flex
+}
+.paginator__allPages span {
+  text-align: center;
+  transition: all .3s linear;
+}
+.paginator__allPages span:hover {
+  color: #000;
+  background-color: #fff;
+}
