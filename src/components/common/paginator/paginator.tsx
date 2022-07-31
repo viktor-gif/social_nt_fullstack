@@ -8,9 +8,11 @@ type PropsType = {
     setCurrentPage: (currentpage: number) => void
 }
 
-export const Paginator = (props: PropsType) => {
+export const Paginator = React.memo((props: PropsType) => {
     const [currentPorsion, setCurrentPorsion] = useState(1)
     const [isAllPagesActive, setAllPagesActive] = useState(false)
+    const [currentPosition, setCurrentPosition] = useState(1)
+    const [isIndicator, setIndicator] = useState(true)
 
     const porsionsSize = 3
 
@@ -29,50 +31,108 @@ export const Paginator = (props: PropsType) => {
     }
 
     const isNextButton = porsionsNumber && currentPorsion < porsionsNumber
-    
-    return <div>
+    return <div className={s.paginator}>
         { 
-            currentPorsion > 1 && <span onClick={() => {
+            currentPorsion > 1 && <div
+                className={s.arrow + " " + s.arrow_left}
+                onClick={() => {
                 setCurrentPorsion(currentPorsion - 1)
-            }}>prev</span>
+                setIndicator(false)
+            }}></div>
         }
-        <span>
-            {pages
-                .filter(page => (page >= leftPageNumber && page <= rightPageNumber))
-                .map(p => {
-                // @ts-ignor
-                return <span className={s.paginator__pageButton + " " + (props.currentPage === p ? s.paginator__currentpage : "")}
-                    key={p}
-                    onClick={() => {
-                        props.setCurrentPage(p)
+
+        <div className={s.paginator__pages}>
+            <ul>
+                {pages
+                    .filter(page => (page >= leftPageNumber && page <= rightPageNumber))
+                    .map(p => {
+                    // @ts-ignor
+                        
+                            console.log(currentPosition)
+                        // const currentPageInPorsion = p / 3 - currentPorsion + 1
+                        const currentPageInPorsion = p / 3 - (currentPorsion - 1)
+                        return <li className={s.paginator__pageButton + " " + (props.currentPage === p ? s.paginator__currentpage : "")
                     }
-                    }>
-                    {p}
-                </span>
-                })
-            }
-        </span>
-        <span>
-            <span className={s.paginator__findPage}>
-                <span onClick={() => isAllPagesActive ? setAllPagesActive(false) : setAllPagesActive(true)}>...</span>
-                <div className={s.paginator__allPages + " " + (isAllPagesActive ? s.paginator__allPagesActive : "")}>
-                    {
-                        pages.map(p => {
-                            return <span onClick={() => props.setCurrentPage(p)}>{p}</span>
-                        })
-                    }
+                        key={p}
+                        onClick={() => {
+                            props.setCurrentPage(p)
+                            if (!isIndicator) {
+                                setIndicator(true)
+                            }
+                            if (currentPageInPorsion < 0.5) {
+                                setCurrentPosition(1)
+                            } else if (currentPageInPorsion < 0.9) {
+                                setCurrentPosition(2)
+                            } else {
+                                setCurrentPosition(3)
+                            }
+                        }
+                        }
+                            // style={{--clr: '#f44336'}}
+                            // style="--clr: #f44336"
+                        >
+                            <span className={s.pageNumber_wrap}>
+                                <span className={s.pageNumber}>{p}</span>
+                            </span>
+                    </li>
+                    })
+                }
+                <li className={s.paginator__pageButton}>
+                    <span onClick={() => isAllPagesActive ? setAllPagesActive(false) : setAllPagesActive(true)}
+                    className={s.pageNumber_wrap} >
+                        <span className={s.pageNumber}>...</span>
+                    </span>
+                    <div className={s.paginator__allPages + " " + (isAllPagesActive ? s.paginator__allPagesActive : "")}>
+                        {
+                            pages.map(p => {
+                                const currentPageInPorsion = p / 3 - (currentPorsion - 1)
+                                return <span
+                                    key={p} onClick={() => {
+                                        setCurrentPorsion(Math.ceil(p / porsionsSize))
+                                        props.setCurrentPage(p)
+
+                                        if (currentPageInPorsion < 0.5) {
+                                            setCurrentPosition(1)
+                                        } else if (currentPageInPorsion < 0.9) {
+                                            setCurrentPosition(2)
+                                        } else {
+                                            setCurrentPosition(3)
+                                        }
+
+                                        
+                                    }
+                                    }
+                                    className={s.allPages_pageNumber}>{p}</span>
+                            })
+                        }
+                    </div>
+                </li>
+                <li className={s.paginator__pageButton + " " + (props.currentPage === pages.length ? s.paginator__currentpage : "")}
+                        onClick={() => {
+                            props.setCurrentPage(pages.length)
+                            setCurrentPosition(4)
+                            if (!isIndicator) {
+                                setIndicator(true)
+                            }
+                        }
+                        }>
+                    <span className={s.pageNumber_wrap}>
+                        <span className={s.pageNumber}>{pages[pages.length - 1]}</span>
+                    </span>
+                </li>
+                <div className={s.indicator + " " + s['indicator' + currentPosition] + " " + (!isIndicator && s.indicator_remove)}>
+
                 </div>
-            </span>
-            <span className={s.paginator__pageButton + " " + (props.currentPage === pages.length ? s.paginator__currentpage : "")}
-                    onClick={() => {
-                        props.setCurrentPage(pages.length)
-                    }
-                    }>{pages[pages.length - 1]}</span>
-        </span>
+            </ul>
+        </div>
+
         { 
-            isNextButton && <span onClick={() => {
+            isNextButton && <div
+                className={s.arrow}
+                onClick={() => {
                 setCurrentPorsion(currentPorsion + 1)
-            }}>next</span>
+                setIndicator(false)
+            }}></div>
         }
     </div>
-}
+})
