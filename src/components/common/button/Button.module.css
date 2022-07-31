@@ -3,10 +3,7 @@
     --bg-color: #8080ff;
     --light-color: #ffff00;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
+    width: fit-content;
 }
 .button {
     border: none;
@@ -20,7 +17,7 @@
     transition: .5s
 }
 .button:hover {
-    letter-spacing: 0.25em;
+    /* letter-spacing: 0.25em; */
     background: var(--light-color);
     color: var(--light-color);
     box-shadow: 0 0 1.4583125em var(--light-color);

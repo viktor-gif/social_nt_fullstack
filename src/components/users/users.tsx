@@ -34,16 +34,15 @@ export const Users = React.memo((props: PropsType) => {
   const usersItems = props.users?.map((u: any) => {
       return <User id={u.id} key={u.id} fullName={u.fullName}
         location={u.location} status={u.status} photos={u.photos}
-        getUserProfile={props.getUserProfile} />
+        getUserProfile={props.getUserProfile} followers={u.followers} />
   })
-  console.log(props.users);
   
     return <div className={s.users}>
         <div className={s.users__nav}>
             
         <div className={s.users__buttons}>
           <Button onClick={() => console.log('click')}
-            value="Всі користувачі" />
+            value="Усі користувачі" />
           <Button onClick={() => console.log('click')}
             value="Тільки друзі" />
         </div>

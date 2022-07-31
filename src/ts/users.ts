@@ -13,5 +13,6 @@ export type UserType = {
     fullName: string,
     status: string | null,
     location: LocationType,
-    photos: PhotosType
+    photos: PhotosType,
+    followers: string[]
 }
