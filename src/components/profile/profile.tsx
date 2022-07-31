@@ -88,7 +88,7 @@ const Profile = (props: PropsType) => {
             props.updatePhoto(e.target.files[0], userId)
         } 
     }
-
+console.log(props.profileData)
     return <div className={s.profile}>
         <div className={s.userStatus}>
             {isEditStatus ?

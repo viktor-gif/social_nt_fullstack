@@ -10,7 +10,11 @@ type PropsType = {
 }
 
 export const Dialogs = (props: PropsType) => {
+
+    
+
     const dialogsItems = props.dialogs?.map(d => {
+        
         return <div className={s.dialogs__item} key={d.dialogId}>
             <div className={s.dialogs__avatar} onClick={() => {
                 props.getDialogMessages(d.dialogId, d.userName, d.userImgUrl)

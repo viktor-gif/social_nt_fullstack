@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { ChangeEvent, useEffect, useState } from "react"
 import { User } from "./user/user"
 import s from "./users.module.css"
 import { Formik, Form, Field } from 'formik'
@@ -9,6 +9,8 @@ import store, { AppStateType } from "../../redux/redux-store"
 import { connect } from "react-redux"
 import { ProfileDataType } from "../../ts/profile"
 import { profileActions } from "../../redux/profileReducer"
+import { SearchInput } from "../common/searchInput/SearchInput"
+import { Button } from "../common/button/Button"
 
 type PropsType = {
   users: UserType[] | null
@@ -33,16 +35,25 @@ export const Users = React.memo((props: PropsType) => {
       return <User id={u.id} key={u.id} fullName={u.fullName}
         location={u.location} status={u.status} photos={u.photos}
         getUserProfile={props.getUserProfile} />
-    })
+  })
+  console.log(props.users);
+  
     return <div className={s.users}>
         <div className={s.users__nav}>
+            
+        <div className={s.users__buttons}>
+          <Button onClick={() => console.log('click')}
+            value="Всі користувачі" />
+          <Button onClick={() => console.log('click')}
+            value="Тільки друзі" />
+        </div>
             <div className={s.users__form}>
                 <UsersForm getUsers={props.getUsers} pageSize={pageSize} />
             </div>
-            <div className={s.users__paginator}>
+      </div>
+      <div className={s.users__paginator}>
                 <Paginator pageSize={pageSize} totalUsersCount={props.totalUsersCount}
                     setCurrentPage={setCurrentPage} currentPage={currentPage} />
-            </div>
         </div>
 
         {usersItems}
@@ -54,21 +65,44 @@ type FormPropsType = {
     pageSize: number
 }
 const UsersForm = (props: FormPropsType) => {
-    return <Formik
-       initialValues={{ term: '' }}
-       onSubmit={(val) => {
-         props.getUsers(props.pageSize, 1, val.term)
-       }}
-     >
-       {({ isSubmitting }) => (
-         <Form>
-           <Field type="text" name="term" />
-           <button type="submit">
-             Submit
-           </button>
-         </Form>
-       )}
-     </Formik>
+  const [inputValue, setInputValue] = useState('')
+  const getTermUsers = () => {
+    props.getUsers(props.pageSize, 1, inputValue)
+    setInputValue('')
+  }
+  return (
+    // <Formik
+    //    initialValues={{ term: '' }}
+    //    onSubmit={(val) => {
+    //      props.getUsers(props.pageSize, 1, val.term)
+    //    }}
+    //  >
+    //    {({ isSubmitting }) => (
+    //      <Form>
+    //       <Field type="text" name="term"
+    //         placeholder="Введіть ім'я користувача" />
+    //        <button type="submit">
+    //          Submit
+    //        </button>
+    //      </Form>
+    //    )}
+    // </Formik>
+    <div className={s.usersForm}>
+      <SearchInput placeholder="Введіть ім'я користувача"
+        value={inputValue}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
+      onKeyPress={(e: any) => {
+        if (e.charCode === 13) {
+          getTermUsers()
+        }
+        }}
+       />
+      
+      <Button value="Знайти"
+        onClick={getTermUsers}
+      />
+    </div>
+    )
 }
 const mapStateToProps = (state: AppStateType) => ({
   users: state.usersPage.users,

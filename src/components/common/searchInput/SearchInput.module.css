@@ -1,0 +1,75 @@
+.searchUsers {
+    position: relative;
+    width: 65px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+}
+.searchUsers::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7px;
+    height: 100%;
+    background: linear-gradient(#fff, #fff, #e3e3e3);
+    z-index: 1;
+    filter: blur(1px);
+}
+.searchUsers::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: 5px;
+    height: 100%;
+    background: #9d9d9d;
+    z-index: 1;
+    filter: blur(1px);
+}
+.searchUsers:hover {
+    width: 300px;
+}
+.searchUsers:hover input::placeholder,
+.searchUsers:hover input {
+    color: #555;
+}
+
+.searchUsers input {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 10px 25px;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 1.1em;
+    color: transparent;
+    background: linear-gradient(#dbdae1, #a3aaba);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1),
+                10px 10px 15px rgba(0, 0, 0, 0.1),
+                /* 20px 20px 15px rgba(0, 0, 0, 0.1), */
+                inset 1px 1px 2px #fff;
+    
+}
+.searchUsers input::placeholder {
+    color: transparent;
+}
+
+.SearchIcon {
+    display: block;
+    position: absolute;
+    left: 20px;
+    color: #555;
+    font-size: 1.3em;
+    cursor: pointer;
+    width: 1em;
+}
+.searchUsers:hover .SearchIcon {
+    display: none;
+}
+/* .SearchIcon:hover {
+    display: none;
+} */

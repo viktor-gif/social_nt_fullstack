@@ -2,6 +2,7 @@
   display: flex;
   font-size: .7em;
   position: relative;
+  margin-top: 2em;
 }
 
 
@@ -139,7 +140,7 @@
   box-shadow: -0.9375em 1.125em #ffff7c;
 }
 .indicator1 {
-  ransform: translateX(calc(4.375em * 0));
+  transform: translateX(calc(4.375em * 0));
 }
 .indicator2 {
   transform: translateX(calc(4.375em * 1));

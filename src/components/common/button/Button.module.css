@@ -1,0 +1,74 @@
+.buttonWrap {
+    --border-color: #008cff;
+    --bg-color: #8080ff;
+    --light-color: #ffff00;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+.button {
+    border: none;
+    position: relative;
+    background: var(--border-color);
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1em;
+    letter-spacing: 0.1em;
+    padding: 0.4166666666666667em 1.25em;
+    transition: .5s
+}
+.button:hover {
+    letter-spacing: 0.25em;
+    background: var(--light-color);
+    color: var(--light-color);
+    box-shadow: 0 0 1.4583125em var(--light-color);
+}
+.button::before {
+    content: '';
+    position: absolute;
+    inset: 0.08333125em;
+    background: var(--bg-color);
+}
+.button span {
+    position: relative;
+    z-index: 1;
+}
+.button i {
+    position: absolute;
+    inset: 0;
+    display: block;
+
+}
+.button i::before {
+    content: '';
+    position: absolute;
+    top: -0.1458125em;
+    left: 80%;
+    width: 0.4166666666666667em;
+    height: 0.208333125em;
+    border: 0.08333125em solid var(--light-color);
+    background: var(--bg-color);
+    transition: 0.5s;
+}
+.button:hover i::before {
+    width: 0.8333333125em;
+    left: 20%;
+}
+.button i::after {
+    content: '';
+    position: absolute;
+    bottom: -0.1458125em;
+    right: 80%;
+    width: 0.4166666666666667em;
+    height: 0.208333125em;
+    border: 0.08333125em solid var(--light-color);
+    background: var(--bg-color);
+    transition: 0.5s;
+}
+
+.button:hover i::after {
+    width: 0.8333333125em;
+    right: 20%;
+}

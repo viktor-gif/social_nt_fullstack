@@ -2,8 +2,20 @@
   padding: 20px;
 }
 .users__form {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .users__paginator {
   padding-bottom: 10px;
+}
+
+.users__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.usersForm {
+  margin-bottom: 50px;
+  display: flex;
 }
