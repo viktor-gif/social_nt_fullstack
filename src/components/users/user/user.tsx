@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "../../common/button/Button";
 import { useEffect, useState } from "react";
 import { followAPI } from "../../../api/follow";
+import { AuthDataType } from "../../../ts/auth";
 
 type PropsType = {
     id: string
@@ -15,6 +16,7 @@ type PropsType = {
     photos: PhotosType
     location: LocationType
     followers: string[]
+    authData: AuthDataType | null
 
     getUserProfile: (data: ProfileDataType) => void
 }
@@ -24,7 +26,6 @@ export const User = (props: PropsType) => {
     const getFollow = () => {
         followAPI.getFollow(props.id).then(res => {
             if(res.data != userFollow_status) setUserFollow_status(res.data)
-            console.log(res.data)
         })
     }
     useEffect(() => {
@@ -52,15 +53,16 @@ export const User = (props: PropsType) => {
             console.log(props.id)
         }
     }
-
     return <div className={s.user}>
         <div className={s.user__avatar}>
             <NavLink to={`/profile/${props.id}`}>
                 <img className={s.user__pic} src={props.photos.small || avatar} />
             </NavLink>
         </div>
-        <Button value={followButtonText}
-            onClick={followClick} />
+        {props.authData?.id !== props.id
+            && <Button value={followButtonText}
+                onClick={followClick} />
+        }
         <div className={s.user__status}>{props.status || '---------------'}</div>
         <div className={s.user__id}><b>Id: </b>{props.id}</div>
         <div className={s.user__fullName}>{props.fullName}</div>

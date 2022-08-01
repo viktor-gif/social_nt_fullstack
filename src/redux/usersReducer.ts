@@ -41,8 +41,9 @@ export const usersActions = {
 
 // redux-thunk
 type DispatchType = Dispatch<actionsTypes>
-export const getUsers = (pageSize: number, currentPage: number, term: string) => (dispatch: DispatchType) => {
-    usersAPI.getUsers(pageSize, currentPage, term).then(res => {
+export const getUsers = (pageSize: number, currentPage: number, term: string, friendStatus: string) => (dispatch: DispatchType) => {
+    usersAPI.getUsers(pageSize, currentPage, term, friendStatus).then(res => {
+        console.log(res.data.items)
       dispatch(usersActions.setUsers(res.data.items))
       dispatch(usersActions.setTotalUsersCount(res.data.totalCount))
     })
