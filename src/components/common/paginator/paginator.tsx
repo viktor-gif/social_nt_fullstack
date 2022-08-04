@@ -48,7 +48,6 @@ export const Paginator = React.memo((props: PropsType) => {
                     .map(p => {
                     // @ts-ignor
                         
-                            console.log(currentPosition)
                         // const currentPageInPorsion = p / 3 - currentPorsion + 1
                         const currentPageInPorsion = p / 3 - (currentPorsion - 1)
                         return <li className={s.paginator__pageButton + " " + (props.currentPage === p ? s.paginator__currentpage : "")

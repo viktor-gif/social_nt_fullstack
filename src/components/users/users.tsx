@@ -4,14 +4,13 @@ import s from "./users.module.css"
 import { UserType } from "../../ts/users"
 import { Paginator } from "../common/paginator/paginator"
 import { getUsers, getTotalUsersCount } from "../../redux/usersReducer"
-import store, { AppStateType } from "../../redux/redux-store"
+import { AppStateType } from "../../redux/redux-store"
 import { connect } from "react-redux"
 import { ProfileDataType } from "../../ts/profile"
 import { profileActions } from "../../redux/profileReducer"
 import { SearchInput } from "../common/searchInput/SearchInput"
 import { Button } from "../common/button/Button"
 import { AuthDataType } from "../../ts/auth"
-import { setTokenSourceMapRange } from "typescript"
 
 type PropsType = {
   users: UserType[] | null
@@ -27,46 +26,90 @@ export const Users = React.memo((props: PropsType) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [term, setTerm] = useState('')
   const [friendStatus, setFriendStatus] = useState('all')
+  // const [users, setusers] = useState(props.users)
   
 
   useEffect(() => {
-        props.getUsers(pageSize, currentPage, term, friendStatus)
-    }, [currentPage, friendStatus, term])
+    props.getUsers(pageSize, currentPage, term, friendStatus)
+  }, [currentPage, friendStatus, term, pageSize])
+  
   const usersItems = props.users
-    // ?.filter(u => {
-    //   u.followers.forEach(f => f) !== null
-    // })
-    ?.map((u: any) => {
+    ?.filter(u => u.id !== props.authData?.id)
+    .map((u: any) => {
       return <User id={u.id} key={u.id} fullName={u.fullName}
         location={u.location} status={u.status} photos={u.photos}
         getUserProfile={props.getUserProfile} followers={u.followers}
         authData={props.authData} />
-  })
-  console.log(props.users?.map(u => u.followers))
+    })
+  const resetTerm = () => setTerm('')
+  const setNotAllusers = (friendStatus: string) => {
+    setFriendStatus(friendStatus)
+    if (pageSize !== 10000) {
+      setPageSize(10000)
+    }
+    resetTerm()
+  }
+
+  const pagesCount = []
+  for (let i = 1; i <= 100; i++) {
+    pagesCount.push(i)
+  }
+  const pagesCountItems = pagesCount.map(p => <option key={p}>{p}</option>)
+  
     return <div className={s.users}>
         <div className={s.users__nav}>
             
         <div className={s.users__buttons}>
-          <Button onClick={() => setFriendStatus('all')}
+          <Button
+            onClick={() => {
+              setFriendStatus('all')
+              if (pageSize === 10000) {
+                setPageSize(3)
+              }
+              resetTerm()
+            }
+          }
             value="Усі користувачі" />
-          <Button onClick={() => setFriendStatus('friends')}
+          <Button
+            onClick={() => {
+              setNotAllusers('friends')
+            }
+          }
             value="Тільки друзі" />
-          <Button onClick={() => setFriendStatus('followers')}
+          <Button
+            onClick={() => {
+              setNotAllusers('followers')
+            }
+          }
             value="Вхідні заявки" />
-          <Button onClick={() => setFriendStatus('followed')}
+          <Button
+            onClick={() => {
+              setNotAllusers('followed')
+            }
+          }
             value="Ваші заявки" />
         </div>
-            <div className={s.users__form}>
+        <div className={s.users__form}>
           <UsersForm getUsers={props.getUsers} pageSize={pageSize}
             setTerm={setTerm} />
-            </div>
-      </div>
-      <div className={s.users__paginator}>
-                <Paginator pageSize={pageSize} totalUsersCount={props.totalUsersCount}
-                    setCurrentPage={setCurrentPage} currentPage={currentPage} />
         </div>
-
+      </div>
+      {friendStatus === "all"
+        && <div className={s.users__paginator}>
+          <Paginator pageSize={pageSize} totalUsersCount={props.totalUsersCount}
+            setCurrentPage={setCurrentPage} currentPage={currentPage} />
+          <select
+            onChange={(e: any) => setPageSize(e.target.value)}
+            value="Виберіть кількість користувачів на одній сторінці" >
+            <option>Виберіть кількість користувачів на одній сторінці</option>
+            {pagesCountItems}
+          </select>
+        </div>
+      }
+      <div className={s.users__items}>
         {usersItems}
+      </div>
+        
     </div>
 })
 

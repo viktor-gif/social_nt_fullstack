@@ -1,8 +1,10 @@
+import { NavLink } from "react-router-dom";
+import { PersonAdd, PersonRemove } from "react-ionicons";
+
 import { LocationType, PhotosType } from "../../../ts/users";
 import avatar from "../../../img/ava_male.jpeg"
 import s from "./user.module.css"
 import { ProfileDataType } from "../../../ts/profile";
-import { NavLink } from "react-router-dom";
 import { Button } from "../../common/button/Button";
 import { useEffect, useState } from "react";
 import { followAPI } from "../../../api/follow";
@@ -25,7 +27,7 @@ export const User = (props: PropsType) => {
     const [userFollow_status, setUserFollow_status] = useState("")
     const getFollow = () => {
         followAPI.getFollow(props.id).then(res => {
-            if(res.data != userFollow_status) setUserFollow_status(res.data)
+            if (res.data != userFollow_status) setUserFollow_status(res.data)
         })
     }
     useEffect(() => {
@@ -35,11 +37,11 @@ export const User = (props: PropsType) => {
     let followButtonText = ""
 
     if (userFollow_status === "") {
-        followButtonText = "Подати заявку в друзі"
+        followButtonText = "Додати до друзів"
     } else if (userFollow_status === "pending-for-answer") {
-        followButtonText = "Відмінити заявку в друзі"
+        followButtonText = "Відмінити заявку"
     } else if (userFollow_status === "query-for-answer") {
-        followButtonText = "Прийняти заявку в друзі"
+        followButtonText = "Прийняти заявку"
     } else if (userFollow_status === "followed") {
         followButtonText = "Видалити з друзів"
     }
@@ -53,20 +55,42 @@ export const User = (props: PropsType) => {
             console.log(props.id)
         }
     }
+    console.log(userFollow_status === "followed" || userFollow_status === "pending-for-answer")
     return <div className={s.user}>
         <div className={s.user__avatar}>
             <NavLink to={`/profile/${props.id}`}>
                 <img className={s.user__pic} src={props.photos.small || avatar} />
             </NavLink>
         </div>
-        {props.authData?.id !== props.id
-            && <Button value={followButtonText}
-                onClick={followClick} />
-        }
-        <div className={s.user__status}>{props.status || '---------------'}</div>
-        <div className={s.user__id}><b>Id: </b>{props.id}</div>
-        <div className={s.user__fullName}>{props.fullName}</div>
-        <div className={s.user__location}><b>Status: </b>{props.location.country} {props.location.city}</div>
+        <div className={s.user__dataBlock}>
+            <div className={s.user__data}>
+                <div className={s.user__id}><b>Id: </b>{props.id}</div>
+                <div className={s.user__fullName}>{props.fullName}</div>
+                <div className={s.user__location}><b>Проживає: </b>{props.location.city}, {props.location.country}</div>
+            </div>
+            {props.authData?.id !== props.id
+                && <div className={s.followButton}
+                    onClick={followClick}>
+                    {(userFollow_status === "" || userFollow_status === "query-for-answer")
+                        && <PersonAdd
+                            color={"#777"}
+                            width="20px"
+                            height="20px"
+                        />
+                    }
+                    {(userFollow_status === "followed" || userFollow_status === "pending-for-answer")
+                        && <PersonRemove
+                            color={"blue"}
+                            width="20px"
+                            height="20px"
+                        />
+                    }
+                    <span className={s.followStatusText}>{followButtonText}</span>
+                    </div>
+            }
+            
+        </div>
+        
     </div>
 
 }
