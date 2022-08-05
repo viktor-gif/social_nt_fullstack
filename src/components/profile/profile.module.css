@@ -1,12 +1,13 @@
 .profile {
-  padding: 20px;
+  display: flex;
+  color: #444;
 }
 
 .profile__pic {
-  max-width: 200px;
+  width: 200px;
 }
 .userStatus {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 1.5em;
   font-style: italic;
   color: #635555;
@@ -16,6 +17,9 @@
 .profile__avatar {
   width: fit-content;
   position: relative;
+  padding: 15px;
+  border-bottom: 15px solid #fff;
+  
 }
 .profile__fileInput {
   position: absolute;
@@ -42,4 +46,14 @@
 }
 .profile__fileInput input {
   display: none;
+}
+.profile__infoBlock {
+  padding: 15px;
+  width: 100%;
+}
+.profile__aside {
+  display: flex;
+  flex-direction: column;
+  border-right: 15px solid #fff;
+  min-height: 100vh;
 }
