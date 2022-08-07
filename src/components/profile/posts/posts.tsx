@@ -1,9 +1,10 @@
-import { Formik, Form, Field } from "formik"
-import React, { useEffect, useState } from "react"
+
+import React, { useEffect } from "react"
 import { PostType } from "../../../ts/posts"
 import { ProfileDataType } from "../../../ts/profile"
 import { Post } from "./post/post"
 import s from "./posts.module.css"
+import { PostsForm } from "./postsForm/postsForm"
 
 type PropsType = {
     posts: PostType[]
@@ -23,8 +24,6 @@ type PropsType = {
 
 export const Posts = React.memo((props: PropsType) => {
 
-    const [currentPostText, setCurrentPostText] = useState('')
-
     useEffect(() => {
         props.profileData && props.getPosts(props.profileData._id)
     }, [props.profileData])
@@ -37,26 +36,9 @@ export const Posts = React.memo((props: PropsType) => {
           addComment={props.addComment} deleteComment={props.deleteComment}
           updateComment={props.updateComment} toggleCommentLike={props.toggleCommentLike} />
     })
-    return <div className={s.posts}>
-        {postsElements}
-        <Formik
-            initialValues={{ postText: currentPostText }}
-            onSubmit={(val) => {
-                // @ts-ignore
-                props.addPost(props.profileData?._id, currentPostText)
-                setCurrentPostText('')
-            }}
-     >
-       {({ isSubmitting }) => (
-         <Form>
-           <Field type="text" name="postText" component="textarea" value={currentPostText} onChange={(e: any) => setCurrentPostText(e.target.value)} />
-          <div>
-            <button type="submit">
-              Створити новий пост
-            </button>
-          </div>
-         </Form>
-       )}
-     </Formik>
-    </div>
+  return <div className={s.posts}>
+    <PostsForm profileData={props.profileData}
+      authProfileData={props.authProfileData} addPost={props.addPost} />
+    {postsElements}
+  </div>
 })

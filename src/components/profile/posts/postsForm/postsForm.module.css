@@ -1,0 +1,48 @@
+.postsForm {
+    margin: 15px 0;
+    position: relative;
+    background-color: #ddddff;
+    box-shadow: 1px 1px 5px rgb(0, 0, 0, .3);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.inputBlock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.inputBlock img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.inputBlock textarea {
+    max-width: 700px;
+    height: 45px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    background-color: #cdcdff;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: #444;
+    overflow: auto;
+}
+.buttonBlock button {
+    padding: 5px 20px;
+    background-color: #9494ff;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: .3s;
+}
+.buttonBlock button:hover {
+    background-color: #b8b8ff;
+    box-shadow: inset 0px 0px 10px 0px #fff,
+                    0px 0px 10px 0px #fff;
+}
