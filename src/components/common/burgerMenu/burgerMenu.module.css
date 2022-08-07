@@ -1,8 +1,8 @@
 .burger {
-  width: 30px;
-  height: 15px;
-  border-radius: 0.5em;
-  position: absolute;
+  width: 35px;
+  height: 17px;
+  border-radius: 0.7em;
+  position: relative;
   top: 0;
   right: 0;
   display: flex;
@@ -13,7 +13,7 @@
   transition: background-color, 0.3s linear;
 }
 .burger:hover {
-  background-color: #50ac79;
+  background-color: #d6c0ff;
 }
 .burger__dots {
   width: 5px;

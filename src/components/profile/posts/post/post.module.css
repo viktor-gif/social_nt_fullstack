@@ -1,14 +1,26 @@
 .post {
-  margin-bottom: 20px;
+  margin: 15px 0;
   position: relative;
+  background-color: rgb(221, 221, 255);
+  box-shadow: 1px 1px 5px rgb(0, 0, 0, .3);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .post__avatar img {
-  width: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .post__info {
   margin-right: 20px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .post__info img {
   width: 20px;
@@ -17,7 +29,7 @@
 /* postMenu-file */
 .postMenu {
   position: absolute;
-  top: 20px;
+  top: 55px;
   right: 0;
   z-index: 10;
   background-color: #dbe7f1;
@@ -50,11 +62,61 @@
   height: fit-content;
 }
 
+
 .commentsInput {
-  background-color: #c8c8c8;
-  color: rgb(32, 32, 32);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.commentsInput input {
+  background-color: #d2c7ff;
+  color: #3a3649;
   border: none;
   outline: none;
-  border-radius: 10px;
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: .9em;
+}
+.commentsInput img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.post__infoBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.nameAndTimeBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2em;
+}
+.fullName {
+  font-size: 1em;
+  font-weight: bold;
+}
+.time {
+  font-size: .8em;
+  font-style: italic;
+  color: #888;
+}
+.post__contentBlock {
+  font-size: 1.5em;
+  max-width: 700px;
   margin-bottom: 10px;
+}
+.post__actionsBlock {
+  border-bottom: 1px solid #999;
+  border-top: 1px solid #999;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.commentsBlock {
+  border-top: 1px dotted #777;
+  padding-top: 10px;
 }

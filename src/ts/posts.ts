@@ -6,7 +6,7 @@ export type PostType = {
     likedUsers: string[]
     likesCount: number
     comments: CommentType[]
-    creaded: string
+    created: string
 }
 export type CommentType = {
     _id: string

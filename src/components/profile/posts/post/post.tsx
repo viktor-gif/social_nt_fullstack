@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
+import { DocumentText, Heart, Share } from "react-ionicons"
 import { profileAPI } from "../../../../api/profile"
 import { CommentType } from "../../../../ts/posts"
 import { ProfileDataType } from "../../../../ts/profile"
 import s from "./post.module.css"
 import avatar from "../../../../img/ava_male.jpeg"
-import heart from "../../../../img/icons/heart.png"
-import greyHeart from "../../../../img/icons/heart_grey.png"
-import commentsIcon from "../../../../img/icons/comments.png"
 import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
 import { PostMenu } from "./postMenu"
 
@@ -33,8 +31,8 @@ type PropsType = {
     toggleCommentLike: (postId: string, commentId: string, userId: string) => void
 }
 
-export const Post = (props: PropsType) => {
-
+export const Post = React.memo((props: PropsType) => {
+    console.log(props.comments)
     const [userProfileData, setUserProfileData] = useState<ProfileDataType | null>(null)
     const [isMenuActive, setMenuActive] = useState(false)
     const [isUpdate, setUpdate] = useState(false)
@@ -82,47 +80,81 @@ export const Post = (props: PropsType) => {
     }
 
     const commentsItems = props.comments.map(c => {
-        return<Comment key={c._id} authorId={c.authorId} authProfileData={props.authProfileData}
+        return <Comment key={c._id} authorId={c.authorId} authProfileData={props.authProfileData}
             commentId={c._id} commentText={c.commentText} likedUsers={c.likedUsers}
             deleteComment={deleteComment} updateComment={updateComment}
-            toggleCommentLike={toggleCommentLike} />
+            toggleCommentLike={toggleCommentLike} created={c.created} />
 
     })
-
     return <div className={s.post}>
-        <BurgerMenu burgerClick={() => { isMenuActive ? setMenuActive(false) : setMenuActive(true) }} />
-        {isMenuActive && <PostMenu canDeletePost={canDeletePost} deletePost={deletePost}
-            canUpdatePost={authIsAuthorOfPost} setUpdate={setUpdate} />}
-        <div className={s.post__avatar}>
-            {/* @ts-ignore */}
-            <img src={userProfileData?.photos.small || props.authProfileData?.photos.small || avatar} alt="userPhoto" />
-            <span>{userProfileData?.fullName || props.authProfileData?.fullName}</span>
+        <div className={s.post__infoBlock}>
+            <div className={s.post__avatar}>
+                {/* @ts-ignore */}
+                <img src={userProfileData?.photos.small || props.authProfileData?.photos.small || avatar} alt="userPhoto" />
+
+            </div>
+            <div className={s.nameAndTimeBlock}>
+                <span className={s.fullName}>{userProfileData?.fullName || props.authProfileData?.fullName}</span>
+                <span className={s.time}>{props.created}</span>
+            </div>
+            <BurgerMenu burgerClick={() => { isMenuActive ? setMenuActive(false) : setMenuActive(true) }} />
         </div>
-        <div style={{color: "green"}}>postId: {props.postId}</div>
-        <div style={{color: "green"}}>authorId: {props.authorId}</div>
-        <div>{props.postText}</div>
-        <div>
-            <span>{props.created}</span>
-            <span onClick={() => props.toggleLike(props.postId, props.userId)} className={s.post__info}>
-                <img src={props.liked ? greyHeart : heart} alt="heart" /> {props.likesCount}
+        
+        {isMenuActive
+            && <PostMenu canDeletePost={canDeletePost} deletePost={deletePost}
+                canUpdatePost={authIsAuthorOfPost} setUpdate={setUpdate} />
+        }
+        <div className={s.post__contentBlock}>
+            {props.postText}
+        </div>
+        <div className={s.post__actionsBlock}>
+            <span onClick={() => props.toggleLike(props.postId, props.userId)}
+                className={s.post__info}>
+                <Heart
+                    width="25px"
+                    height="25px"
+                    color={props.liked ? "#888" : "#ab1414"}
+                /> <span>{props.likesCount}</span>
+                <span>{props.liked ? "Прибрати" : "Додати"} лайк</span>
             </span>
-            <span onClick={() => isCommentsAll ? setCommentsAll(false) : setCommentsAll(true)} className={s.post__info}>
-                <img src={commentsIcon} alt="comments" /> {props.comments.length}
+            <span onClick={() => isCommentsAll ? setCommentsAll(false) : setCommentsAll(true)}
+                className={s.post__info}>
+                <DocumentText
+                    width="25px"
+                    height="25px"
+                    color="#333"
+                />
+                <span>{props.comments.length}</span>
+                 <span>{isCommentsAll ? "Приховати" : "Показати"} коментарі</span>
+            </span>
+            <span onClick={() => isCommentsAll ? setCommentsAll(false) : setCommentsAll(true)}
+                className={s.post__info}>
+                <Share
+                    width="25px"
+                    height="25px"
+                    color="#333"
+                /> <span>{Math.ceil(100 * Math.random())}</span>
+                <span>Поділитися</span>
             </span>
         </div>
         <div>
-            {isCommentsAll && <div>
-            <input className={s.commentsInput} placeholder="Напишіть коментар"
-                value={currentCommentText} onChange={(e: any) => setCurrentCommentText(e.target.value)}
-                onKeyDown={(e: any) => {
-                    if (e.keyCode === 13) {
-                        props.addComment(props.postId, currentCommentText, props.userId)
-                        setCurrentCommentText('')
-                    }
-                    
-                }} />
+            <div className={s.commentsInput}>
+                <img src={props.authProfileData?.photos.small || avatar} alt="userPhoto" />
+                <input placeholder="Напишіть коментар"
+                    value={currentCommentText} onChange={(e: any) => setCurrentCommentText(e.target.value)}
+                    onKeyDown={(e: any) => {
+                        if (e.keyCode === 13) {
+                            props.addComment(props.postId, currentCommentText, props.userId)
+                            setCurrentCommentText('')
+                        }
+
+                    }} />
+            </div>
+        </div>
+        {isCommentsAll
+            && <div className={s.commentsBlock}>
                 {commentsItems}
-            </div>}
-        </div>
+            </div>
+        }
     </div>
-}
+})

@@ -30,7 +30,7 @@ export const Posts = React.memo((props: PropsType) => {
     }, [props.profileData])
     const postsElements = props.posts.map(p => {
         return <Post key={p._id} postId={p._id} postText={p.postText} authorId={p.authorId}
-            comments={p.comments} created={p.creaded} userId={p.profileId}
+            comments={p.comments} created={p.created} userId={p.profileId}
           authProfileData={props.authProfileData} likesCount={p.likesCount}
           deletePost={props.deletePost} updatePost={props.updatePost}
           toggleLike={props.toggleLike} liked={p.likedUsers.includes(props.authProfileData?._id || '')}
