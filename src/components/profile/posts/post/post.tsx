@@ -9,6 +9,7 @@ import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
 import { PostMenu } from "./postMenu"
 
 import { Comment } from "./comment/comment"
+import { formatDate } from "../../../../utils/formatDate"
 
 type PropsType = {
     key: string
@@ -95,7 +96,7 @@ export const Post = React.memo((props: PropsType) => {
             </div>
             <div className={s.nameAndTimeBlock}>
                 <span className={s.fullName}>{userProfileData?.fullName || props.authProfileData?.fullName}</span>
-                <span className={s.time}>{props.created}</span>
+                <span className={s.time}>{formatDate(props.created)}</span>
             </div>
             <BurgerMenu burgerClick={() => { isMenuActive ? setMenuActive(false) : setMenuActive(true) }} />
         </div>

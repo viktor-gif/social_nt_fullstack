@@ -43,6 +43,7 @@ type PropsType = {
 const Profile = (props: PropsType) => {
     const [isEditStatus, setEditStatus] = useState(false)
     const [profileStatus, setProfileStatus] = useState(props.status)
+    const [isPostsActive, setPostsActive] = useState(true)
     
     const profile = props.profileData
 
@@ -112,13 +113,15 @@ console.log(props.profileData)
             </div>
             <ProfileInfo profile={profile} ownerId={props.ownerId}
                 updateProfile={props.updateProfile} getProfile={props.getProfile}
-                createDialog={props.createDialog} />
-            <Posts posts={props.posts} getPosts={props.getPosts} profileData={props.profileData}
-                addPost={props.addPost} authProfileData={props.authProfileData}
-                deletePost={props.deletePost} updatePost={props.updatePost}
-                toggleLike={props.toggleLike} addComment={props.addComment}
-                deleteComment={props.deleteComment} updateComment={props.updateComment}
+                createDialog={props.createDialog} setPostsActive={setPostsActive} />
+            {isPostsActive
+                && <Posts posts={props.posts} getPosts={props.getPosts} profileData={props.profileData}
+                    addPost={props.addPost} authProfileData={props.authProfileData}
+                    deletePost={props.deletePost} updatePost={props.updatePost}
+                    toggleLike={props.toggleLike} addComment={props.addComment}
+                    deleteComment={props.deleteComment} updateComment={props.updateComment}
                 toggleCommentLike={props.toggleCommentLike} />
+            }
         </div>
     </div>
 }

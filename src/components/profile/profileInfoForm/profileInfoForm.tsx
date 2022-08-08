@@ -1,12 +1,13 @@
 import { Field, Form, Formik } from "formik"
 import { ProfileDataType } from "../../../ts/profile"
-import s from "./profileInfo.module.css"
+import s from "./profileInfoForm.module.css"
 
 type PropsType = {
     profile: ProfileDataType | null
     setEditProfile: (isEdit: boolean) => void
     updateProfile: (data: ProfileDataType) => void
     getProfile: (userId: string) => void
+    setPostsActive: (isActive: boolean) => void
 }
 
 export const ProfileInfoForm = (props: PropsType) => {
@@ -44,6 +45,7 @@ export const ProfileInfoForm = (props: PropsType) => {
                 props.updateProfile(val)
                 profile && props.getProfile(profile?._id)
                 props.setEditProfile(false)
+                props.setPostsActive(true)
             }}
         >
             {({ isSubmitting }) => (

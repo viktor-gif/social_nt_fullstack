@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ProfileDataType } from "../../../ts/profile"
 import s from "./profileInfo.module.css"
 import { ProfileInfoData } from "./profileInfoData"
-import { ProfileInfoForm } from "./profileInfoForm"
+import { ProfileInfoForm } from "../profileInfoForm/profileInfoForm"
 
 type PropsType = {
     profile: ProfileDataType | null
@@ -10,6 +10,7 @@ type PropsType = {
     updateProfile: (data: ProfileDataType) => void
     getProfile: (userId: string) => void
     createDialog: (userId: string) => void
+    setPostsActive: (isActive: boolean) => void
 }
 
 export const ProfileInfo = (props: PropsType) => {
@@ -17,11 +18,12 @@ export const ProfileInfo = (props: PropsType) => {
     if (isEditProfile && props.profile?._id === props.ownerId) {
         return <div className={s.profileInfo}>
             <ProfileInfoForm profile={props.profile} setEditProfile={setEditProfile}
-                updateProfile={props.updateProfile} getProfile={props.getProfile} />
+                updateProfile={props.updateProfile} getProfile={props.getProfile}
+                setPostsActive={props.setPostsActive} />
     </div>
     }
     return <div className={s.profileInfo}>
         <ProfileInfoData profile={props.profile} ownerId={props.ownerId} setEditProfile={setEditProfile}
-                createDialog={props.createDialog} />
+                createDialog={props.createDialog} setPostsActive={props.setPostsActive} />
     </div>
 }

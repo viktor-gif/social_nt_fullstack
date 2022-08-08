@@ -10,6 +10,7 @@ type PropsType = {
     ownerId: string | undefined
     setEditProfile: (isEdit: boolean) => void
     createDialog: (userId: string) => void
+    setPostsActive: (isActive: boolean) => void
 }
 
 export const ProfileInfoData = (props: PropsType) => {
@@ -96,7 +97,11 @@ export const ProfileInfoData = (props: PropsType) => {
         </div>
         
         {(props.ownerId === profile?._id)
-            && <Button value="Редагувати" onClick={() => props.setEditProfile(true)} />
+            && <Button value="Редагувати" onClick={() => {
+            props.setEditProfile(true)
+            props.setPostsActive(false)
+            }
+            } />
         }
     </div>
 }
