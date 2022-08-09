@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from "formik"
 import { ProfileDataType } from "../../../ts/profile"
+import { Button } from "../../common/button/Button"
 import s from "./profileInfoForm.module.css"
 
 type PropsType = {
@@ -19,7 +20,10 @@ export const ProfileInfoForm = (props: PropsType) => {
     const contactsItems = profileContactsKeys?.map(p => {
         return <li key={p}>
         
-            <span>{p}</span>: <Field type="text" name={p} id={p} placeholder={`Ваш ${p}...`} />
+            <span className={s.fieldName}>{p}:</span>
+            <span className={s.fieldInput}>
+                <Field type="text" name={p} id={p} placeholder={`Ваш ${p}...`} />
+            </span>
         </li>
     })
 //{profileContacts[p]}
@@ -50,32 +54,63 @@ export const ProfileInfoForm = (props: PropsType) => {
         >
             {({ isSubmitting }) => (
                 <Form>
-                    <div>
-                        Ім'я: <Field type="text" name="fullName" id="fullName" placeholder="Ваше повне ім'я..." />
-                    </div>
-                    <div>
-                        Про себе: <Field type="text" name="aboutMe" id="aboutMe" placeholder="Розкажіть про себе..." component="textarea" />
-                    </div>
-                    <div>
-                        Шукаю роботу: <Field type="checkbox" name="lookingForAJob" id="lookingForAJob" />
-                    </div>
-                    <div>
-                        Описання майбутньої роботи: <Field type="text" name="lookingForAJobDescription"
-                            id="lookingForAJobDescription" placeholder="Опишіть свою майбутню pоботу..." component="textarea" />
-                    </div>
-                    <div>Місце проживання: {profile?.location.city} {profile?.location.country}
-                        <div>
-                            Країна: <Field type="text" name="country" id="country" placeholder="Ваша країна..." />
+                    <div className={s.formikForm}>
+                        <div className={s.formItem}>
+                            <span className={s.fieldName}>Ім'я:</span>
+                            <span className={s.fieldInput}>
+                                <Field type="text" name="fullName" id="fullName" placeholder="Ваше повне ім'я..." />
+
+                            </span>
                         </div>
-                        <div>
-                            Місто: <Field type="text" name="city" id="city" placeholder="Ваше місто або населений пункт..." />
+                        <div className={s.formItem}>
+                            <span className={s.fieldName}>Країна:</span>
+                            <span className={s.fieldInput}>
+                                <Field type="text" name="country" id="country" placeholder="Ваша країна..." />
+
+                            </span>
                         </div>
+                        <div className={s.formItem}>
+                            <span className={s.fieldName}>Місто:</span>
+                            <span className={s.fieldInput}>
+                                <Field type="text" name="city" id="city" placeholder="Ваше місто або населений пункт..." />
+
+                            </span>
+                        </div>
+                        <div className={s.formItem}>
+                            <span className={s.fieldName}>Шукаю роботу:</span>
+                            <span className={s.fieldInput}>
+                                <Field type="checkbox" name="lookingForAJob" id="lookingForAJob" />
+
+                            </span>
+                        </div>
+                        
+
+                        <ul className={s.contacts}>
+                            <span className={s.contactsName}>Контакти: </span>
+                            {contactsItems}
+                        </ul>
+
+                        <div className={s.formItem}>
+                            <span className={s.fieldName}>Про себе:</span>
+                            <span className={s.fieldInput}>
+                                <Field type="text" name="aboutMe" id="aboutMe" placeholder="Розкажіть про себе..." component="textarea" />
+
+                            </span>
+                        </div>
+                        <div className={s.formItem}>
+                            <span className={s.fieldName}>Опис роботи:</span>
+                            <span className={s.fieldInput}>
+                                <Field type="text" name="lookingForAJobDescription"
+                                    id="lookingForAJobDescription" placeholder="Опишіть свою майбутню pоботу..." component="textarea" />
+                            </span>
+                            
+                        </div>
+                        {/* <button className={s.submitButton} type="submit">Зберегти зміни</button> */}
+                        <div className={s.submitButton}>
+                            <Button value="Зберегти зміни" />
+                        </div>
+                        
                     </div>
-                    
-                    <ul>Контакти: 
-                        {contactsItems}
-                    </ul>
-                    <button type="submit">Зберегти зміни</button>
                 </Form>
             )}
         </Formik>
