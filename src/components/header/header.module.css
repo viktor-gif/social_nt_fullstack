@@ -1,7 +1,9 @@
 .header {
   padding: 10px 20px;
+  height: 60px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .header__logo {
   width: 50px;
@@ -14,4 +16,48 @@
   padding: 5px;
   margin: 2px;
   border-radius: 5px;
+}
+.menuProfileActions {
+  background-color: #ffffff85;
+  padding: 5px 10px;
+  position: relative;
+}
+.menuProfileActions::before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #333;
+}
+.menuProfileActions img {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+}
+.actionsList {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: max-content;
+  background-color: #fff;
+  
+  border-radius: 5px;
+  background-color: #e4e4e4;
+}
+.actionsList li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: .3s;
+  padding: 5px 10px;
+}
+.actionsList li:hover {
+  background-color: #fff;
 }
