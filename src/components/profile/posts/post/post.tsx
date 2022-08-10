@@ -10,6 +10,7 @@ import { PostMenu } from "./postMenu"
 
 import { Comment } from "./comment/comment"
 import { formatDate } from "../../../../utils/formatDate"
+import { Button } from "../../../common/button/Button"
 
 type PropsType = {
     key: string
@@ -56,10 +57,13 @@ export const Post = React.memo((props: PropsType) => {
     const deletePost = () => {
         props.deletePost(props.postId, props.userId)
     }
-    const updatePost = () => {
-        props.updatePost(props.postId, currentPostText, props.userId)
+    const resetUpdatePost = () => {
         setUpdate(false)
         setMenuActive(false)
+    }
+    const updatePost = () => {
+        props.updatePost(props.postId, currentPostText, props.userId)
+        resetUpdatePost()
     }
     const deleteComment = (commentId: string) => {
         props.deleteComment(props.postId, commentId, props.userId)
@@ -74,8 +78,11 @@ export const Post = React.memo((props: PropsType) => {
     if (isUpdate) {
         return <div className={s.post__update}>
             <textarea id="updatePost" value={currentPostText} onChange={(e: any) => setCurrentPostText(e.target.value)}></textarea>
-            <div>
-                <button onClick={updatePost}>Застосувати зміни</button>
+            <div className={s.post__updateButton}>
+                <Button value={"Застосувати зміни"} onClick={updatePost}
+                    size="eight" />
+                <Button value={"Відмінити"} onClick={resetUpdatePost}
+                    size="eight" />
             </div>
         </div>
     }

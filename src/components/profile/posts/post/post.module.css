@@ -51,18 +51,6 @@
   margin-right: 10px;
 }
 
-.post__update {
-  margin-bottom: 20px;
-}
-.post__update textarea {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  width: fit-content;
-  height: fit-content;
-}
-
-
 .commentsInput {
   display: flex;
   align-items: center;
@@ -118,5 +106,25 @@
 }
 .commentsBlock {
   border-top: 1px dotted #777;
-  padding-top: 10px;
+}
+
+.post__update {
+  margin-top: 10px;
+  /* background-color: #d2c7ff; */
+  background-color: #c0d3d5;
+  box-shadow: 1px 1px 5px rgb(0, 0, 0, .3);
+  padding: 15px;
+}
+.post__update textarea {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: fit-content;
+  height: fit-content;
+  font-size: 2em;
+  color: #444;
+}
+.post__updateButton {
+  display: flex;
+  gap: 20px;
 }

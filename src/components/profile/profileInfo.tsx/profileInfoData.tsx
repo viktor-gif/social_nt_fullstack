@@ -49,7 +49,11 @@ export const ProfileInfoData = (props: PropsType) => {
         <div className={s.fullname}>{profile?.fullName}</div>
 
         {(props.ownerId && props.ownerId !== profile?._id)
-            && <button onClick={onWriteMessage}>Надіслати повідомлення</button>}
+            // && <button onClick={onWriteMessage}>Надіслати повідомлення</button>
+            && <div className={s.buttonSendMessage}>
+                <Button onClick={onWriteMessage} value="Надіслати повідомлення" size="seven" />
+            </div>
+        }
         
         {(profile?.location.city || profile?.location.country)
             && <div className={s.profileData__item}>
