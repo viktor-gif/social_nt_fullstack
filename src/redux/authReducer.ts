@@ -77,6 +77,7 @@ export const login = (email: string, password: string) => async (dispatch: Dispa
             dispatch(authMe())
         } 
     } catch (err: any) {
+        debugger
         dispatch(authActions.setLoginError(err.response.data.message || "Помилка сервера"))
     }
     

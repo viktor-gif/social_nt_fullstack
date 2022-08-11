@@ -2,10 +2,8 @@ import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
 import s from "./header.module.css"
 import logo from "../../img/logo.png"
-import { NavLink } from "react-router-dom"
 import { AuthDataType } from "../../ts/auth"
 import { logout } from "../../redux/authReducer"
-import { Button } from "../common/button/Button"
 import avatar from "../../img/ava_male.jpeg"
 import { ProfileDataType } from "../../ts/profile"
 import { LogOut } from "react-ionicons"
@@ -34,7 +32,7 @@ const Header = (props: PropsType) => {
             && <div className={s.menuProfileActions} onClick={toggleMenuActions}>
                 <img src={props.authProfileData?.photos.small || avatar} alt="ava" />
                 {isMenuActionsActive
-                    
+
                 && <ul className={s.actionsList}>
                     <li onClick={logoutClick} >
                         <LogOut color={'#555'}/> 

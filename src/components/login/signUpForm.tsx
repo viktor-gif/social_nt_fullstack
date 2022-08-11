@@ -3,7 +3,6 @@ import s from "./login.module.css"
 import { Formik, Form, Field } from 'formik';
 import {usersAPI} from "../../api/users"
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
 
 type PropsType = {
     setSignedUp: (isSignedUp: boolean) => void
@@ -62,9 +61,3 @@ export const SignUpForm = (props: PropsType) => {
     </Formik>
 
 }
-
-// const mapStateToProps = (state: appStateType) => ({
-    
-// })
-
-//export default connect(mapStateToProps, {})(CreateUser)

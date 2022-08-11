@@ -1,5 +1,4 @@
 import s from "./login.module.css"
-import { Formik, Form, Field } from 'formik'
 import React, { useState } from "react"
 import { Navigate } from "react-router-dom"
 import { login } from "../../redux/authReducer"
@@ -19,7 +18,7 @@ type PropsType = {
 
 export const Login = React.memo((props: PropsType) => {
     const [isSignedUp, setSignedUp] = useState(true)
-
+    console.log(props.loginError)
     if (props.isAuth && props.authData) return <Navigate replace to={`/profile/${props.authData.id}`} />
     
     return <div className={s.login}>
