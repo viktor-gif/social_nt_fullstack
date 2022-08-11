@@ -1,5 +1,14 @@
 .login {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
   padding: 20px;
+}
+.login form {
+  width: 50%;
 }
 .login__formItem {
   margin-bottom: 20px;
@@ -7,4 +16,81 @@
 .login__error {
   color: red;
   font-size: 1.5em;
+}
+.login__wrapForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 0 10px #00000055;
+  background-color: #e3e3fd;
+  border-radius: 10px;
+  padding: 20px;
+}
+.login__title {
+  width: 50%;
+  font-size: 50px;
+    background: -webkit-linear-gradient(blue, yellow);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.login__formItem input {
+  width: 100%;
+  padding: 5px 20px;
+  font-size: 1.5em;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 3px #00000055;
+  background-color: #f0f0ff;
+  color: #555;
+}
+.or {
+  display: block;
+  text-align: center;
+  width: 100%;
+  height: 0;
+  font-size: 1em;
+  margin: 20px 0;
+  border-top: 1px solid #999;
+  position: relative;
+}
+.or::before {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 60px;
+  background-color: #e3e3fd;
+  position: absolute;
+  top: -1px;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%)
+}
+.or::after {
+  content: "або";
+  display: inline-block;
+  width: 40px;
+  font-size: 1em;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%)
+}
+.login__wrapForm button {
+  padding: 5px 20px;
+  border: none;
+  width: 100%;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  border-radius: 5px;
+  background-color: #9191ff;
+  color: #555;
+  transition: .3s;
+}
+.login__wrapForm button:hover {
+  background-color: #a8a8ff;
+  transform: translateY(-1px);
+  cursor: pointer;
 }

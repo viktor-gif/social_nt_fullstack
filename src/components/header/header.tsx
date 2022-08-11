@@ -30,23 +30,19 @@ const Header = (props: PropsType) => {
     
     return <div className={s.header}>
         <img src={logo} className={s.header__logo} />
-        {!props.authData?.id ? <div className={s.header__actions}>
-            <NavLink to="/user/add" className={s.header__actions_item}>Створити нового користувача</NavLink>
-            <NavLink to="/login" className={s.header__actions_item}>Зайти на свою сторінку</NavLink>
-        </div>
-            :
-        <div className={s.menuProfileActions} onClick={toggleMenuActions}>
-            <img src={props.authProfileData?.photos.small || avatar} alt="ava" />
-            {isMenuActionsActive
-                
-            && <ul className={s.actionsList}>
-                <li onClick={logoutClick} >
-                    <LogOut color={'#555'}/> 
-                    <span>Вийти з свого профілю</span>
-                </li>
-            </ul> 
-            }
-        </div>
+        {props.authData?.id
+            && <div className={s.menuProfileActions} onClick={toggleMenuActions}>
+                <img src={props.authProfileData?.photos.small || avatar} alt="ava" />
+                {isMenuActionsActive
+                    
+                && <ul className={s.actionsList}>
+                    <li onClick={logoutClick} >
+                        <LogOut color={'#555'}/> 
+                        <span>Вийти з свого профілю</span>
+                    </li>
+                </ul> 
+                }
+            </div>
         }
     </div>
 }

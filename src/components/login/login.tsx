@@ -6,46 +6,30 @@ import { login } from "../../redux/authReducer"
 import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
 import { AuthDataType } from "../../ts/auth"
+import { LoginForm } from "./loginForm"
+import { SignUpForm } from "./signUpForm"
 
 type PropsType = {
     loginError: string | null
     isAuth: boolean
     authData: AuthDataType | null
 
-    login: (login: string, email: string, password: string) => void
+    login: (email: string, password: string) => void
 }
 
 export const Login = React.memo((props: PropsType) => {
+    const [isSignedUp, setSignedUp] = useState(true)
 
     if (props.isAuth && props.authData) return <Navigate replace to={`/profile/${props.authData.id}`} />
     
     return <div className={s.login}>
-        <Formik
-            initialValues={{
-           
-            }}
-            onSubmit={(val: any) => {
-                props.login(val.login, val.email, val.password)
-            }}
-        >
-        {({ isSubmitting }) => (
-                <Form>
-                    <div className={s.login__formItem}>Логін: 
-                        <Field type="text" name="login" id="login" placeholder="Ваш логін..." />
-                    </div>
-                    <div className={s.login__formItem}>E-mail: 
-                        <Field type="email" name="email" id="email" placeholder="Ваш email..." />
-                    </div>
-                    <div className={s.login__formItem}>Пароль: 
-                        <Field type="password" name="password" id="password" placeholder="Ваш пароль..." />
-                    </div>
-                    {props.loginError && <div className={s.login__error}>{props.loginError}</div>}
-                <button type="submit">
-                    Submit
-                </button>
-            </Form>
-            )}
-        </Formik>
+        <h1 className={s.login__title}>Перша українська соціальна мережа</h1>
+        {isSignedUp
+            ? <LoginForm loginError={props.loginError} isAuth={props.isAuth}
+                authData={props.authData} login={props.login}
+                setSignedUp={setSignedUp} />
+            : <SignUpForm setSignedUp={setSignedUp} />
+        }
     </div>
 
 })

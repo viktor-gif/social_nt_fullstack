@@ -68,10 +68,10 @@ export const authMe = () => async (dispatch: DispatchType) => {
     dispatch(authActions.setAuthData(res.data, resAuthProfile.data, true))
 }
 
-export const login = (login: string, email: string, password: string) => async (dispatch: DispatchType) => {
+export const login = (email: string, password: string) => async (dispatch: DispatchType) => {
     try {
         dispatch(authActions.setLoginError(null))
-        const res = await authAPI.login(login, email, password)
+        const res = await authAPI.login(email, password)
         if (res.data.resultCode === 2) {
             // @ts-ignore
             dispatch(authMe())
