@@ -1,0 +1,46 @@
+
+.dialog__pic {
+  width: 50px;
+}
+.dialog {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #dedede;
+}
+.nameBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.userName {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+.messageText {
+  font-size: .9em;
+  color: #999;
+}
+.dateBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  flex-grow: 1;
+  gap: 10px;
+}
+.dialog__created {
+  color: #00ca22;
+}
+.newMessagesAmount {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: #00ca22;
+  font-size: .8em;
+  color: rgb(255, 255, 255);
+}

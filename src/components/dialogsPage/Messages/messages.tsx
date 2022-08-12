@@ -26,6 +26,11 @@ type PropsPage = {
 
 export const Messages = React.memo((props: PropsPage) => {
     const [messagesMustDelete, setMustDeleteMessages] = useState<string[]>([])
+    const [currentDialogInfo, setCurrentDialogInfo] = useState<ProfileDataType | null>(null)
+    console.log(props.messages)
+    useEffect(() => {
+
+    }, [])
 
     const messagesItems = props.messages?.map(m => {
         return <Message messageId={m._id} key={m._id} senderId={m.sender}
@@ -37,7 +42,10 @@ export const Messages = React.memo((props: PropsPage) => {
             isViewed={m.viewed} setViewed={props.setViewed} />
     })
     return <div className={s.messages}>
-        <h3>{props.currentDialogInfo?.userName}</h3>
+        <div className={s.messages__header}>
+            {currentDialogInfo && <img src={currentDialogInfo.photos.small || avatar} alt="ava" />}
+            {currentDialogInfo && <span>{currentDialogInfo?.fullName}</span>}
+        </div>
         {messagesItems}
         <MessagesForm currentDialogInfo={props.currentDialogInfo}
             sendDialogMessage={props.sendDialogMessage} />

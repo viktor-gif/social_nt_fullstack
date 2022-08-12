@@ -1,9 +1,14 @@
 .dialogs {
   display: flex;
   flex-direction: column;
-  border-right: 2px solid #333;
-  padding-right: 20px;
+  overflow: auto;
+  min-width: 400px;
+  background-color: #f7f7f7;
 }
-.dialogs__pic {
-  width: 50px;
+.dialogs__head {
+  height: 60px;
+  background-color: #e4e4e4;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
 }
