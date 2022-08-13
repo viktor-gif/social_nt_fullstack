@@ -1,9 +1,9 @@
 .dialogs {
   display: flex;
   flex-direction: column;
-  overflow: auto;
   min-width: 400px;
   background-color: #f7f7f7;
+  position: relative;
 }
 .dialogs__head {
   height: 60px;
@@ -11,4 +11,12 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.dialogs__items {
+  max-height: 100vh;
+  overflow: auto;
 }

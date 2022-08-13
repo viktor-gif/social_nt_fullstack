@@ -40,14 +40,33 @@ export const Messages = React.memo((props: PropsPage) => {
             isSpam={m.isSpam} setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam}
             isViewed={m.viewed} setViewed={props.setViewed} currentDialogId={props.currentDialogId} />
     })
-    return <div className={s.messages}>
+    return <div className={s.messages__wrap}>
         <div className={s.messages__header}>
-            {props.currentDialogInfo && <img src={props.currentDialogInfo.photos.small || avatar} alt="ava" />}
-            {props.currentDialogInfo && <span>{props.currentDialogInfo?.fullName}</span>}
+            {props.currentDialogInfo
+                ? <div className={s.header__yesOrNotDialog}>
+                    <img src={props.currentDialogInfo.photos.small || avatar} alt="ava" />
+                    <span className={s.header__mainInfo}>
+                        <span className={s.header__fullName}>{props.currentDialogInfo?.fullName}</span>
+                        <span className={s.header__onlineIndicator}>online</span>
+                    </span>
+                </div>
+                :
+                <div className={s.header__yesOrNotDialog}>
+                    <span className={s.header__mainInfo + " " + s.header__chooseDialog}>Виберіть співрозмовника</span>
+                </div>
+            }
         </div>
-        {messagesItems}
-        <MessagesForm currentDialogInfo={props.currentDialogInfo}
-            sendDialogMessage={props.sendDialogMessage}  currentDialogId={props.currentDialogId} />
+        <div className={s.messages}>
+            {messagesItems}
+        {props.currentDialogInfo
+            ? <div className={s.messagesForm}>
+                <MessagesForm currentDialogInfo={props.currentDialogInfo}
+                    sendDialogMessage={props.sendDialogMessage} currentDialogId={props.currentDialogId} />
+            </div>
+            :
+            <div className={s.noChousenDialogText}>Тут можуть бути повідомлення вашого діалогу</div>
+        }
+        </div>
     </div>
 })
 

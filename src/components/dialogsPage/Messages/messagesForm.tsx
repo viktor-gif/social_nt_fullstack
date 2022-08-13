@@ -22,11 +22,21 @@ export const MessagesForm = (props: PropsPage) => {
        }}
      >
        {({ isSubmitting }) => (
-         <Form>
-           <Field type="text" name="textMessage" component="textarea" value={currentMessage} onChange={(e: any) => setCurrentMessage(e.target.value)} />
+         <Form className={s.formikMessagesForm}>
+          <Field type="text" name="textMessage" component="input" value={currentMessage} onChange={(e: any) => setCurrentMessage(e.target.value)}
+            placeholder="Відправити повідомлення"
+            onKeyDown={(e: any) => {
+              if (e.keyCode === 13) {
+                //    @ts-ignore
+                props.sendDialogMessage(props.currentDialogId, currentMessage)
+                setCurrentMessage('')
+            
+              }
+            }}
+          />
           <div>
             <button type="submit">
-              Надіслати
+              
             </button>
           </div>
          </Form>

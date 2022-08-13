@@ -1,8 +1,106 @@
+.messages__wrap {
+  width: 100%;
+  position: relative;
+  transform: translateX(0px);
+}
+
 .messages {
-  padding: 0 20px;
+  padding: 20px 20px 80px 20px;
   /* max-width: 500px; */
   flex-basis: 100%;
   /* max-width: 600px; */
   max-height: 100vh;
   overflow: auto;
+  position: relative;
+}
+.messages__header {
+  height: 60px;
+  width: 100%;
+  background-color: #e4e4e4;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid #d3d3d3;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.header__yesOrNotDialog {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header__mainInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.header__fullName {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+.header__onlineIndicator {
+  font-size: .9em;
+  font-style: italic;
+  color: #888;
+}
+.header__chooseDialog {
+  font-size: 1.5em;
+  color: #555;
+}
+.noChousenDialogText {
+  font-size: 1.5em;
+  margin-top: 50px;
+  text-align: center;
+  color: #777;
+  font-style: oblique;
+}
+.messagesForm {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.formikMessagesForm {
+  display: flex;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #ebebeb;
+  align-items: center;
+}
+.formikMessagesForm input {
+  width: 100%;
+  padding: 10px 20px;
+  height: 40px;
+  font-size: 1em;
+  border-radius: 40px;
+  border: none;
+  outline: none;
+}
+.formikMessagesForm button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: transparent;
+}
+.formikMessagesForm button::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-top: 2px solid #000;
+  border-right: 2px solid #000;
+  transform: rotate(45deg);
+  transition: .3s;
+  position: relative;
+  left: 0;
+}
+.formikMessagesForm button:hover::before {
+  border-top: 2px solid #00c900;
+  border-right: 2px solid #00c900;
+  left: 1px;
 }
