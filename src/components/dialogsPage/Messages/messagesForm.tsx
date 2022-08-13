@@ -1,12 +1,14 @@
 
 import { Formik, Form, Field } from "formik"
 import { useState } from "react"
-import { CurrentDialogInfoType } from "../../../ts/dialogs"
+import { ProfileDataType } from "../../../ts/profile"
 import s from "./messages.module.css"
 
 type PropsPage = {
-    currentDialogInfo: CurrentDialogInfoType | null
-    sendDialogMessage: (dialogId: string, userName: string, userImg: string | null, message: string) => void
+  currentDialogId: string | null
+  currentDialogInfo: ProfileDataType | null
+    
+  sendDialogMessage: (dialogId: string, message: string) => void
 }
 
 export const MessagesForm = (props: PropsPage) => {
@@ -15,7 +17,7 @@ export const MessagesForm = (props: PropsPage) => {
        initialValues={{ textMessage: currentMessage }}
         onSubmit={(val) => {
         //    @ts-ignore
-          props.sendDialogMessage(props.currentDialogInfo?.dialogId, props.currentDialogInfo?.userName, props.currentDialogInfo?.userImg, currentMessage)
+          props.sendDialogMessage(props.currentDialogId, currentMessage)
           setCurrentMessage('')
        }}
      >

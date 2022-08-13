@@ -1,19 +1,16 @@
 import { Dispatch } from "react"
 import { dialogsAPI } from "../api/dialogs"
-import { CurrentDialogInfoType, DialogType, MessageType } from "../ts/dialogs"
+import { DialogType, MessageType } from "../ts/dialogs"
 import { InferActionsTypes } from "./redux-store"
 
 const SET_DIALOGS = 'Viktor-gif/dialogs/SET_DIALOGS'
 const SET_MESSAGES = 'Viktor-gif/dialogs/SET_MESSAGES'
-const SET_CURRENT_DIALOG_INFO = 'Viktor-gif/dialogs/SET_CURRENT_DIALOG_INFO'
 
 type InitialStateType = typeof initialState
 
 const initialState = {
-    test: 'test',
     dialogs: null as DialogType[] | null,
-    messages: null as MessageType[] | null,
-    currentDialogInfo: null as CurrentDialogInfoType | null
+    messages: null as MessageType[] | null
 }
 
 export const dialogsReducer = (state: InitialStateType = initialState, action: actionsTypes) => {
@@ -30,11 +27,6 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: a
                 ...state,
                 messages: action.payload
             }
-        case SET_CURRENT_DIALOG_INFO:
-            return {
-                ...state,
-                currentDialogInfo: action.payload
-            }
         default: return state
     }
 }
@@ -44,7 +36,6 @@ type actionsTypes = InferActionsTypes<typeof dialogsActions>
 export const dialogsActions = {
     setDialogs: (dialogs: DialogType[]) => ({ type: SET_DIALOGS, payload: dialogs} as const),
     setMessages: (messages: MessageType[]) => ({ type: SET_MESSAGES, payload: messages} as const),
-    setCurrentDialogInfo: (info: CurrentDialogInfoType) => ({ type: SET_CURRENT_DIALOG_INFO, payload: info} as const),
 }
 
 // redux-thunk
@@ -59,18 +50,15 @@ export const createDialog = (userId: string) => (diapatch: DispatchType) => {
         console.log(res)
     })
 }
-export const getDialogMessages = (dialogId: string, userName: string, userImg: string | null) => (dispatch: DispatchType) => {
+export const getDialogMessages = (dialogId: string) => (dispatch: DispatchType) => {
     dialogsAPI.getDialogMessages(dialogId).then(res => {
         dispatch(dialogsActions.setMessages(res.data))
-        console.log(res.data)
-        dispatch(dialogsActions.setCurrentDialogInfo({ dialogId, userName, userImg }))
-        
     })
 }
-export const sendDialogMessage = (dialogId: string, userName: string, userImg: string | null, message: string) => (dispatch: DialogType) => {
+export const sendDialogMessage = (dialogId: string, message: string) => (dispatch: DialogType) => {
     dialogsAPI.sendMessage(dialogId, message).then(res => {
         // @ts-ignore
-        dispatch(getDialogMessages(dialogId, userName, userImg))
+        dispatch(getDialogMessages(dialogId))
     })
 }
 export const deleteMessage = (dialogId: string, messageId: string) => (dispatch: DialogType) => {

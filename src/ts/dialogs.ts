@@ -14,8 +14,3 @@ export type MessageType = {
     viewed: boolean
     created: string
 }
-export type CurrentDialogInfoType = {
-    dialogId: string
-    userName: string
-    userImg: string | null
-}

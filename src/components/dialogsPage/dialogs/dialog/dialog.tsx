@@ -1,5 +1,3 @@
-
-
 import s from "./dialog.module.css"
 import avatar from "../../../../img/ava_male.jpeg"
 import { ProfileDataType } from "../../../../ts/profile"
@@ -13,8 +11,9 @@ type DialogPropsType = {
     created: string
     userId: string
 
-    getDialogMessages: (dialogId: string, userName: string, userImg: string | null) => void
+    getDialogMessages: (dialogId: string) => void
     setCurrentDialogInfo: (dialogInfo: ProfileDataType | null) => void
+    setCurrentDialogId: (dialogId: string) => void
 }
 
 export const Dialog = (props: DialogPropsType) => {
@@ -26,7 +25,8 @@ export const Dialog = (props: DialogPropsType) => {
     }, [])
 
     const getDialogMessages = () => {
-        props.getDialogMessages(props.dialogId, "some name", "some url")
+        props.getDialogMessages(props.dialogId)
+        props.setCurrentDialogId(props.dialogId)
         profileAPI.getProfile(props.userId).then(res => {
             props.setCurrentDialogInfo(res.data)
         })

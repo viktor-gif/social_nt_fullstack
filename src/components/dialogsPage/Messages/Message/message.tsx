@@ -1,14 +1,11 @@
 
-import { CurrentDialogInfoType, MessageType } from "../../../../ts/dialogs"
 import s from "./message.module.css"
 import avatar from "../../../../img/ava_male.jpeg"
 import React, { useEffect, useState } from "react"
 import deleteIcon from "../../../../img/icons/delete-icon.png"
 import spamIcon from "../../../../img/icons/spam-icon.png"
 import viewedIcon from "../../../../img/icons/check-mark-5291043.png"
-import { AuthDataType } from "../../../../ts/auth"
 import { ProfileDataType } from "../../../../ts/profile"
-import { getProfile } from "../../../../redux/profileReducer"
 import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
 
 type PropsPage = {
@@ -17,11 +14,11 @@ type PropsPage = {
     message: string
     key: string
     authProfileData: ProfileDataType | null
-    currentDialogInfo: CurrentDialogInfoType | null
     userProfileData: ProfileDataType | null
     messagesMustDelete: string[]
     isSpam: boolean
     isViewed: boolean
+    currentDialogId: string | null
 
     getProfile: (userId: string) => void
     deleteMessage: (dialogId: string, messageId: string) => void
@@ -47,7 +44,7 @@ export const Message = React.memo((props: PropsPage) => {
             if (props.messagesMustDelete.includes(props.messageId)) {
                 
                 {/* @ts-ignore */ }
-                props.deleteMessage(props.currentDialogInfo?.dialogId, props.messageId)
+                props.deleteMessage(props.currentDialogId, props.messageId)
                 //props.setMessageMustDelete(props.messagesMustDelete.filter(item => item !== props.messageId))
                 props.setMessageMustDelete([])
                 
@@ -58,7 +55,7 @@ export const Message = React.memo((props: PropsPage) => {
     useEffect(() => {
         if (props.senderId !== props.authProfileData?._id && !props.isViewed) {
             // @ts-ignore
-            props.setViewed(props.currentDialogInfo?.dialogId, props.messageId, props.senderId)
+            props.setViewed(props.currentDialogId, props.messageId, props.senderId)
         }
     }, [])
     console.log(props.messagesMustDelete)
@@ -73,10 +70,10 @@ export const Message = React.memo((props: PropsPage) => {
     const toggleSpam = () => {
         if (props.isSpam) {
             // @ts-ignore
-            props.restoreFromSpam(props.currentDialogInfo?.dialogId, props.messageId)
+            props.restoreFromSpam(props.currentDialogId, props.messageId)
         } else {
             // @ts-ignore
-            props.setAsSpam(props.currentDialogInfo?.dialogId, props.messageId)
+            props.setAsSpam(props.currentDialogId, props.messageId)
         }
         setActiveMessageOptions(false)
     }

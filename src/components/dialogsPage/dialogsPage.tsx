@@ -10,7 +10,7 @@ import {
 import { getProfile } from "../../redux/profileReducer"
 import { AppStateType } from "../../redux/redux-store"
 import { AuthDataType } from "../../ts/auth"
-import { CurrentDialogInfoType, DialogType, MessageType } from "../../ts/dialogs"
+import { DialogType, MessageType } from "../../ts/dialogs"
 import { ProfileDataType } from "../../ts/profile"
 import { Dialogs } from "./dialogs/dialogs"
 import s from "./dialogsPage.module.css"
@@ -19,7 +19,6 @@ import { Messages } from "./Messages/messages"
 type PropsType = {
     dialogs: DialogType[] | null
     messages: MessageType[] | null
-    currentDialogInfo: CurrentDialogInfoType | null
     isAuth: boolean
     authData: AuthDataType | null
     authProfileData: ProfileDataType | null
@@ -27,8 +26,8 @@ type PropsType = {
 
     getProfile: (userId: string) => void
     getDialogs: () => void
-    getDialogMessages: (dialogId: string, userName: string, userImg: string | null) => void
-    sendDialogMessage: (dialogId: string, userName: string, userImg: string | null, message: string) => void
+    getDialogMessages: (dialogId: string) => void
+    sendDialogMessage: (dialogId: string, message: string) => void
     deleteMessage: (dialogId: string, messageId: string) => void
     setAsSpam: (dialogId: string, messageId: string) => void
     restoreFromSpam: (dialogId: string, messageId: string) => void
@@ -37,6 +36,7 @@ type PropsType = {
 
 const DialogsPage = (props: PropsType) => {
     const [currentDialogInfo, setCurrentDialogInfo] = useState<ProfileDataType | null>(null)
+    const [currentDialogId, setCurrentDialogId] = useState<string | null>(null)
 
     useEffect(() => {
         props.getDialogs()
@@ -44,20 +44,21 @@ const DialogsPage = (props: PropsType) => {
     if (!props.isAuth) return <Navigate replace to="/login" />
     return <div className={s.dialogsPage}>
         <Dialogs dialogs={props.dialogs} getDialogMessages={props.getDialogMessages}
-            authProfileData={props.authProfileData} setCurrentDialogInfo={setCurrentDialogInfo} />
-        <Messages messages={props.messages} currentDialogInfo={props.currentDialogInfo}
+            authProfileData={props.authProfileData} setCurrentDialogInfo={setCurrentDialogInfo}
+            setCurrentDialogId={setCurrentDialogId} />
+        <Messages messages={props.messages}
             sendDialogMessage={props.sendDialogMessage} authData={props.authData}
             authProfileData={props.authProfileData} userProfileData={props.userProfileData}
             getProfile={props.getProfile} deleteMessage={props.deleteMessage}
             setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam}
-            setViewed={props.setViewed} />
+            setViewed={props.setViewed} currentDialogInfo={currentDialogInfo}
+            currentDialogId={currentDialogId} />
     </div>
 }
 
 const mapStateToProps = (state: AppStateType) => ({
     dialogs: state.dialogsPage.dialogs,
     messages: state.dialogsPage.messages,
-    currentDialogInfo: state.dialogsPage.currentDialogInfo,
     isAuth: state.auth.isAuth,
     authData: state.auth.authData,
     authProfileData: state.auth.authProfileData,

@@ -9,8 +9,9 @@ type PropsType = {
     dialogs: DialogType[] | null
     authProfileData: ProfileDataType | null
 
-    getDialogMessages: (dialogId: string, userName: string, userImg: string | null) => void
+    getDialogMessages: (dialogId: string) => void
     setCurrentDialogInfo: (dialogInfo: ProfileDataType | null) => void
+    setCurrentDialogId: (dialogId: string) => void
 }
 
 export const Dialogs = (props: PropsType) => {
@@ -19,7 +20,8 @@ export const Dialogs = (props: PropsType) => {
     const dialogsItems = props.dialogs?.map(d => {
 
         return <Dialog key={d.dialogId} userId={d.userId} dialogId={d.dialogId} created={d.created}
-            getDialogMessages={props.getDialogMessages} setCurrentDialogInfo={props.setCurrentDialogInfo} />
+            getDialogMessages={props.getDialogMessages} setCurrentDialogInfo={props.setCurrentDialogInfo}
+            setCurrentDialogId={props.setCurrentDialogId} />
     })
     return <div className={s.dialogs}>
         <div className={s.dialogs__head}>
