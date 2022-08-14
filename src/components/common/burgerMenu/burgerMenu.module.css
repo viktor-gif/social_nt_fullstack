@@ -13,7 +13,7 @@
   transition: background-color, 0.3s linear;
 }
 .burger:hover {
-  background-color: #d6c0ff;
+  background-color: #6fdac2;
 }
 .burger__dots {
   width: 5px;

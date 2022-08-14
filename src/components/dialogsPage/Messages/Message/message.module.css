@@ -1,60 +1,72 @@
 .message {
-  display: grid;
-  grid-template-columns: 50px 1fr;
-  grid-template-areas:
-    "avatar userName"
-    "message message";
+  width: 100%;
+  padding: 5px 10px;
+  display: flex;
+  position: relative;
+  z-index: 1;
+}
+.message:hover .message__burger {
+  opacity: 1;
 }
 .message__auth {
-  grid-template-columns: 1fr 50px;
-  grid-template-areas:
-    "userName avatar"
-    "message message";
-  justify-items: end;
+  justify-content: end;
 }
-.messageAvatar {
-  grid-area: avatar;
-}
-.message__userName {
-  grid-area: userName;
-}
-.message__authName {
-  text-align: right;
-}
-.message__text {
-  grid-area: message;
-  display: inline-block;
+.message__textBlock {
   width: fit-content;
-  padding: 0.8em;
-  background-color: rgba(250, 235, 215, 0.5);
-  margin: 10px 0;
-  border-radius: 0 0.5em 0.5em 0.5em;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: #e6d8ff;
+  padding: 10px;
+  border-radius: 0 10px 10px 10px;
   color: #333;
-  font-style: italic;
   position: relative;
 }
-.message__textAuth {
-  border-radius: 0.5em 0 0.5em 0.5em;
+.message__textBlock::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 15px solid #e6d8ff;
+  border-left: 15px solid transparent;
+  position: absolute;
+  top: 0;
+  left: -14px;
 }
-.messageAvatar img {
-  width: 30px;
+.message__textBlockAuth {
+  align-items: end;
+  border-radius: 10px 0 10px 10px;
+  background-color: #f2ffd0;
+  color: #555;
 }
-.message__deleteIcon {
-  width: 30px;
-  cursor: pointer;
-  transition: opacity 0.3s linear;
-  position: relative;
-  top: 10px;
-}
-.message__deleteIcon:hover {
-  opacity: 0.5;
+.message__textBlockAuth::before {
+  border-top: 15px solid #f2ffd0;
+  border-right: 15px solid transparent;
+  border-left: none;
+  left: 100%;
 }
 
-.message__authBurger {
+.message__text {
+  color: #333;
+}
+.message__created {
+  color: #999;
+}
+
+.message__burger {
   width: fit-content;
   position: absolute;
-  left: 30px;
-  top: 0;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: .3s;
+}
+.setVisible {
+  opacity: 1;
+}
+.message__authBurger {
+  left: -40px;
 }
 
 .message__options {
@@ -62,13 +74,26 @@
   flex-direction: column;
   padding: 10px;
   position: absolute;
-  top: 1em;
-  right: -5em;
-  max-width: 200px;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  z-index: 1000;
+  width: max-content;
   background-color: aliceblue;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  box-shadow: 0 0 5px #00000050;
 }
-.message__optionsAuth {
-  right: calc(100% - 2em);
+.message__options::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-top: 10px solid aliceblue;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .message__options_item img {
   width: 20px;
@@ -83,9 +108,10 @@
   cursor: pointer;
   background-color: transparent;
   transition: all 0.3s linear;
+  border-radius: 5px;
 }
 .message__options_item:hover {
-  background-color: #999;
+  background-color: rgb(183, 183, 183);
   color: #fff;
 }
 
@@ -121,7 +147,7 @@
   color: #fff;
 }
 .spam {
-  position: absolute;
+  /* position: absolute;
   top: 15px;
   left: 0;
   width: 100%;
@@ -129,14 +155,14 @@
   background-color: red;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 .message__viewed {
   position: absolute;
   bottom: 0;
-  right: -20px;
+  right: -25px;
   width: 20px;
 }
 .message__viewedAuth {
-  right: 100%;
+  right: calc(100% + 5px);
 }

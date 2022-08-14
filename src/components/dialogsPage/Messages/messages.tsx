@@ -38,7 +38,8 @@ export const Messages = React.memo((props: PropsPage) => {
             getProfile={props.getProfile} deleteMessage={props.deleteMessage}
             messagesMustDelete={messagesMustDelete} setMessageMustDelete={setMustDeleteMessages}
             isSpam={m.isSpam} setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam}
-            isViewed={m.viewed} setViewed={props.setViewed} currentDialogId={props.currentDialogId} />
+            isViewed={m.viewed} setViewed={props.setViewed} currentDialogId={props.currentDialogId}
+            created={m.created} />
     })
     return <div className={s.messages__wrap}>
         <div className={s.messages__header}>

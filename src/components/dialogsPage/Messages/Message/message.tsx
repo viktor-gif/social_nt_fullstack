@@ -1,12 +1,12 @@
 
 import s from "./message.module.css"
-import avatar from "../../../../img/ava_male.jpeg"
 import React, { useEffect, useState } from "react"
 import deleteIcon from "../../../../img/icons/delete-icon.png"
 import spamIcon from "../../../../img/icons/spam-icon.png"
-import viewedIcon from "../../../../img/icons/check-mark-5291043.png"
 import { ProfileDataType } from "../../../../ts/profile"
 import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
+import { formatDate } from "../../../../utils/formatDate"
+import { CheckmarkDone, Trash } from "react-ionicons"
 
 type PropsPage = {
     messageId: string
@@ -19,6 +19,7 @@ type PropsPage = {
     isSpam: boolean
     isViewed: boolean
     currentDialogId: string | null
+    created: string
 
     getProfile: (userId: string) => void
     deleteMessage: (dialogId: string, messageId: string) => void
@@ -34,6 +35,7 @@ export const Message = React.memo((props: PropsPage) => {
     const [isDeleteMenuActive, setDeleteMenuActive] = useState(false)
     
     const [messageMustDelete, setMessageMustDelete] = useState(false)
+    const [isBurgerVisible, setBurgerVisible] = useState(false)
 
     useEffect(() => {
         if (!senderIsAuthUser && (props.userProfileData?._id !== props.senderId)) {
@@ -58,10 +60,15 @@ export const Message = React.memo((props: PropsPage) => {
             props.setViewed(props.currentDialogId, props.messageId, props.senderId)
         }
     }, [])
-    console.log(props.messagesMustDelete)
 
     const toggleMessageOptions = () => {
-        isActiveMessageOptions ? setActiveMessageOptions(false) : setActiveMessageOptions(true)
+        if (isActiveMessageOptions) {
+            setActiveMessageOptions(false)
+            setBurgerVisible(false)
+        } else {
+            setActiveMessageOptions(true)
+            setBurgerVisible(true)
+        }
     }
     const getDeletemenu = () => {
         setDeleteMenuActive(true)
@@ -77,9 +84,6 @@ export const Message = React.memo((props: PropsPage) => {
         }
         setActiveMessageOptions(false)
     }
-
-    const userAvatar = senderIsAuthUser ? props.authProfileData?.photos.small : props.userProfileData?.photos.small
-    const userName = senderIsAuthUser ? props.authProfileData?.fullName : props.userProfileData?.fullName
 
     if (messageMustDelete) {
         return <div className={s.message__deleted}>
@@ -98,29 +102,35 @@ export const Message = React.memo((props: PropsPage) => {
     return <div className={s.message__wrapper}>
         {!isDeleteMenuActive ?
             <div className={s.message + " " + (senderIsAuthUser ? s.message__auth : "")} key={props.messageId}>
-                <div className={s.messageAvatar}>
-                    <img src={userAvatar || avatar} alt="userPhoto" />
-                </div>
-                <div className={s.message__userName + " " + (senderIsAuthUser ? s.message__authName : "")}>{userName}</div>
-                <div className={s.message__text + " " + (senderIsAuthUser ? s.message__textAuth : "")}>
-                    {props.message}
-                    <div className={(senderIsAuthUser ? s.message__authBurger : "")}>
+                <div className={s.message__textBlock + " " + (senderIsAuthUser ? s.message__textBlockAuth : "")}>
+                    <span className={s.message__text}>{props.message}</span>
+                    <span className={s.message__created}>{formatDate(props.created)}</span>
+                    <div className={s.message__burger + " " + (senderIsAuthUser ? s.message__authBurger : "") + " " + (isBurgerVisible ? s.setVisible : "")}>
                         <BurgerMenu burgerClick={toggleMessageOptions} />
+                        {isActiveMessageOptions &&
+                            <div className={s.message__options + " " + (senderIsAuthUser ? s.message__optionsAuth : "")}>
+                                <div onClick={getDeletemenu} className={s.message__options_item}>
+                                    <Trash width="20px" height="20px" color="red" />
+                                    <span>Видалити</span>
+                                </div>
+                                <div onClick={toggleSpam} className={s.message__options_item}>
+                                    <img src={spamIcon} alt="spam-icon" />
+                                    <span>{props.isSpam ? "Вилучити зі спаму" : "Вважати спамом"}</span>
+                                </div>
+                            </div>
+                        }
                     </div>
-                    {isActiveMessageOptions &&
-                        <div className={s.message__options + " " + (senderIsAuthUser ? s.message__optionsAuth : "")}>
-                            <div onClick={getDeletemenu} className={s.message__options_item}>
-                                <img src={deleteIcon} alt="del-icon" />
-                                <span>Видалити</span>
+                    
+                    {props.isViewed
+                        && <div className={s.message__viewed + " " + (senderIsAuthUser ? s.message__viewedAuth : "")}>
+                                <CheckmarkDone
+                                    width='20px'
+                                    height='20px'
+                                    color='#888'
+                                />
                             </div>
-                            <div onClick={toggleSpam} className={s.message__options_item}>
-                                <img src={spamIcon} alt="spam-icon" />
-                                <span>{props.isSpam ? "Вилучити зі спаму" : "Вважати спамом"}</span>
-                            </div>
-                        </div>
                     }
-                    {props.isViewed && <img className={s.message__viewed + " " + (senderIsAuthUser ? s.message__viewedAuth : "")} src={viewedIcon} alt="Viewed" />}
-                    {props.isSpam && <div className={s.spam}>SPAM</div>}
+                    {/* {props.isSpam && <div className={s.spam}>SPAM</div>} */}
                 </div>
             </div>
             :
