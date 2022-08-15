@@ -130,7 +130,7 @@ export const Message = React.memo((props: PropsPage) => {
                                 />
                             </div>
                     }
-                    {/* {props.isSpam && <div className={s.spam}>SPAM</div>} */}
+                    {props.isSpam && <div className={s.spam}>SPAM</div>}
                 </div>
             </div>
             :

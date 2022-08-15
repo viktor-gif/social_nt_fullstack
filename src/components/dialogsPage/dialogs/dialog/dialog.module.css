@@ -31,7 +31,7 @@
   gap: 10px;
 }
 .dialog__created {
-  color: #00ca22;
+  color: #999;
 }
 .newMessagesAmount {
   display: flex;
@@ -43,4 +43,7 @@
   background-color: #00ca22;
   font-size: .8em;
   color: rgb(255, 255, 255);
+}
+.dialog__createdNewMessages {
+  color: #00ca22;
 }

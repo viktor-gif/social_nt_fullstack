@@ -21,7 +21,7 @@ export const Dialogs = (props: PropsType) => {
 
         return <Dialog key={d.dialogId} userId={d.userId} dialogId={d.dialogId} created={d.created}
             getDialogMessages={props.getDialogMessages} setCurrentDialogInfo={props.setCurrentDialogInfo}
-            setCurrentDialogId={props.setCurrentDialogId} />
+            setCurrentDialogId={props.setCurrentDialogId} authProfileData={props.authProfileData} />
     })
     return <div className={s.dialogs}>
         <div className={s.dialogs__head}>

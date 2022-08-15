@@ -30,7 +30,7 @@ export const Messages = React.memo((props: PropsPage) => {
     useEffect(() => {
 
     }, [])
-
+    
     const messagesItems = props.messages?.map(m => {
         return <Message messageId={m._id} key={m._id} senderId={m.sender}
             message={m.message} authProfileData={props.authProfileData}
