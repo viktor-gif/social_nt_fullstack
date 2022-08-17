@@ -1,21 +1,19 @@
 
 import s from "./message.module.css"
 import React, { useEffect, useState } from "react"
-import deleteIcon from "../../../../img/icons/delete-icon.png"
 import spamIcon from "../../../../img/icons/spam-icon.png"
 import { ProfileDataType } from "../../../../ts/profile"
 import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
 import { formatDate } from "../../../../utils/formatDate"
 import { CheckmarkDone, Trash } from "react-ionicons"
 
-type PropsPage = {
+type PropsType = {
     messageId: string
     senderId: string
     message: string
     key: string
     authProfileData: ProfileDataType | null
     userProfileData: ProfileDataType | null
-    messagesMustDelete: string[]
     isSpam: boolean
     isViewed: boolean
     currentDialogId: string | null
@@ -23,36 +21,38 @@ type PropsPage = {
 
     getProfile: (userId: string) => void
     deleteMessage: (dialogId: string, messageId: string) => void
-    setMessageMustDelete: (messagesIds: string[]) => void
     setAsSpam: (dialogId: string, messageId: string) => void
     restoreFromSpam: (dialogId: string, messageId: string) => void
     setViewed: (dialogId: string, messageId: string, senderId: string) => void
     getDialogMessages: (dialogId: string) => void
 }
 
-export const Message = React.memo((props: PropsPage) => {
+
+export const Message = React.memo((props: PropsType) => {
     const senderIsAuthUser = props.authProfileData?._id === props.senderId
     const [isActiveMessageOptions, setActiveMessageOptions] = useState(false)
     const [isDeleteMenuActive, setDeleteMenuActive] = useState(false)
     
     const [messageMustDelete, setMessageMustDelete] = useState(false)
     const [isBurgerVisible, setBurgerVisible] = useState(false)
-
+    console.log(messageMustDelete)
+    const cleanup = () => {
+        console.log(messageMustDelete)
+            if (messageMustDelete) {
+               debugger
+                {/* @ts-ignore */ }
+                props.deleteMessage(props.currentDialogId, props.messageId)
+                // props.setMessageMustDelete(props.messagesMustDelete.filter(item => item !== props.messageId))
+                // props.setMustDeleteMessages([])
+                
+            }
+    }
     useEffect(() => {
         if (!senderIsAuthUser && (props.userProfileData?._id !== props.senderId)) {
             props.getProfile(props.senderId)
         }
         return () => {
-            
-            if (props.messagesMustDelete.includes(props.messageId)) {
-                
-                {/* @ts-ignore */ }
-                props.deleteMessage(props.currentDialogId, props.messageId)
-                //props.setMessageMustDelete(props.messagesMustDelete.filter(item => item !== props.messageId))
-                props.setMessageMustDelete([])
-                
-            }
-            
+            cleanup()
         }
     }, [])
     useEffect(() => {
@@ -94,7 +94,6 @@ export const Message = React.memo((props: PropsPage) => {
                 <button onClick={() => {
                     setMessageMustDelete(false)
                     setDeleteMenuActive(false)
-                    props.setMessageMustDelete(props.messagesMustDelete.filter(item => item !== props.messageId))
                 }
                 }>Відновити</button>
             </div>
@@ -138,10 +137,11 @@ export const Message = React.memo((props: PropsPage) => {
             <div className={s.message__deleteMenu}>
                 <div className={s.message__deleteMenu_text}>Ви дійсно хочете видалити це повідомлення?</div>
                 <div className={s.message__deleteMenu_buttons}>
-                    {/* @ts-ignore */}
+                    
                     <button onClick={() => {
                         setMessageMustDelete(true)
-                        props.setMessageMustDelete(props.messagesMustDelete.concat(props.messageId))
+                        {/* @ts-ignore */}
+                        props.deleteMessage(props.currentDialogId, props.messageId)
                     }
                     }>Так</button>
                     <button onClick={() => setDeleteMenuActive(false)}>Ні</button>

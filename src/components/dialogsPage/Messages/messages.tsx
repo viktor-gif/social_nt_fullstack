@@ -3,7 +3,7 @@ import { MessageType } from "../../../ts/dialogs"
 import s from "./messages.module.css"
 import { MessagesForm } from "./messagesForm"
 import avatar from "../../../img/ava_male.jpeg"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { AuthDataType } from "../../../ts/auth"
 import { ProfileDataType } from "../../../ts/profile"
 import { Message } from "./Message/message"
@@ -27,8 +27,7 @@ type PropsPage = {
 }
 
 export const Messages = React.memo((props: PropsPage) => {
-    const [messagesMustDelete, setMustDeleteMessages] = useState<string[]>([])
-    
+
     const messagesItems = props.messages
         ?.filter(m => props.isSpamMode ? m.isSpam : !m.isSpam)
         .map(m => {
@@ -36,7 +35,6 @@ export const Messages = React.memo((props: PropsPage) => {
             message={m.message} authProfileData={props.authProfileData}
             userProfileData={props.userProfileData}
             getProfile={props.getProfile} deleteMessage={props.deleteMessage}
-            messagesMustDelete={messagesMustDelete} setMessageMustDelete={setMustDeleteMessages}
             isSpam={m.isSpam} setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam}
             isViewed={m.viewed} setViewed={props.setViewed} currentDialogId={props.currentDialogId}
             created={m.created} getDialogMessages={props.getDialogMessages} />
