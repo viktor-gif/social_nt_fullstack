@@ -104,3 +104,8 @@
   border-right: 2px solid #00c900;
   left: 1px;
 }
+.spamTitle {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 10px;
+}

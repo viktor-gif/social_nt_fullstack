@@ -10,6 +10,7 @@
   background-color: #e4e4e4;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
   position: sticky;
   top: 0;
@@ -19,4 +20,33 @@
 .dialogs__items {
   max-height: 100vh;
   overflow: auto;
+}
+.menuIcon {
+  display: flex;
+  align-items: center;
+  transition: .3s;
+  border-radius: 10px;
+  position: relative;
+}
+.menuIcon:hover {
+  background-color: #fff;
+}
+.menuIcon span {
+  position: relative;
+  top: 2px;
+}
+.dialogs__menu {
+  padding: 5px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  z-index: 1000;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #00000055;
+  width: max-content;
+  transform: translateX(-50%);
+}
+.dialogs__menu li {
+  list-style: none;
 }

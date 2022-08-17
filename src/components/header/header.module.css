@@ -43,11 +43,11 @@
   position: absolute;
   right: 0;
   top: 50px;
+  z-index: 1000;
   width: max-content;
   background-color: #fff;
   
   border-radius: 5px;
-  background-color: #e4e4e4;
 }
 .actionsList li {
   list-style: none;

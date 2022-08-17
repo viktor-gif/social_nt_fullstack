@@ -37,6 +37,7 @@ type PropsType = {
 const DialogsPage = (props: PropsType) => {
     const [currentDialogInfo, setCurrentDialogInfo] = useState<ProfileDataType | null>(null)
     const [currentDialogId, setCurrentDialogId] = useState<string | null>(null)
+    const [isSpamMode, setSpamMode] = useState(false)
 
     useEffect(() => {
         props.getDialogs()
@@ -45,14 +46,16 @@ const DialogsPage = (props: PropsType) => {
     return <div className={s.dialogsPage}>
         <Dialogs dialogs={props.dialogs} getDialogMessages={props.getDialogMessages}
             authProfileData={props.authProfileData} setCurrentDialogInfo={setCurrentDialogInfo}
-            setCurrentDialogId={setCurrentDialogId} />
+            setCurrentDialogId={setCurrentDialogId} setSpamMode={setSpamMode}
+            isSpamMode={isSpamMode} />
         <Messages messages={props.messages}
             sendDialogMessage={props.sendDialogMessage} authData={props.authData}
             authProfileData={props.authProfileData} userProfileData={props.userProfileData}
             getProfile={props.getProfile} deleteMessage={props.deleteMessage}
             setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam}
             setViewed={props.setViewed} currentDialogInfo={currentDialogInfo}
-            currentDialogId={currentDialogId} />
+            currentDialogId={currentDialogId} getDialogMessages={props.getDialogMessages}
+            isSpamMode={isSpamMode} />
     </div>
 }
 

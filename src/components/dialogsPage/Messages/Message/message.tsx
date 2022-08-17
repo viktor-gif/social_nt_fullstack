@@ -27,6 +27,7 @@ type PropsPage = {
     setAsSpam: (dialogId: string, messageId: string) => void
     restoreFromSpam: (dialogId: string, messageId: string) => void
     setViewed: (dialogId: string, messageId: string, senderId: string) => void
+    getDialogMessages: (dialogId: string) => void
 }
 
 export const Message = React.memo((props: PropsPage) => {
@@ -83,6 +84,7 @@ export const Message = React.memo((props: PropsPage) => {
             props.setAsSpam(props.currentDialogId, props.messageId)
         }
         setActiveMessageOptions(false)
+        props.currentDialogId && props.getDialogMessages(props.currentDialogId)
     }
 
     if (messageMustDelete) {
@@ -130,7 +132,6 @@ export const Message = React.memo((props: PropsPage) => {
                                 />
                             </div>
                     }
-                    {props.isSpam && <div className={s.spam}>SPAM</div>}
                 </div>
             </div>
             :
