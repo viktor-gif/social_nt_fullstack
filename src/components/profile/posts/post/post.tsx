@@ -15,7 +15,10 @@ import { Button } from "../../../common/button/Button"
 type PropsType = {
     key: string
     postId: string
-    postText: string
+    postText: string | null
+    postImg: string | null
+    postVideo: string | null
+    postAudio: string | null
     authorId: string
     comments: CommentType[]
     userId: string
@@ -62,7 +65,7 @@ export const Post = React.memo((props: PropsType) => {
         setMenuActive(false)
     }
     const updatePost = () => {
-        props.updatePost(props.postId, currentPostText, props.userId)
+        props.updatePost(props.postId, currentPostText || '', props.userId)
         resetUpdatePost()
     }
     const deleteComment = (commentId: string) => {
@@ -77,7 +80,7 @@ export const Post = React.memo((props: PropsType) => {
 
     if (isUpdate) {
         return <div className={s.post__update}>
-            <textarea id="updatePost" value={currentPostText} onChange={(e: any) => setCurrentPostText(e.target.value)}></textarea>
+            <textarea id="updatePost" value={currentPostText || ''} onChange={(e: any) => setCurrentPostText(e.target.value)}></textarea>
             <div className={s.post__updateButton}>
                 <Button value={"Застосувати зміни"} onClick={updatePost}
                     size="eight" />
@@ -112,9 +115,27 @@ export const Post = React.memo((props: PropsType) => {
             && <PostMenu canDeletePost={canDeletePost} deletePost={deletePost}
                 canUpdatePost={authIsAuthorOfPost} setUpdate={setUpdate} />
         }
-        <div className={s.post__contentBlock}>
-            {props.postText}
-        </div>
+        {props.postText
+            && <div className={s.post__contentBlock}>
+                {props.postText}
+            </div>
+        }
+        {props.postImg
+            && <div className={s.postFile}>
+                <img src={props.postImg} alt="" />
+            </div>
+        }
+        {props.postVideo
+            && <div className={s.postFile}>
+                <video src={props.postVideo} controls />
+            </div>
+        }
+        {props.postAudio
+            && <div className={s.postFile}>
+                <audio src={props.postAudio} controls />
+            </div>
+        }
+
         <div className={s.post__actionsBlock}>
             <span onClick={() => props.toggleLike(props.postId, props.userId)}
                 className={s.post__info}>

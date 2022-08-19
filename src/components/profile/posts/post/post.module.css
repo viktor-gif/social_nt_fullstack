@@ -128,3 +128,10 @@
   display: flex;
   gap: 20px;
 }
+
+.postFile img, .postFile video {
+  max-width: 250px;
+}
+.postFile audio {
+  width: 80%;
+}

@@ -4,8 +4,23 @@ export const postsAPI = {
     getPosts: (userId: string) => {
         return axiosCreate.get(`/posts?userId=${userId}`)
     },
-    createPost: (userId: string, postText: string) => {
-        return axiosCreate.post(`/posts?userId=${userId}`, {postText})
+    createPost: (userId: string, postText: string, file: any) => {
+        const fileData = new FormData()
+        fileData.append("posts", file)
+        return axiosCreate.post(`/posts?userId=${userId}&postText=${postText}`, fileData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+    },
+    postImage(photoFile: any) {
+        const photoData = new FormData()
+        photoData.append("posts", photoFile)
+        return axiosCreate.post(`/posts/images`, photoData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
     },
     deletePost: (postId: string) => {
         return axiosCreate.delete(`/posts/${postId}`)

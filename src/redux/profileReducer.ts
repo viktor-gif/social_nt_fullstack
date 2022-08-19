@@ -85,8 +85,8 @@ export const getPosts = (userId: string) => (dispatch: DispatchType) => {
         dispatch(profileActions.setPosts(res.data))
     })
 }
-export const addPost = (userId: string, postText: string) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.createPost(userId, postText)
+export const addPost = (userId: string, postText: string, file: any) => async (dispatch: DispatchType) => {
+    const res = await postsAPI.createPost(userId, postText, file)
     if (res.data.resultCode === 2) {
         // @ts-ignore
         dispatch(getPosts(userId))

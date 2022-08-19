@@ -46,3 +46,23 @@
     box-shadow: inset 0px 0px 10px 0px #fff,
                     0px 0px 10px 0px #fff;
 }
+.iconsBlock {
+    margin-left: 50px;
+}
+.attachIcon {
+    display: inline-block;
+    border-radius: 5px;
+    transition: .3s;
+    position: relative;
+}
+.attachIcon:hover {
+    background-color: #bdbdff;
+    top: -1px;
+}
+.attachIcon span {
+    position: relative;
+    top: 2px;
+}
+.attachIcon input {
+    display: none;
+}

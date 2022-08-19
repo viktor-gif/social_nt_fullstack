@@ -27,10 +27,12 @@ type PropsType = {
     getProfile: (userId: string) => void
     getStatus: (userId: string) => void
     updateStatus: (status: string) => void
+
     updatePhoto: (photoFile: any, userId: string) => void
+
     updateProfile: (data: ProfileDataType) => void
     createDialog: (userId: string) => void
-    addPost: (userId: string, postText: string) => void
+    addPost: (userId: string, postText: string, file: any) => void
     deletePost: (postId: string, userId: string) => void
     updatePost: (postId: string, postText: string, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
@@ -86,6 +88,7 @@ const Profile = (props: PropsType) => {
 
     const onUpdatePhoto = (e: any) => {
         if (e.target.files.length && userId) {
+            console.log(e.target.files)
             props.updatePhoto(e.target.files[0], userId)
         } 
     }

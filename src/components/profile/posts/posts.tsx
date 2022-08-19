@@ -12,7 +12,7 @@ type PropsType = {
     authProfileData: ProfileDataType | null
 
     getPosts: (userId: string) => void
-    addPost: (userId: string, postText: string) => void
+    addPost: (userId: string, postText: string, file: any) => void
     deletePost: (postId: string, userId: string) => void
     updatePost: (postId: string, postText: string, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
@@ -27,14 +27,15 @@ export const Posts = React.memo((props: PropsType) => {
     useEffect(() => {
         props.profileData && props.getPosts(props.profileData._id)
     }, [props.profileData])
-    const postsElements = props.posts.map(p => {
+    const postsElements = [...props.posts].reverse().map(p => {
         return <Post key={p._id} postId={p._id} postText={p.postText} authorId={p.authorId}
             comments={p.comments} created={p.created} userId={p.profileId}
           authProfileData={props.authProfileData} likesCount={p.likesCount}
           deletePost={props.deletePost} updatePost={props.updatePost}
           toggleLike={props.toggleLike} liked={p.likedUsers.includes(props.authProfileData?._id || '')}
           addComment={props.addComment} deleteComment={props.deleteComment}
-          updateComment={props.updateComment} toggleCommentLike={props.toggleCommentLike} />
+          updateComment={props.updateComment} toggleCommentLike={props.toggleCommentLike}
+          postImg={p.postImg} postVideo={p.postVideo} postAudio={p.postAudio} />
     })
   return <div className={s.posts}>
     <PostsForm profileData={props.profileData}

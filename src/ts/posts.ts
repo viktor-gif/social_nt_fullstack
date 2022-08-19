@@ -2,7 +2,10 @@ export type PostType = {
     _id: string
     authorId: string
     profileId: string
-    postText: string
+    postText: string | null
+    postImg: string | null
+    postVideo: string | null
+    postAudio: string | null
     likedUsers: string[]
     likesCount: number
     comments: CommentType[]
