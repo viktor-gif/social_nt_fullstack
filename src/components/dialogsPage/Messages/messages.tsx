@@ -3,7 +3,7 @@ import { MessageType } from "../../../ts/dialogs"
 import s from "./messages.module.css"
 import { MessagesForm } from "./messagesForm"
 import avatar from "../../../img/ava_male.jpeg"
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { AuthDataType } from "../../../ts/auth"
 import { ProfileDataType } from "../../../ts/profile"
 import { Message } from "./Message/message"
@@ -18,7 +18,7 @@ type PropsPage = {
     isSpamMode: boolean
 
     getProfile: (userId: string) => void
-    sendDialogMessage: (dialogId: string, message: string) => void
+    sendDialogMessage: (dialogId: string, message: string, file: any) => void
     deleteMessage: (dialogId: string, messageId: string) => void
     setAsSpam: (dialogId: string, messageId: string) => void
     restoreFromSpam: (dialogId: string, messageId: string) => void
@@ -27,12 +27,13 @@ type PropsPage = {
 }
 
 export const Messages = React.memo((props: PropsPage) => {
-
     const messagesItems = props.messages
         ?.filter(m => props.isSpamMode ? m.isSpam : !m.isSpam)
         .map(m => {
         return <Message messageId={m._id} key={m._id} senderId={m.sender}
-            message={m.message} authProfileData={props.authProfileData}
+            message={m.message}
+            image={m.image} video={m.video} audio={m.audio}
+            authProfileData={props.authProfileData}
             userProfileData={props.userProfileData}
             getProfile={props.getProfile} deleteMessage={props.deleteMessage}
             isSpam={m.isSpam} setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam}

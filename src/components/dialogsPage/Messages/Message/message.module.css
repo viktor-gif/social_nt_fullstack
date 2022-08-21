@@ -166,3 +166,11 @@
 .message__viewedAuth {
   right: calc(100% + 5px);
 }
+img, audio, video {
+  width: 200px;
+}
+.mediaItem img {
+  width: 100px;
+  height: 100px;
+  border-radius: 0;
+}

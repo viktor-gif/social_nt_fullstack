@@ -10,8 +10,17 @@ export const dialogsAPI = {
     getDialogMessages(dialogId: string) {
         return axiosCreate.get(`dialogs/${dialogId}/messages`)
     },
-    sendMessage(dialogId: string, message: string) {
-        return axiosCreate.post(`dialogs/${dialogId}/messages`, { message: message })
+    sendMessage(dialogId: string, message: string, file: any) {
+        console.log(message)
+        console.log(file)
+        const fileData = new FormData()
+        fileData.append("dialogs", file)
+        return axiosCreate.post(`dialogs/${dialogId}/messages?messageText=${message}&whereIsFile=dialogs`, fileData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        // return axiosCreate.post(`dialogs/${dialogId}/messages`, { message: message })
     },
     deleteMessage(dialogId: string, messageId: string) {
         return axiosCreate.delete(`/dialogs/${dialogId}/messages/${messageId}`)

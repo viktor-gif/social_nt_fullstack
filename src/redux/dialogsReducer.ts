@@ -55,8 +55,9 @@ export const getDialogMessages = (dialogId: string) => (dispatch: DispatchType) 
         dispatch(dialogsActions.setMessages(res.data))
     })
 }
-export const sendDialogMessage = (dialogId: string, message: string) => (dispatch: DialogType) => {
-    dialogsAPI.sendMessage(dialogId, message).then(res => {
+export const sendDialogMessage = (dialogId: string, message: string, file: any) => (dispatch: DialogType) => {
+    
+    dialogsAPI.sendMessage(dialogId, message, file).then(res => {
         // @ts-ignore
         dispatch(getDialogMessages(dialogId))
     })

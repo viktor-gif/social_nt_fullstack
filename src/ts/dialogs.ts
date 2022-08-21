@@ -9,7 +9,10 @@ export type MessageType = {
     _id: string
     deleted: boolean
     isSpam: boolean
-    message: string
+    message: string | null
+    image: string | null
+    video: string | null
+    audio: string | null
     sender: string
     viewed: boolean
     created: string

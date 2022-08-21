@@ -10,7 +10,10 @@ import { CheckmarkDone, Trash } from "react-ionicons"
 type PropsType = {
     messageId: string
     senderId: string
-    message: string
+    message: string | null
+    image: string | null
+    video: string | null
+    audio: string | null
     key: string
     authProfileData: ProfileDataType | null
     userProfileData: ProfileDataType | null
@@ -104,7 +107,24 @@ export const Message = React.memo((props: PropsType) => {
         {!isDeleteMenuActive ?
             <div className={s.message + " " + (senderIsAuthUser ? s.message__auth : "")} key={props.messageId}>
                 <div className={s.message__textBlock + " " + (senderIsAuthUser ? s.message__textBlockAuth : "")}>
-                    <span className={s.message__text}>{props.message}</span>
+                    {props.message
+                        && <span className={s.message__text}>{props.message}</span>
+                    }
+                    {props.image
+                        && <div className={s.mediaItem}>
+                            <img src={props.image} alt="mesImg" />
+                        </div>
+                    }
+                    {props.video
+                        && <div>
+                            <video src={props.video} controls />
+                        </div>
+                    }
+                    {props.audio
+                        && <div>
+                            <audio src={props.audio} controls />
+                        </div>
+                    }
                     <span className={s.message__created}>{formatDate(props.created)}</span>
                     <div className={s.message__burger + " " + (senderIsAuthUser ? s.message__authBurger : "") + " " + (isBurgerVisible ? s.setVisible : "")}>
                         <BurgerMenu burgerClick={toggleMessageOptions} />

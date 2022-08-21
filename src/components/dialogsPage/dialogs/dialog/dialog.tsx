@@ -23,6 +23,7 @@ export const Dialog = (props: DialogPropsType) => {
     const [lastMessageInDialog, setLastMessageInDialog] = useState('Повідомлень немає')
     const [lastMessageDate, setLastMessageDate] = useState(props.created)
     const [newMessagesAmount, setNewMessagesAmount] = useState(0)
+    const [mediaType, setMediaType] = useState("Фото...")
 
     useEffect(() => {
         profileAPI.getProfile(props.userId).then(res => {
@@ -31,9 +32,16 @@ export const Dialog = (props: DialogPropsType) => {
         dialogsAPI.getDialogMessages(props.dialogId).then(res => {
             // console.log(res.data)
             const newMessagesLength = res.data.filter((m: any) => m.viewed === false && (m.sender !== props.authProfileData?._id)).length
-               
-            res.data.length > 0 && setLastMessageInDialog(res.data[res.data.length - 1].message)
-            res.data.length > 0 && setLastMessageDate(res.data[res.data.length - 1].created)
+            const lastMessage = res.data[res.data.length - 1]
+            if (lastMessage && lastMessage.image) {
+                setMediaType("Фото...")
+            } else if (lastMessage && lastMessage.video) {
+                setMediaType("Відео...")
+            } else if (lastMessage && lastMessage.audio) {
+                setMediaType("Аудіо...")
+            }
+            res.data.length > 0 && setLastMessageInDialog(lastMessage.message || mediaType)
+            res.data.length > 0 && setLastMessageDate(lastMessage.created)
             newMessagesLength !== 0 && setNewMessagesAmount(newMessagesLength)
         })
     }, [])
