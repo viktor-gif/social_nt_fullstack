@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { DocumentText, Heart, Share } from "react-ionicons"
+import { Attach, DocumentText, Heart, Share } from "react-ionicons"
 import { profileAPI } from "../../../../api/profile"
 import { CommentType } from "../../../../ts/posts"
 import { ProfileDataType } from "../../../../ts/profile"
@@ -30,7 +30,7 @@ type PropsType = {
     deletePost: (postId: string, userId: string) => void
     updatePost: (postId: string, postText: string, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
-    addComment: (postId: string, commentText: string, userId: string) => void
+    addComment: (postId: string, userId: string, commentText: string) => void
     deleteComment: (postId: string, commentId: string, userId: string) => void
     updateComment: (postId: string, commentId: string, commentText: string, userId: string) => void
     toggleCommentLike: (postId: string, commentId: string, userId: string) => void
@@ -45,6 +45,8 @@ export const Post = React.memo((props: PropsType) => {
     const [isCommentsAll, setCommentsAll] = useState(false)
 
     const [currentCommentText, setCurrentCommentText] = useState('')
+
+    const [commentFile, setCommentFile] = useState(null)
 
     const authIsAuthorOfPost = props.authorId === props.authProfileData?._id
     const isAuthPosts = props.userId === props.authProfileData?._id
@@ -76,6 +78,12 @@ export const Post = React.memo((props: PropsType) => {
     }
     const toggleCommentLike = (commentId: string) => {
         props.toggleCommentLike(props.postId, commentId, props.userId)
+    }
+
+    const sendComment = () => {
+        props.addComment(props.postId, props.userId, currentCommentText)
+        setCurrentCommentText('')
+        setCommentFile(null)
     }
 
     if (isUpdate) {
@@ -116,8 +124,20 @@ export const Post = React.memo((props: PropsType) => {
                 canUpdatePost={authIsAuthorOfPost} setUpdate={setUpdate} />
         }
         {props.postText
-            && <div className={s.post__contentBlock}>
-                {props.postText}
+            && <div>
+                {props.postText.includes("http://") || props.postText.includes("https://")
+                    ? <div>
+                        <a href={props.postText}>
+                            <div>{props.postText}</div>
+                        {/* @ts-ignore */}
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/X5Sf1bEjhKc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </a>
+                    </div>
+                    : <div className={s.post__contentBlock}>
+                        {props.postText}
+                    </div>
+                }
+                    
             </div>
         }
         {props.postImg
@@ -173,11 +193,19 @@ export const Post = React.memo((props: PropsType) => {
                     value={currentCommentText} onChange={(e: any) => setCurrentCommentText(e.target.value)}
                     onKeyDown={(e: any) => {
                         if (e.keyCode === 13) {
-                            props.addComment(props.postId, currentCommentText, props.userId)
-                            setCurrentCommentText('')
+                            sendComment()
                         }
 
-                    }} />
+                    }}
+                />
+                <label className={s.attachIcon} htmlFor="addFileCommentInput">
+                    <Attach width="30px" height="30px" />
+                    <input type="file" id="addFileCommentInput" onChange={(e: any) => {
+                            setCommentFile(e.target.files[0])
+                        }}
+                    />
+                </label>
+                <span className={s.sendCommentButton} onClick={sendComment}></span>
             </div>
         </div>
         {isCommentsAll

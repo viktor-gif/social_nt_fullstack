@@ -116,12 +116,12 @@ export const Message = React.memo((props: PropsType) => {
                         </div>
                     }
                     {props.video
-                        && <div>
+                        && <div className={s.mediaItem}>
                             <video src={props.video} controls />
                         </div>
                     }
                     {props.audio
-                        && <div>
+                        && <div className={s.mediaItem}>
                             <audio src={props.audio} controls />
                         </div>
                     }

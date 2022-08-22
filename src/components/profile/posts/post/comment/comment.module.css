@@ -105,4 +105,14 @@
 }
 .commentsActions__item {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+.commentsActions__item:hover {
+  background-color: #d2c7ff;
+}
+.date {
+  display: flex;
+  align-items: center;
 }

@@ -104,13 +104,9 @@ export const Comment = React.memo((props: PropsType) => {
                 <div
                     className={s.commentsActions__item}
                 >
-                    <DocumentText
-                        width="20px"
-                        height="20px"
-                        color="#333"
-                    />
+                    <span>Відповісти</span>
                 </div>
-                <div>{formatDate(props.created)}</div>
+                <div className={s.date}>{formatDate(props.created)}</div>
             </div>
             
         </div>

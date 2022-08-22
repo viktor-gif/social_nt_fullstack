@@ -15,25 +15,27 @@ type PropsPage = {
 export const MessagesForm = (props: PropsPage) => {
   const [currentMessage, setCurrentMessage] = useState('')
   const [messageFile, setMessageFile] = useState(null)
+
+  const sendMessage = () => {
+      //    @ts-ignore
+      props.sendDialogMessage(props.currentDialogId, currentMessage, messageFile)
+      setCurrentMessage('')
+      setMessageFile(null)
+    }
+
     return <Formik
        initialValues={{ textMessage: currentMessage }}
         onSubmit={(val) => {
-        //    @ts-ignore
-          props.sendDialogMessage(props.currentDialogId, currentMessage, messageFile)
-          setCurrentMessage('')
+          sendMessage()
        }}
      >
        {({ isSubmitting }) => (
          <Form className={s.formikMessagesForm}>
           <Field type="text" name="textMessage" component="input" value={currentMessage} onChange={(e: any) => setCurrentMessage(e.target.value)}
             placeholder="Відправити повідомлення"
-            onKeyDown={(e: any) => {
+            onKeyPress={(e: any) => {
               if (e.keyCode === 13) {
-                console.log(messageFile)
-                //    @ts-ignore
-                props.sendDialogMessage(props.currentDialogId, currentMessage, messageFile)
-                setCurrentMessage('')
-            
+                sendMessage()
               }
             }}
           />

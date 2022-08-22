@@ -20,6 +20,7 @@ export const PostsForm = React.memo((props: PropsType) => {
     const addPost = () => {
         props.profileData && props.addPost(props.profileData._id, currentPostText, postFile)
         setCurrentPostText('')
+        setPostFile(null)
     }
 
   return <div className={s.postsForm}>
