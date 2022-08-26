@@ -113,8 +113,9 @@ export const toggleLike = (postId: string, userId: string) => async (dispatch: D
         dispatch(getPosts(userId))
     }
 }
-export const addComment = (postId: string, userId: string, commentText: string) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.addComment(postId, commentText)
+export const addComment = (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null = null) => async (dispatch: DispatchType) => {
+
+    const res = await postsAPI.addComment(postId, commentText, file, linkToAnotherComment)
     if (res.data.resultCode === 2) {
         // @ts-ignore
         dispatch(getPosts(userId))

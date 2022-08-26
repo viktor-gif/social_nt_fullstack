@@ -32,9 +32,12 @@
   width: fit-content;
   height: fit-content;
 }
-
-.commentItem {
+.commentItem__wrap {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
+}
+.commentItem {
   font-size: 0.9em;
   color: #666;
   position: relative;
@@ -115,4 +118,29 @@
 .date {
   display: flex;
   align-items: center;
+}
+.commentsInput {
+  margin-left: 40px;
+  position: relative;
+}
+.replyCansel {
+  position: absolute;
+  bottom: -20px;
+  left: 40px;
+}
+.commentMedia img {
+  width: 150px;
+  border-radius: 10px;
+}
+.commentMedia video {
+  width: 300px;
+  border-radius: 10px;
+}
+.commentMedia audio {
+  width: 300px;
+  border-radius: 10px;
+}
+.commentsAnswers {
+  margin-left: 30px;
+  font-size: .9em;
 }

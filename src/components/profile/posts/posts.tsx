@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { PostType } from "../../../ts/posts"
 import { ProfileDataType } from "../../../ts/profile"
 import { Post } from "./post/post"
@@ -16,14 +16,14 @@ type PropsType = {
     deletePost: (postId: string, userId: string) => void
     updatePost: (postId: string, postText: string, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
-    addComment: (postId: string, userId: string, commentText: string) => void
+    addComment: (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null) => void
     deleteComment: (postId: string, commentId: string, userId: string) => void
     updateComment: (postId: string, commentId: string, commentText: string, userId: string) => void
     toggleCommentLike: (postId: string, commentId: string, userId: string) => void
 }
 
 export const Posts = React.memo((props: PropsType) => {
-
+  const [commentFile, setCommentFile] = useState(null)
     useEffect(() => {
         props.profileData && props.getPosts(props.profileData._id)
     }, [props.profileData])
@@ -35,7 +35,8 @@ export const Posts = React.memo((props: PropsType) => {
           toggleLike={props.toggleLike} liked={p.likedUsers.includes(props.authProfileData?._id || '')}
           addComment={props.addComment} deleteComment={props.deleteComment}
           updateComment={props.updateComment} toggleCommentLike={props.toggleCommentLike}
-          postImg={p.postImg} postVideo={p.postVideo} postAudio={p.postAudio} />
+          postImg={p.postImg} postVideo={p.postVideo} postAudio={p.postAudio}
+          commentFile={commentFile} setCommentFile={setCommentFile} />
     })
   return <div className={s.posts}>
     <PostsForm profileData={props.profileData}

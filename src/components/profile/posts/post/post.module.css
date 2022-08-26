@@ -130,11 +130,17 @@
   gap: 20px;
 }
 
-.postFile img, .postFile video {
-  max-width: 250px;
+.postFile video {
+  max-width: 300px;
+  border-radius: 10px;
+}
+.postFile img {
+  max-width: 200px;
+  border-radius: 10px;
 }
 .postFile audio {
   width: 80%;
+  border-radius: 10px;
 }
 .sendCommentButton {
   display: inline-block;

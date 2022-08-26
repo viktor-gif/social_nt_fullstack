@@ -14,7 +14,11 @@ export type PostType = {
 export type CommentType = {
     _id: string
     authorId: string
-    commentText: string
+    commentText: string | null
+    image: string | null
+    video: string | null
+    audio: string | null
+    linkToAnotherComment: string | null
     likedUsers: string[]
     likesCount: number
     created: string

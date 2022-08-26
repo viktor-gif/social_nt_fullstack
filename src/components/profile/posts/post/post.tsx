@@ -26,18 +26,19 @@ type PropsType = {
     likesCount: number
     authProfileData: ProfileDataType | null
     liked: boolean
+    commentFile: any
 
     deletePost: (postId: string, userId: string) => void
     updatePost: (postId: string, postText: string, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
-    addComment: (postId: string, userId: string, commentText: string) => void
+    addComment: (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null) => void
     deleteComment: (postId: string, commentId: string, userId: string) => void
     updateComment: (postId: string, commentId: string, commentText: string, userId: string) => void
     toggleCommentLike: (postId: string, commentId: string, userId: string) => void
+    setCommentFile: (file: any) => void
 }
 
 export const Post = React.memo((props: PropsType) => {
-    console.log(props.comments)
     const [userProfileData, setUserProfileData] = useState<ProfileDataType | null>(null)
     const [isMenuActive, setMenuActive] = useState(false)
     const [isUpdate, setUpdate] = useState(false)
@@ -46,7 +47,7 @@ export const Post = React.memo((props: PropsType) => {
 
     const [currentCommentText, setCurrentCommentText] = useState('')
 
-    const [commentFile, setCommentFile] = useState(null)
+    
 
     const authIsAuthorOfPost = props.authorId === props.authProfileData?._id
     const isAuthPosts = props.userId === props.authProfileData?._id
@@ -58,6 +59,8 @@ export const Post = React.memo((props: PropsType) => {
             })
         }
     }, [])
+
+    console.log(props.commentFile)
 
     const deletePost = () => {
         props.deletePost(props.postId, props.userId)
@@ -81,9 +84,11 @@ export const Post = React.memo((props: PropsType) => {
     }
 
     const sendComment = () => {
-        props.addComment(props.postId, props.userId, currentCommentText)
+        console.log(props.commentFile)
+        debugger
+        props.addComment(props.postId, props.userId, currentCommentText, props.commentFile, null)
         setCurrentCommentText('')
-        setCommentFile(null)
+        props.setCommentFile(null)
     }
 
     if (isUpdate) {
@@ -98,12 +103,19 @@ export const Post = React.memo((props: PropsType) => {
         </div>
     }
 
-    const commentsItems = props.comments.map(c => {
+    const commentsItems = props.comments
+        .filter(c => !c.linkToAnotherComment)
+        .map(c => {
         return <Comment key={c._id} authorId={c.authorId} authProfileData={props.authProfileData}
             commentId={c._id} commentText={c.commentText} likedUsers={c.likedUsers}
+            linkToAnotherComment={c.linkToAnotherComment}
+            image={c.image} video={c.video} audio={c.audio}
             deleteComment={deleteComment} updateComment={updateComment}
-            toggleCommentLike={toggleCommentLike} created={c.created} />
-
+            toggleCommentLike={toggleCommentLike} created={c.created}
+            addComment={props.addComment} comments={props.comments}
+            postId={props.postId} userId={props.userId}
+            commentFile={props.commentFile} setCommentFile={props.setCommentFile} />
+            
     })
     return <div className={s.post}>
         <div className={s.post__infoBlock}>
@@ -201,7 +213,7 @@ export const Post = React.memo((props: PropsType) => {
                 <label className={s.attachIcon} htmlFor="addFileCommentInput">
                     <Attach width="30px" height="30px" />
                     <input type="file" id="addFileCommentInput" onChange={(e: any) => {
-                            setCommentFile(e.target.files[0])
+                            props.setCommentFile(e.target.files[0])
                         }}
                     />
                 </label>
