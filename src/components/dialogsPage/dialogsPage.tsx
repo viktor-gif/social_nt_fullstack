@@ -26,7 +26,7 @@ type PropsType = {
 
     getProfile: (userId: string) => void
     getDialogs: () => void
-    getDialogMessages: (dialogId: string) => void
+    getDialogMessages: (dialogId: string | null) => void
     sendDialogMessage: (dialogId: string, message: string, file: any) => void
     deleteMessage: (dialogId: string, messageId: string) => void
     setAsSpam: (dialogId: string, messageId: string) => void

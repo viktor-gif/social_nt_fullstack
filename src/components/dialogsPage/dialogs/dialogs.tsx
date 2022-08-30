@@ -11,7 +11,7 @@ type PropsType = {
     authProfileData: ProfileDataType | null
     isSpamMode: boolean
 
-    getDialogMessages: (dialogId: string) => void
+    getDialogMessages: (dialogId: string | null) => void
     setCurrentDialogInfo: (dialogInfo: ProfileDataType | null) => void
     setCurrentDialogId: (dialogId: string) => void
     setSpamMode: (isSpam: boolean) => void

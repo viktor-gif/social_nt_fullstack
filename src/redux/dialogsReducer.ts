@@ -35,7 +35,7 @@ type actionsTypes = InferActionsTypes<typeof dialogsActions>
 // action-creators
 export const dialogsActions = {
     setDialogs: (dialogs: DialogType[]) => ({ type: SET_DIALOGS, payload: dialogs} as const),
-    setMessages: (messages: MessageType[]) => ({ type: SET_MESSAGES, payload: messages} as const),
+    setMessages: (messages: MessageType[] | null) => ({ type: SET_MESSAGES, payload: messages} as const),
 }
 
 // redux-thunk
@@ -50,10 +50,14 @@ export const createDialog = (userId: string) => (diapatch: DispatchType) => {
         console.log(res)
     })
 }
-export const getDialogMessages = (dialogId: string) => (dispatch: DispatchType) => {
-    dialogsAPI.getDialogMessages(dialogId).then(res => {
-        dispatch(dialogsActions.setMessages(res.data))
-    })
+export const getDialogMessages = (dialogId: string | null) => (dispatch: DispatchType) => {
+    if (dialogId) {
+        dialogsAPI.getDialogMessages(dialogId).then(res => {
+            dispatch(dialogsActions.setMessages(res.data))
+        })
+    } else {
+        dispatch(dialogsActions.setMessages(null))
+    }
 }
 export const sendDialogMessage = (dialogId: string, message: string, file: any) => (dispatch: DialogType) => {
     

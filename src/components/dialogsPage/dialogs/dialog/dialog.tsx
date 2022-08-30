@@ -13,7 +13,7 @@ type DialogPropsType = {
     userId: string
     authProfileData: ProfileDataType | null
 
-    getDialogMessages: (dialogId: string) => void
+    getDialogMessages: (dialogId: string | null) => void
     setCurrentDialogInfo: (dialogInfo: ProfileDataType | null) => void
     setCurrentDialogId: (dialogId: string) => void
 }

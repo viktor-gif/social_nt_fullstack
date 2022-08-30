@@ -34,7 +34,7 @@
   left: -14px;
 }
 .message__textBlockAuth {
-  align-items: end;
+  align-items: flex-end;
   border-radius: 10px 0 10px 10px;
   background-color: #f2ffd0;
   color: #555;

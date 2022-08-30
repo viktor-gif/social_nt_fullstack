@@ -3,7 +3,7 @@ import { MessageType } from "../../../ts/dialogs"
 import s from "./messages.module.css"
 import { MessagesForm } from "./messagesForm"
 import avatar from "../../../img/ava_male.jpeg"
-import React from "react"
+import React, { useEffect } from "react"
 import { AuthDataType } from "../../../ts/auth"
 import { ProfileDataType } from "../../../ts/profile"
 import { Message } from "./Message/message"
@@ -23,10 +23,17 @@ type PropsPage = {
     setAsSpam: (dialogId: string, messageId: string) => void
     restoreFromSpam: (dialogId: string, messageId: string) => void
     setViewed: (dialogId: string, messageId: string, senderId: string) => void
-    getDialogMessages: (dialogId: string) => void
+    getDialogMessages: (dialogId: string | null) => void
 }
 
 export const Messages = React.memo((props: PropsPage) => {
+
+    useEffect(() => {
+        return () => {
+            props.getDialogMessages(null)
+        }
+    }, [])
+
     const messagesItems = props.messages
         ?.filter(m => props.isSpamMode ? m.isSpam : !m.isSpam)
         .map(m => {
