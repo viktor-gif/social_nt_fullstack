@@ -3,7 +3,7 @@ import { MessageType } from "../../../ts/dialogs"
 import s from "./messages.module.css"
 import { MessagesForm } from "./messagesForm"
 import avatar from "../../../img/ava_male.jpeg"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { AuthDataType } from "../../../ts/auth"
 import { ProfileDataType } from "../../../ts/profile"
 import { Message } from "./Message/message"
@@ -24,9 +24,11 @@ type PropsPage = {
     restoreFromSpam: (dialogId: string, messageId: string) => void
     setViewed: (dialogId: string, messageId: string, senderId: string) => void
     getDialogMessages: (dialogId: string | null) => void
+    updateMessage: (dialogId: string, messageId: string, message: string | null, file: any) => void
 }
 
 export const Messages = React.memo((props: PropsPage) => {
+    const [messageFile, setMessageFile] = useState(null)
 
     useEffect(() => {
         return () => {
@@ -38,14 +40,16 @@ export const Messages = React.memo((props: PropsPage) => {
         ?.filter(m => props.isSpamMode ? m.isSpam : !m.isSpam)
         .map(m => {
         return <Message messageId={m._id} key={m._id} senderId={m.sender}
-            message={m.message}
+            message={m.message} 
             image={m.image} video={m.video} audio={m.audio}
             authProfileData={props.authProfileData}
             userProfileData={props.userProfileData}
             getProfile={props.getProfile} deleteMessage={props.deleteMessage}
             isSpam={m.isSpam} setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam}
             isViewed={m.viewed} setViewed={props.setViewed} currentDialogId={props.currentDialogId}
-            created={m.created} getDialogMessages={props.getDialogMessages} />
+            created={m.created} getDialogMessages={props.getDialogMessages}
+            messageFile={messageFile} setMessageFile={setMessageFile}
+            updateMessage={props.updateMessage} />
     })
     return <div className={s.messages__wrap}>
         <div className={s.messages__header}>
@@ -69,7 +73,8 @@ export const Messages = React.memo((props: PropsPage) => {
         {props.currentDialogInfo
             ? <div className={s.messagesForm}>
                 <MessagesForm currentDialogInfo={props.currentDialogInfo}
-                    sendDialogMessage={props.sendDialogMessage} currentDialogId={props.currentDialogId} />
+                    sendDialogMessage={props.sendDialogMessage} currentDialogId={props.currentDialogId}
+                    messageFile={messageFile} setMessageFile={setMessageFile} />
             </div>
             :
             <div className={s.noChousenDialogText}>Тут можуть бути повідомлення вашого діалогу</div>

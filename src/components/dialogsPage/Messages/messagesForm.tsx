@@ -8,19 +8,21 @@ import s from "./messages.module.css"
 type PropsPage = {
   currentDialogId: string | null
   currentDialogInfo: ProfileDataType | null
+  messageFile: any
     
   sendDialogMessage: (dialogId: string, message: string, file: any) => void
+  setMessageFile: (file: any) => void
 }
 
 export const MessagesForm = (props: PropsPage) => {
   const [currentMessage, setCurrentMessage] = useState('')
-  const [messageFile, setMessageFile] = useState(null)
+  // const [messageFile, setMessageFile] = useState(null)
 
   const sendMessage = () => {
       //    @ts-ignore
-      props.sendDialogMessage(props.currentDialogId, currentMessage, messageFile)
+      props.sendDialogMessage(props.currentDialogId, currentMessage, props.messageFile)
       setCurrentMessage('')
-      setMessageFile(null)
+      props.setMessageFile(null)
     }
 
     return <Formik
@@ -43,7 +45,7 @@ export const MessagesForm = (props: PropsPage) => {
             <label htmlFor="messageFile" className={s.messageFile}>
               <Attach width="30px" height="30px" />
               <input type="file" id="messageFile" onChange={(e: any) => {
-                setMessageFile(e.target.files[0])
+                props.setMessageFile(e.target.files[0])
               }} />
             </label>
           </div>
@@ -56,4 +58,5 @@ export const MessagesForm = (props: PropsPage) => {
        )}
      </Formik>
 }
+
 

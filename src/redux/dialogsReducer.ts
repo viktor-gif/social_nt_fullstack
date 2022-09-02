@@ -66,6 +66,13 @@ export const sendDialogMessage = (dialogId: string, message: string, file: any) 
         dispatch(getDialogMessages(dialogId))
     })
 }
+export const updateMessage = (dialogId: string, messageId: string, message: string | null, file: any) => (dispatch: DialogType) => {
+    
+    dialogsAPI.updateMessage(dialogId, messageId, message, file).then(res => {
+        // @ts-ignore
+        dispatch(getDialogMessages(dialogId))
+    })
+}
 export const deleteMessage = (dialogId: string, messageId: string) => (dispatch: DialogType) => {
     dialogsAPI.deleteMessage(dialogId, messageId).then(res => console.log(res))
 

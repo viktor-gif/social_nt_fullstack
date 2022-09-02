@@ -19,6 +19,16 @@ export const dialogsAPI = {
             }
         })
     },
+    updateMessage(dialogId: string, messageId: string, message: string | null, file: any = null) {
+        
+        const fileData = new FormData()
+        fileData.append("dialogs", file)
+        return axiosCreate.put(`dialogs/${dialogId}/messages/${messageId}/update?messageText=${message}&whereIsFile=dialogs`, fileData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+    },
     deleteMessage(dialogId: string, messageId: string) {
         return axiosCreate.delete(`/dialogs/${dialogId}/messages/${messageId}`)
     },

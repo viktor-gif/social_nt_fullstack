@@ -5,7 +5,7 @@ import {
     getDialogs, getDialogMessages,
     sendDialogMessage, deleteMessage,
     setAsSpam, restoreFromSpam,
-    setViewed
+    setViewed, updateMessage
 } from "../../redux/dialogsReducer"
 import { getProfile } from "../../redux/profileReducer"
 import { AppStateType } from "../../redux/redux-store"
@@ -32,6 +32,7 @@ type PropsType = {
     setAsSpam: (dialogId: string, messageId: string) => void
     restoreFromSpam: (dialogId: string, messageId: string) => void
     setViewed: (dialogId: string, messageId: string, senderId: string) => void
+    updateMessage: (dialogId: string, messageId: string, message: string | null, file: any) => void
 }
 
 const DialogsPage = (props: PropsType) => {
@@ -55,7 +56,7 @@ const DialogsPage = (props: PropsType) => {
             setAsSpam={props.setAsSpam} restoreFromSpam={props.restoreFromSpam}
             setViewed={props.setViewed} currentDialogInfo={currentDialogInfo}
             currentDialogId={currentDialogId} getDialogMessages={props.getDialogMessages}
-            isSpamMode={isSpamMode} />
+            isSpamMode={isSpamMode} updateMessage={props.updateMessage} />
     </div>
 }
 
@@ -76,6 +77,7 @@ export default connect(mapStateToProps, {
     deleteMessage,
     setAsSpam,
     restoreFromSpam,
-    setViewed
+    setViewed,
+    updateMessage
 })(DialogsPage)
 

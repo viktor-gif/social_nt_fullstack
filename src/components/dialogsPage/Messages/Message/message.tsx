@@ -1,11 +1,10 @@
 
 import s from "./message.module.css"
 import React, { useEffect, useState } from "react"
-import spamIcon from "../../../../img/icons/spam-icon.png"
 import { ProfileDataType } from "../../../../ts/profile"
 import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
 import { formatDate } from "../../../../utils/formatDate"
-import { CheckmarkDone, Trash } from "react-ionicons"
+import { Attach, Ban, CheckmarkDone, Construct, Trash } from "react-ionicons"
 
 type PropsType = {
     messageId: string
@@ -21,6 +20,7 @@ type PropsType = {
     isViewed: boolean
     currentDialogId: string | null
     created: string
+    messageFile: any
 
     getProfile: (userId: string) => void
     deleteMessage: (dialogId: string, messageId: string) => void
@@ -28,6 +28,8 @@ type PropsType = {
     restoreFromSpam: (dialogId: string, messageId: string) => void
     setViewed: (dialogId: string, messageId: string, senderId: string) => void
     getDialogMessages: (dialogId: string) => void
+    setMessageFile: (file: any) => void
+    updateMessage: (dialogId: string, messageId: string, message: string | null, file: any) => void
 }
 
 
@@ -38,9 +40,11 @@ export const Message = React.memo((props: PropsType) => {
     
     const [messageMustDelete, setMessageMustDelete] = useState(false)
     const [isBurgerVisible, setBurgerVisible] = useState(false)
-    console.log(messageMustDelete)
+    const [isCorrectMode, setCorrectMode] = useState(false)
+
+    const [currentMessageText, setCurrentMessageText] = useState(props.message || '')
+    
     const cleanup = () => {
-        console.log(messageMustDelete)
             if (messageMustDelete) {
                debugger
                 {/* @ts-ignore */ }
@@ -90,6 +94,29 @@ export const Message = React.memo((props: PropsType) => {
         props.currentDialogId && props.getDialogMessages(props.currentDialogId)
     }
 
+    if (isCorrectMode) {
+        return <div>
+            <div>
+                <input type="text" value={currentMessageText} onChange={(e) => setCurrentMessageText(e.target.value)} />
+            <label htmlFor="messageFile" className={s.messageFile}>
+              <Attach width="30px" height="30px" />
+              <input type="file" id="messageFile" onChange={(e: any) => {
+                props.setMessageFile(e.target.files[0])
+              }} />
+            </label>
+            </div>
+            
+            <button onClick={() => {
+                {/* @ts-ignore */}
+                props.updateMessage(props.currentDialogId, props.messageId, currentMessageText, props.messageFile)
+                setCorrectMode(false)
+                {/* @ts-ignore */}
+                props.getDialogMessages(props.currentDialogId)
+            }}>Зберегти зміни</button>
+            <button onClick={() => setCorrectMode(false)}>Відмднити</button>
+        </div>
+    }
+
     if (messageMustDelete) {
         return <div className={s.message__deleted}>
             <span>Повідомлення видалено</span>
@@ -131,13 +158,22 @@ export const Message = React.memo((props: PropsType) => {
                         {isActiveMessageOptions &&
                             <div className={s.message__options + " " + (senderIsAuthUser ? s.message__optionsAuth : "")}>
                                 <div onClick={getDeletemenu} className={s.message__options_item}>
-                                    <Trash width="20px" height="20px" color="red" />
+                                    <Trash width="30px" height="30px" color="#e65c5c" />
                                     <span>Видалити</span>
                                 </div>
-                                <div onClick={toggleSpam} className={s.message__options_item}>
-                                    <img src={spamIcon} alt="spam-icon" />
+                                <div onClick={toggleSpam} className={s.message__options_item + " " + s.message__options_itemSpam}>
+                                    <Ban width="30px" height="30px" color="#e65c5c" />
                                     <span>{props.isSpam ? "Вилучити зі спаму" : "Вважати спамом"}</span>
                                 </div>
+                                {props.senderId === props.authProfileData?._id
+                                    && <div onClick={() => {
+                                        setCorrectMode(true)
+                                        setActiveMessageOptions(false)
+                                    }} className={s.message__options_item}>
+                                        <Construct width="30px" height="30px" color="#555" />
+                                        <span>Виправити</span>
+                                    </div>
+                                }
                             </div>
                         }
                     </div>

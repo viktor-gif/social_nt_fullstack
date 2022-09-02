@@ -18,6 +18,7 @@ type PropsType = {
 }
 
 export const Dialogs = (props: PropsType) => {
+    console.log(props.dialogs)
     const [isDialogsMenu, setDialogsmenu] = useState(false)
 
     const dialogsItems = props.dialogs?.map(d => {
