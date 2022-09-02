@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react"
 import { ProfileDataType } from "../../../../ts/profile"
 import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
 import { formatDate } from "../../../../utils/formatDate"
-import { Attach, Ban, CheckmarkDone, Construct, Trash } from "react-ionicons"
+import { Ban, CheckmarkDone, Construct, Trash } from "react-ionicons"
+import { UpdateMessage } from "../../../common/updateMessage/updateMessage"
 
 type PropsType = {
     messageId: string
@@ -41,8 +42,6 @@ export const Message = React.memo((props: PropsType) => {
     const [messageMustDelete, setMessageMustDelete] = useState(false)
     const [isBurgerVisible, setBurgerVisible] = useState(false)
     const [isCorrectMode, setCorrectMode] = useState(false)
-
-    const [currentMessageText, setCurrentMessageText] = useState(props.message || '')
     
     const cleanup = () => {
             if (messageMustDelete) {
@@ -95,26 +94,9 @@ export const Message = React.memo((props: PropsType) => {
     }
 
     if (isCorrectMode) {
-        return <div>
-            <div>
-                <input type="text" value={currentMessageText} onChange={(e) => setCurrentMessageText(e.target.value)} />
-            <label htmlFor="messageFile" className={s.messageFile}>
-              <Attach width="30px" height="30px" />
-              <input type="file" id="messageFile" onChange={(e: any) => {
-                props.setMessageFile(e.target.files[0])
-              }} />
-            </label>
-            </div>
-            
-            <button onClick={() => {
-                {/* @ts-ignore */}
-                props.updateMessage(props.currentDialogId, props.messageId, currentMessageText, props.messageFile)
-                setCorrectMode(false)
-                {/* @ts-ignore */}
-                props.getDialogMessages(props.currentDialogId)
-            }}>Зберегти зміни</button>
-            <button onClick={() => setCorrectMode(false)}>Відмднити</button>
-        </div>
+        return <UpdateMessage message={props.message} setMessageFile={props.setMessageFile}
+            setCorrectMode={setCorrectMode} file={props.messageFile} currentDialogId={props.currentDialogId}
+            messageId={props.messageId} updateMessage={props.updateMessage} getDialogMessages={props.getDialogMessages} />
     }
 
     if (messageMustDelete) {
