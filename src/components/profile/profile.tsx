@@ -34,11 +34,11 @@ type PropsType = {
     createDialog: (userId: string) => void
     addPost: (userId: string, postText: string, file: any) => void
     deletePost: (postId: string, userId: string) => void
-    updatePost: (postId: string, postText: string, userId: string) => void
+    updatePost: (postId: string, postText: string, file: any, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
     addComment: (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null) => void
     deleteComment: (postId: string, commentId: string, userId: string) => void
-    updateComment: (postId: string, commentId: string, commentText: string, userId: string) => void
+    updateComment: (postId: string, commentId: string, commentText: string, file: any, userId: string) => void
     toggleCommentLike: (postId: string, commentId: string, userId: string) => void
 }
 

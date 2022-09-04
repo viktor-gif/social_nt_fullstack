@@ -11,6 +11,7 @@ import { PostMenu } from "./postMenu"
 import { Comment } from "./comment/comment"
 import { formatDate } from "../../../../utils/formatDate"
 import { Button } from "../../../common/button/Button"
+import { UpdateMessage } from "../../../common/updateMessage/updateMessage"
 
 type PropsType = {
     key: string
@@ -26,27 +27,28 @@ type PropsType = {
     likesCount: number
     authProfileData: ProfileDataType | null
     liked: boolean
+    postFile: any
     commentFile: any
 
     deletePost: (postId: string, userId: string) => void
-    updatePost: (postId: string, postText: string, userId: string) => void
+    updatePost: (postId: string, postText: string, file: any, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
     addComment: (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null) => void
     deleteComment: (postId: string, commentId: string, userId: string) => void
-    updateComment: (postId: string, commentId: string, commentText: string, userId: string) => void
+    updateComment: (postId: string, commentId: string, commentText: string, file: any, userId: string) => void
     toggleCommentLike: (postId: string, commentId: string, userId: string) => void
     setCommentFile: (file: any) => void
+    setPostFile: (file: any) => void
 }
 
 export const Post = React.memo((props: PropsType) => {
     const [userProfileData, setUserProfileData] = useState<ProfileDataType | null>(null)
     const [isMenuActive, setMenuActive] = useState(false)
     const [isUpdate, setUpdate] = useState(false)
-    const [currentPostText, setCurrentPostText] = useState(props.postText)
+    const [currentPostText, setCurrentPostText] = useState(props.postText || '')
     const [isCommentsAll, setCommentsAll] = useState(false)
 
     const [currentCommentText, setCurrentCommentText] = useState('')
-
     
 
     const authIsAuthorOfPost = props.authorId === props.authProfileData?._id
@@ -70,14 +72,14 @@ export const Post = React.memo((props: PropsType) => {
         setMenuActive(false)
     }
     const updatePost = () => {
-        props.updatePost(props.postId, currentPostText || '', props.userId)
+        props.updatePost(props.postId, currentPostText || '', props.postFile, props.userId)
         resetUpdatePost()
     }
     const deleteComment = (commentId: string) => {
         props.deleteComment(props.postId, commentId, props.userId)
     }
     const updateComment = (commentId: string, commentText: string) => {
-        props.updateComment(props.postId, commentId, commentText, props.userId)
+        props.updateComment(props.postId, commentId, commentText, props.commentFile, props.userId)
     }
     const toggleCommentLike = (commentId: string) => {
         props.toggleCommentLike(props.postId, commentId, props.userId)
@@ -92,15 +94,8 @@ export const Post = React.memo((props: PropsType) => {
     }
 
     if (isUpdate) {
-        return <div className={s.post__update}>
-            <textarea id="updatePost" value={currentPostText || ''} onChange={(e: any) => setCurrentPostText(e.target.value)}></textarea>
-            <div className={s.post__updateButton}>
-                <Button value={"Застосувати зміни"} onClick={updatePost}
-                    size="eight" />
-                <Button value={"Відмінити"} onClick={resetUpdatePost}
-                    size="eight" />
-            </div>
-        </div>
+        return <UpdateMessage resetUpdate={resetUpdatePost} update={updatePost}
+            currentText={currentPostText} setCurrentText={setCurrentPostText} setFile={props.setPostFile} />
     }
 
     const commentsItems = props.comments

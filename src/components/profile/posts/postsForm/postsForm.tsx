@@ -8,19 +8,20 @@ import { Attach } from "react-ionicons"
 type PropsType = {
     authProfileData: ProfileDataType | null
     profileData: ProfileDataType | null
+    postFile: any
 
     addPost: (userId: string, postText: string, file: any) => void
+    setPostFile: (file: any) => void
 }
 
 export const PostsForm = React.memo((props: PropsType) => {
 
     const [currentPostText, setCurrentPostText] = useState('')
-    const [postFile, setPostFile] = useState(null)
 
     const addPost = () => {
-        props.profileData && props.addPost(props.profileData._id, currentPostText, postFile)
+        props.profileData && props.addPost(props.profileData._id, currentPostText, props.postFile)
         setCurrentPostText('')
-        setPostFile(null)
+        props.setPostFile(null)
     }
 
   return <div className={s.postsForm}>
@@ -40,7 +41,7 @@ export const PostsForm = React.memo((props: PropsType) => {
         <label htmlFor="postFile" className={s.attachIcon}>
             <Attach width="30px" height="30px" />
             <input type="file" id="postFile" onChange={(e: any) => {
-                setPostFile(e.target.files[0])
+                props.setPostFile(e.target.files[0])
             }} />
         </label>
         

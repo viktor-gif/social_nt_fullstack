@@ -11,6 +11,7 @@ import { profileAPI } from "../../../../../api/profile"
 import avatar from "../../../../../img/ava_male.jpeg"
 import { formatDate } from "../../../../../utils/formatDate"
 import { CommentType } from "../../../../../ts/posts"
+import { UpdateMessage } from "../../../../common/updateMessage/updateMessage"
 
 type CommentPropsType = {
     authorId: string
@@ -29,7 +30,7 @@ type CommentPropsType = {
     commentFile: any
 
     deleteComment: (commentId: string) => void
-    updateComment: (commentId: string, commentText: string) => void
+    updateComment: (commentId: string, commentText: string, file: any) => void
     toggleCommentLike: (commentId: string) => void
     addComment: (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null) => void
     setCommentFile: (file: any) => void
@@ -84,7 +85,7 @@ type CommentItemPropsType = {
     commentFile: any
 
     deleteComment: (commentId: string) => void
-    updateComment: (commentId: string, commentText: string) => void
+    updateComment: (commentId: string, commentText: string, file: any) => void
     toggleCommentLike: (commentId: string) => void
     addComment: (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null) => void
     setCommentFile: (file: any) => void
@@ -111,17 +112,17 @@ const CommentItem = React.memo((props: CommentItemPropsType) => {
             })
         }
     }, [isAnswerInput])
+
+    const updateComment = () => {
+        props.updateComment(props.commentId, currentTextEdit, props.commentFile)
+        setUpdateMode(false)
+    }
+
+    const resetUpdateComment = () => setUpdateMode(false)
+
     if (isUpdateMode) {
-        return <div className={s.changeCommentForm}>
-            <input type='text' value={currentTextEdit}
-                onChange={(e: any) => setCurrentTextEdit(e.target.value)} />
-            <div className={s.changeCommentForm_submit}>
-                <button onClick={() => {
-                    props.updateComment(props.commentId, currentTextEdit)
-                    setUpdateMode(false)
-                }}>Застосувати зміни</button>
-            </div>
-        </div>
+        return <UpdateMessage resetUpdate={resetUpdateComment} update={updateComment}
+            currentText={currentTextEdit} setCurrentText={setCurrentTextEdit} setFile={props.setCommentFile} />
     }
 
     const liked = props.likedUsers.includes(props.authProfileData?._id || '')

@@ -14,16 +14,18 @@ type PropsType = {
     getPosts: (userId: string) => void
     addPost: (userId: string, postText: string, file: any) => void
     deletePost: (postId: string, userId: string) => void
-    updatePost: (postId: string, postText: string, userId: string) => void
+    updatePost: (postId: string, postText: string, file: any, userId: string) => void
     toggleLike: (postId: string, userId: string) => void
     addComment: (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null) => void
     deleteComment: (postId: string, commentId: string, userId: string) => void
-    updateComment: (postId: string, commentId: string, commentText: string, userId: string) => void
+    updateComment: (postId: string, commentId: string, commentText: string, file: any, userId: string) => void
     toggleCommentLike: (postId: string, commentId: string, userId: string) => void
 }
 
 export const Posts = React.memo((props: PropsType) => {
   const [commentFile, setCommentFile] = useState(null)
+  const [postFile, setPostFile] = useState(null)
+
     useEffect(() => {
         props.profileData && props.getPosts(props.profileData._id)
     }, [props.profileData])
@@ -36,11 +38,13 @@ export const Posts = React.memo((props: PropsType) => {
           addComment={props.addComment} deleteComment={props.deleteComment}
           updateComment={props.updateComment} toggleCommentLike={props.toggleCommentLike}
           postImg={p.postImg} postVideo={p.postVideo} postAudio={p.postAudio}
-          commentFile={commentFile} setCommentFile={setCommentFile} />
+          commentFile={commentFile} setCommentFile={setCommentFile}
+          postFile={postFile} setPostFile={setPostFile} />
     })
   return <div className={s.posts}>
     <PostsForm profileData={props.profileData}
-      authProfileData={props.authProfileData} addPost={props.addPost} />
+      authProfileData={props.authProfileData} addPost={props.addPost}
+      postFile={postFile} setPostFile={setPostFile} />
     {postsElements}
   </div>
 })

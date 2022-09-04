@@ -42,6 +42,8 @@ export const Message = React.memo((props: PropsType) => {
     const [messageMustDelete, setMessageMustDelete] = useState(false)
     const [isBurgerVisible, setBurgerVisible] = useState(false)
     const [isCorrectMode, setCorrectMode] = useState(false)
+
+    const [currentMessageText, setCurrentMessageText] = useState(props.message || '')
     
     const cleanup = () => {
             if (messageMustDelete) {
@@ -93,10 +95,18 @@ export const Message = React.memo((props: PropsType) => {
         props.currentDialogId && props.getDialogMessages(props.currentDialogId)
     }
 
+    const updateMessage = () => {
+        {/* @ts-ignore */ }
+        props.updateMessage(props.currentDialogId, props.messageId, currentMessageText, props.messageFile)
+        setCorrectMode(false)
+        {/* @ts-ignore */}
+        props.getDialogMessages(props.currentDialogId)
+    }
+    const resetUpdateMessage = () => setCorrectMode(false)
+
     if (isCorrectMode) {
-        return <UpdateMessage message={props.message} setMessageFile={props.setMessageFile}
-            setCorrectMode={setCorrectMode} file={props.messageFile} currentDialogId={props.currentDialogId}
-            messageId={props.messageId} updateMessage={props.updateMessage} getDialogMessages={props.getDialogMessages} />
+        return <UpdateMessage currentText={currentMessageText} setFile={props.setMessageFile}
+            resetUpdate={resetUpdateMessage} update={updateMessage} setCurrentText={setCurrentMessageText} />
     }
 
     if (messageMustDelete) {

@@ -99,8 +99,8 @@ export const deletePost = (postId: string, userId: string) => async (dispatch: D
         dispatch(getPosts(userId))
     }
 }
-export const updatePost = (postId: string, postText: string, userId: string) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.updatePost(postId, postText)
+export const updatePost = (postId: string, postText: string, file: any, userId: string) => async (dispatch: DispatchType) => {
+    const res = await postsAPI.updatePost(postId, postText, file)
     if (res.data.resultCode === 2) {
         // @ts-ignore
         dispatch(getPosts(userId))
@@ -121,8 +121,8 @@ export const addComment = (postId: string, userId: string, commentText: string, 
         dispatch(getPosts(userId))
     }
 }
-export const updateComment = (postId: string, commentId: string, commentText: string, userId: string) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.updateComment(postId, commentId, commentText)
+export const updateComment = (postId: string, commentId: string, commentText: string, file: any, userId: string) => async (dispatch: DispatchType) => {
+    const res = await postsAPI.updateComment(postId, commentId, commentText, file)
     if (res.data.resultCode === 2) {
         // @ts-ignore
         dispatch(getPosts(userId))
