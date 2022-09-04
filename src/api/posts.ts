@@ -45,9 +45,10 @@ export const postsAPI = {
     },
 
     updateComment: (postId: string, commentId: string, commentText: string, file: any) => {
+       
         const fileData = new FormData()
         fileData.append("comments", file)
-        return axiosCreate.put(`/posts/${postId}/comments/${commentId}/update?commentText=${commentText}`, fileData, {
+        return axiosCreate.put(`/posts/${postId}/comments/${commentId}/update?commentText=${commentText}&whereIsFile=comments`, fileData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }

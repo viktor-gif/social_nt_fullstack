@@ -122,7 +122,10 @@ export const addComment = (postId: string, userId: string, commentText: string, 
     }
 }
 export const updateComment = (postId: string, commentId: string, commentText: string, file: any, userId: string) => async (dispatch: DispatchType) => {
+    
     const res = await postsAPI.updateComment(postId, commentId, commentText, file)
+    
+    console.log(res.data)
     if (res.data.resultCode === 2) {
         // @ts-ignore
         dispatch(getPosts(userId))

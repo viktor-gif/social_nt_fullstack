@@ -42,6 +42,9 @@ type PropsType = {
 }
 
 export const Post = React.memo((props: PropsType) => {
+
+    console.log(props.comments)
+
     const [userProfileData, setUserProfileData] = useState<ProfileDataType | null>(null)
     const [isMenuActive, setMenuActive] = useState(false)
     const [isUpdate, setUpdate] = useState(false)
@@ -86,8 +89,6 @@ export const Post = React.memo((props: PropsType) => {
     }
 
     const sendComment = () => {
-        console.log(props.commentFile)
-        debugger
         props.addComment(props.postId, props.userId, currentCommentText, props.commentFile, null)
         setCurrentCommentText('')
         props.setCommentFile(null)
