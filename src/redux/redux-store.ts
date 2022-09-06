@@ -5,13 +5,15 @@ import { authReducer } from "./authReducer";
 import { dialogsReducer } from "./dialogsReducer";
 import { profileReducer } from "./profileReducer";
 import { usersReducer } from "./usersReducer";
+import { videoReducer } from "./videoReducer";
 
 
 const rootReducer = combineReducers({
     usersPage: usersReducer,
     auth: authReducer,
     profilePage: profileReducer,
-    dialogsPage: dialogsReducer
+    dialogsPage: dialogsReducer,
+    video: videoReducer
 });
 
 type RootReducerType = typeof rootReducer

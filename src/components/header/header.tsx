@@ -6,8 +6,9 @@ import { AuthDataType } from "../../ts/auth"
 import { logout } from "../../redux/authReducer"
 import avatar from "../../img/ava_male.jpeg"
 import { ProfileDataType } from "../../ts/profile"
-import { LogOut } from "react-ionicons"
+import { LogOut, Videocam } from "react-ionicons"
 import { useState } from "react"
+import { NavLink } from "react-router-dom"
 
 type PropsType = {
     authData: AuthDataType | null
@@ -28,6 +29,11 @@ const Header = (props: PropsType) => {
     
     return <div className={s.header}>
         <img src={logo} className={s.header__logo} />
+        <NavLink to="commonVideo">
+            <div className={s.header__filesBlock}>
+                <Videocam />
+            </div>
+        </NavLink>
         {props.authData?.id
             && <div className={s.menuProfileActions} onClick={toggleMenuActions}>
                 <img src={props.authProfileData?.photos.small || avatar} alt="ava" />

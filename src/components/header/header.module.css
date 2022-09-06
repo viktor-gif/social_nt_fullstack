@@ -61,3 +61,20 @@
 .actionsList li:hover {
   background-color: #fff;
 }
+.header__filesBlock {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 0 10px;
+  height: 100%;
+}
+.header__filesBlock span {
+  padding: 5px;
+  border-radius: 5px;
+  position: relative;
+  transition: .3s;
+}
+.header__filesBlock span:hover {
+  background-color: #9f9ffe;
+  bottom: 1px;
+}

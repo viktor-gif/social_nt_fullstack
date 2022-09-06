@@ -13,6 +13,7 @@ import { AppStateType } from './redux/redux-store';
 import { AuthDataType } from './ts/auth';
 import Profile from './components/profile/profile'
 import DialogsPage from './components/dialogsPage/dialogsPage';
+import CommonVideo from './components/commonVideo/commonVideo';
 
 type PropsType = {
   authData: AuthDataType | null
@@ -41,6 +42,7 @@ function App(props: PropsType) {
             <Route path='/login' element={<Login />} />
             <Route path='/profile/:userId' element={<Profile />} />
             <Route path='/dialogs' element={<DialogsPage />} />
+            <Route path='/commonVideo' element={<CommonVideo />} />
           </Routes>
         </main>
         <aside className="app__aside">

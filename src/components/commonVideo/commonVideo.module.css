@@ -1,0 +1,44 @@
+.videoPage {
+    padding: 20px;
+}
+
+.videoBlock {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.video {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: rgb(181, 181, 255);
+    padding-bottom: 5px;
+}
+.video video {
+    min-width: 200px;
+    max-width: 350px;
+    width: 100%;
+}
+.videoOptionsBlock {
+    margin-bottom: 20px;
+
+}
+.videoForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+.addVideoLabel {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.addVideoLabel input {
+    display: none;
+}
+.formButtons {
+    display: flex;
+    gap: 10px;
+}
