@@ -2,11 +2,11 @@
 import { axiosCreate } from "./api";
 
 export const videoAPI = {
-    getVideo() {
-        return axiosCreate.get(`/video`)
+    getVideo(videoType: string, term: string | null) {
+       
+        return axiosCreate.get(`/video?videoType=${videoType}&term=${term}`)
     },
     addVideo(title: string | null, isPrivat: boolean = false, file: any) {
-        debugger
         const videoData = new FormData()
         videoData.append('video', file)
         return axiosCreate.post(`/video?title=${title}&isPrivat=${isPrivat}`, videoData, {
@@ -14,5 +14,8 @@ export const videoAPI = {
                 "Content-Type": "multipart/form-data"
             }
         })
+    },
+    addCommonVideo(videoId: string) {
+        return axiosCreate.put(`/video/${videoId}/add`)
     }
 }

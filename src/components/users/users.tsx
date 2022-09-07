@@ -27,7 +27,6 @@ export const Users = React.memo((props: PropsType) => {
   const [term, setTerm] = useState('')
   const [friendStatus, setFriendStatus] = useState('all')
   // const [users, setusers] = useState(props.users)
-  
 
   useEffect(() => {
     props.getUsers(pageSize, currentPage, term, friendStatus)
