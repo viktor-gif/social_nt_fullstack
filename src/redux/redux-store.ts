@@ -7,6 +7,7 @@ import { profileReducer } from "./profileReducer";
 import { usersReducer } from "./usersReducer";
 import { videoReducer } from "./videoReducer";
 import { audioReducer } from "./audioReducer";
+import { imgReducer } from "./imgReducer";
 
 
 const rootReducer = combineReducers({
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     video: videoReducer,
-    audio: audioReducer
+    audio: audioReducer,
+    img: imgReducer
 });
 
 type RootReducerType = typeof rootReducer
