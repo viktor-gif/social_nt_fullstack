@@ -1,0 +1,88 @@
+.videoPage {
+    padding: 20px;
+}
+
+.videoBlock {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.video {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: rgb(181, 181, 255);
+    padding-bottom: 5px;
+    position: relative;
+}
+.addIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+.video video {
+    min-width: 200px;
+    max-width: 350px;
+    width: 100%;
+}
+.videoOptionsBlock {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+.videoForm {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: aliceblue;
+    z-index: 2;
+}
+.addVideoLabel {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.addVideoLabel input {
+    display: none;
+}
+.formButtons {
+    display: flex;
+    gap: 10px;
+}
+.addVideo {
+    position: relative;
+}
+.myVideo {
+    cursor: pointer;
+    position: relative;
+}
+.myVideoType {
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f2ff;
+    border-radius: 10px;
+    width: max-content;
+    position: absolute;
+    top: 20px;
+    right: 0;
+    z-index: 1;
+}
+.myVideoType_item {
+    padding: 5px;
+    border-radius: 10px;
+    transition: .3s;
+}
+.myVideoType_item:hover {
+    background-color: #c0c0ff;
+}
+.allVideo {
+    cursor: pointer;
+}

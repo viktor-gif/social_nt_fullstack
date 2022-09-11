@@ -14,6 +14,7 @@ import { AuthDataType } from './ts/auth';
 import Profile from './components/profile/profile'
 import DialogsPage from './components/dialogsPage/dialogsPage';
 import CommonVideo from './components/commonVideo/commonVideo';
+import CommonAudio from './components/commonAudio/commonAudio';
 
 type PropsType = {
   authData: AuthDataType | null
@@ -43,6 +44,7 @@ function App(props: PropsType) {
             <Route path='/profile/:userId' element={<Profile />} />
             <Route path='/dialogs' element={<DialogsPage />} />
             <Route path='/commonVideo' element={<CommonVideo />} />
+            <Route path='/commonAudio' element={<CommonAudio />} />
           </Routes>
         </main>
         <aside className="app__aside">

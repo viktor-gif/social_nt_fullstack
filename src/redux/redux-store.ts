@@ -6,6 +6,7 @@ import { dialogsReducer } from "./dialogsReducer";
 import { profileReducer } from "./profileReducer";
 import { usersReducer } from "./usersReducer";
 import { videoReducer } from "./videoReducer";
+import { audioReducer } from "./audioReducer";
 
 
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
-    video: videoReducer
+    video: videoReducer,
+    audio: audioReducer
 });
 
 type RootReducerType = typeof rootReducer

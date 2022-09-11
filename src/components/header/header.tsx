@@ -6,7 +6,7 @@ import { AuthDataType } from "../../ts/auth"
 import { logout } from "../../redux/authReducer"
 import avatar from "../../img/ava_male.jpeg"
 import { ProfileDataType } from "../../ts/profile"
-import { LogOut, Videocam } from "react-ionicons"
+import { LogOut, MusicalNote, Videocam } from "react-ionicons"
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
 
@@ -32,6 +32,11 @@ const Header = (props: PropsType) => {
         <NavLink to="commonVideo">
             <div className={s.header__filesBlock}>
                 <Videocam />
+            </div>
+        </NavLink>
+        <NavLink to="commonAudio">
+            <div className={s.header__filesBlock}>
+                <MusicalNote />
             </div>
         </NavLink>
         {props.authData?.id
