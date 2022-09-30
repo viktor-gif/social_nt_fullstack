@@ -5,10 +5,11 @@ import s from "./audioPlayer.module.css"
 
 type PropsType = {
     audioData: AudioDataType[] | null
+    currentIndex: number
 
     getAudio: () => void
+    setCurrentIndex: (index: number) => void
 }
-
 
 export const AudioPlayer = (props: PropsType) => {
 
@@ -46,11 +47,17 @@ export const AudioPlayer = (props: PropsType) => {
     const duration = audioElem ? audioElem.current?.duration : 0
     // const volume = audioElem ? audioElem.current?.volume : 0
 
+    useEffect(() => {
+        setAudioIndex(props.currentIndex)
+        setTimeout(() => {
+            isPlaying && playAudio()
+        }, 100)
+    }, [props.currentIndex])
     
     useEffect(() => {
         setTimeout(() => {
             setDurationSong(audioElem.current?.duration)
-        }, 100)
+        }, 500)
         setCurrentAudioUrl(currentUrl)
     }, [audioIndex, props.audioData])
 

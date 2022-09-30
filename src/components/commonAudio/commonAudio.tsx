@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
-import { Add, Pause, Play } from "react-ionicons"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
 import { addAudio, getAudio, addCommonAudio } from "../../redux/audioReducer"
@@ -8,6 +7,7 @@ import { SearchInput } from "../common/searchInput/SearchInput"
 import s from "./commonAudio.module.css"
 import { AudioDataType } from "../../ts/commonAudio"
 import { AudioPlayer } from "./audioPlayer/audioPlayer"
+import { AudioItem } from "./audioItem/audioItem"
 
 type PropsType = {
     audioData: AudioDataType[] | null
@@ -16,78 +16,6 @@ type PropsType = {
     addAudio: (title: string | null, isPrivat: boolean, file: any) => void
     addCommonAudio: (audioId: string) => void
 }
-
-type AudioItemPropsType = {
-    index: number
-    id: string
-    url: string
-    title: string | null
-    currentAudio: any
-    currentIndex: number
-    audioVolume: number
-
-    setCurrentAudio: (element: any) => void
-    setCurrentIndex: (index: number) => void
-    addCommonAudio: (audioId: string) => void
-    setAudioVolume: (volume: number) => void
-}
-const AudioItem = React.memo((props: AudioItemPropsType) => {
-
-    const [isPlaying, setPlaying] = useState(false)
-
-    const audioEl = useRef<any>(null)
-    // console.log(props.currentIndex !== 2 && props.index === props.currentIndex)
-    // console.log(props.currentIndex)
-    // console.log(props.index)
-
-
-            // console.log(audioEl)
-
-    return <div className={s.audioItem}
-        onMouseUp={(e: any) => {
-        }}
-        onMouseLeave={(e: any) => {
-        }}
-        onMouseMove={(e: any) => {
-        }}
-    >
-
-        <div className={s.playBlock}>
-            {isPlaying
-                ? <Pause color="#fff" />
-                : <Play color="#fff" />
-            }
-        </div>
-        <div className={s.progressAndTitleBlock}>
-            <div className={s.title}>
-                
-            </div>
-            <div
-                onMouseDown={(e: any) => {
-                    const width = e.currentTarget.clientWidth
-                    const click = e.clientX
-                    const offsetLeft = e.currentTarget.offsetLeft
-                    const progressW = click - offsetLeft
-                    const progressWidthPersent = (progressW / width) * 100
-
-                }}
-                className={s.progressContainer}
-            >
-                <div className={s.progress} style={{width: `50%`}}></div>
-            </div>
-        </div>
-        <div className={s.soundBlock}>
-            
-            <div onMouseMove={() => console.log('onMouseMove')} className={s.soundContainer}>
-                <div className={s.sound} style={{width: `50%`}}></div>
-            </div>
-        </div>
-        
-        <div className={s.addingIconsContainer}>
-            <Add color="#6060da" />
-        </div>
-    </div>
-})
 
 const CommonAudio = (props: PropsType) => {
     const [titleText, setTitleText] = useState('')
@@ -136,7 +64,7 @@ const CommonAudio = (props: PropsType) => {
     const getAudioWithTerm = () => props.getAudio(audioType, term.length > 0 ? term : null)
     
     return <div className={s.videoPage}>
-        <AudioPlayer audioData={props.audioData} getAudio={getAudio} />
+        <AudioPlayer audioData={props.audioData} getAudio={getAudio} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
         <div className={s.videoOptionsBlock}>
             <div className={s.addVideo}>
                 <label htmlFor="addVideo" className={s.addVideoLabel}>
