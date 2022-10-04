@@ -8,6 +8,7 @@ import { usersReducer } from "./usersReducer";
 import { videoReducer } from "./videoReducer";
 import { audioReducer } from "./audioReducer";
 import { imgReducer } from "./imgReducer";
+import { groopsReducer } from "./groopsReducer";
 
 
 const rootReducer = combineReducers({
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     video: videoReducer,
     audio: audioReducer,
-    img: imgReducer
+    img: imgReducer,
+    groops: groopsReducer
 });
 
 type RootReducerType = typeof rootReducer

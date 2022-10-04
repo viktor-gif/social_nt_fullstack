@@ -4,7 +4,7 @@ import s from "./nav.module.css"
 import { AppStateType } from "../../../redux/redux-store"
 import {
     PersonOutline, PeopleOutline, ChatbubblesOutline,
-    SettingsOutline, HelpOutline, LogoElectron
+    SettingsOutline, HelpOutline, LogoElectron, PeopleCircle
 } from "react-ionicons"
 import { useState } from "react"
 
@@ -43,6 +43,18 @@ const Nav = (props: PropsType) => {
                         />
                     </span>
                     <span className={s.nav__title}>Користувачі</span>
+                </NavLink>
+            </li>
+            <li>
+                <NavLink className={s.active} to="/Groops">
+                    <span className={s.nav__icon}>
+                        <PeopleCircle
+                            color={'#fff'}
+                            height="25px"
+                            width="25px"
+                        />
+                    </span>
+                    <span className={s.nav__title}>Групи</span>
                 </NavLink>
             </li>
             <li>

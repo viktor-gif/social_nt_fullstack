@@ -16,6 +16,7 @@ import DialogsPage from './components/dialogsPage/dialogsPage';
 import CommonVideo from './components/commonVideo/commonVideo';
 import CommonAudio from './components/commonAudio/commonAudio';
 import CommonImg from './components/commonImg/commonImg';
+import Groops from './components/groops/groops';
 
 type PropsType = {
   authData: AuthDataType | null
@@ -47,6 +48,7 @@ function App(props: PropsType) {
             <Route path='/commonVideo' element={<CommonVideo />} />
             <Route path='/commonAudio' element={<CommonAudio />} />
             <Route path='/commonImg' element={<CommonImg />} />
+            <Route path='/groops' element={<Groops />} />
           </Routes>
         </main>
         <aside className="app__aside">
