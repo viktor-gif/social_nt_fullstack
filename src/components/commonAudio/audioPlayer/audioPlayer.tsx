@@ -6,7 +6,9 @@ import s from "./audioPlayer.module.css"
 type PropsType = {
     audioData: AudioDataType[] | null
     currentIndex: number
+    isPlaying: boolean
 
+    setPlaying: (isPlay: boolean) => void
     getAudio: () => void
     setCurrentIndex: (index: number) => void
 }
@@ -16,7 +18,6 @@ export const AudioPlayer = (props: PropsType) => {
     const audioElem = useRef<any>(null)
 
     const [audioIndex, setAudioIndex] = useState(0)
-    const [isPlaying, setPlaying] = useState(false)
     const [soundWidth, setSoundWidth] = useState(20)
 
     const [volume, setVolume] = useState(0.2)
@@ -25,6 +26,10 @@ export const AudioPlayer = (props: PropsType) => {
     const [soundStrengthBeforeMuted, setSoundStrengthBeforeMuted] = useState(soundStrength)
 
     const currentUrl = (props.audioData && props.audioData.length > 0) ? props.audioData[audioIndex].url : ''
+    // @ts-ignore
+    console.log(props.audioData ? props.audioData[audioIndex] : props.audioData)
+    console.log(props.audioData)
+    console.log(audioIndex)
     
     const [currentAudioUrl, setCurrentAudioUrl] = useState(currentUrl)
 
@@ -50,7 +55,7 @@ export const AudioPlayer = (props: PropsType) => {
     useEffect(() => {
         setAudioIndex(props.currentIndex)
         setTimeout(() => {
-            isPlaying && playAudio()
+            props.isPlaying && playAudio()
         }, 100)
     }, [props.currentIndex])
     
@@ -87,11 +92,11 @@ export const AudioPlayer = (props: PropsType) => {
 
     const playButtonClick = () => {
         playAudio()
-        setPlaying(true)
+        props.setPlaying(true)
     }
     const pauseButtonClick = () => {
         pauseAudio()
-        setPlaying(false)
+        props.setPlaying(false)
     }
 
     const nextButtonClick = () => {
@@ -104,7 +109,7 @@ export const AudioPlayer = (props: PropsType) => {
 
                 randomAudio && setAudioIndex(randomAudio)
                 setTimeout(() => {
-                    isPlaying && playAudio()
+                    props.isPlaying && playAudio()
                 }, 100)
             } else {
                 if (props.audioData?.length === audioIndex + 1) {
@@ -113,7 +118,13 @@ export const AudioPlayer = (props: PropsType) => {
                     setAudioIndex(audioIndex + 1)
                 }
                 setTimeout(() => {
-                    isPlaying && playAudio()
+                    props.isPlaying && playAudio()
+
+                    if (props.audioData?.length === props.currentIndex + 1) {
+                        props.setCurrentIndex(0)
+                    } else {
+                        props.setCurrentIndex(audioIndex + 1)
+                    }
                 }, 100)
             }
         }
@@ -128,7 +139,7 @@ export const AudioPlayer = (props: PropsType) => {
         
                 randomAudio && setAudioIndex(randomAudio)
                 setTimeout(() => {
-                    isPlaying && playAudio()
+                    props.isPlaying && playAudio()
                 }, 100)
             } else {
                 if (audioIndex === 0) {
@@ -138,7 +149,13 @@ export const AudioPlayer = (props: PropsType) => {
                 }
 
                 setTimeout(() => {
-                    isPlaying && playAudio()
+                    props.isPlaying && playAudio()
+
+                    if (props.audioData?.length === 0) {
+                        props.setCurrentIndex(props.audioData ? props.audioData?.length - 1 : 0)
+                    } else {
+                        props.setCurrentIndex(audioIndex - 1)
+                    }
                 }, 100)
             }
         }
@@ -267,7 +284,7 @@ export const AudioPlayer = (props: PropsType) => {
 
         <div className={s.playBlock}>
             <span className={s.playOrPause}>
-                {isPlaying
+                {props.isPlaying
                     ? <Pause color="#fff" onClick={pauseButtonClick} />
                     : <Play color="#fff" onClick={playButtonClick} />
                 }

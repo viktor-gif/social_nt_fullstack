@@ -11,6 +11,7 @@ type PropsType = {
     currentAudio: any
     currentIndex: number
     audioVolume: number
+    isPlaying: boolean
 
     setCurrentAudio: (element: any) => void
     setCurrentIndex: (index: number) => void
@@ -26,8 +27,8 @@ export const AudioItem = React.memo((props: PropsType) => {
     return <div className={s.audioPlayer}>
 
         <div className={s.playBlock}>
-            {props.currentIndex === props.index
-                ? <VolumeHigh color="#6060da" />
+            {props.currentIndex === props.index && props.isPlaying
+                ? <VolumeHigh color="#d7e323" />
                 : <Play color="#000" onClick={playButtonClick} />
             }
         </div>

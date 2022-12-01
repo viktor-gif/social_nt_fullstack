@@ -30,6 +30,8 @@ const CommonAudio = (props: PropsType) => {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [audioVolume, setAudioVolume] = useState(0.2)
 
+    const [isPlaying, setPlaying] = useState(false)
+
     const getAudio = () => {
         props.getAudio(audioType, null)
     }
@@ -46,6 +48,7 @@ const CommonAudio = (props: PropsType) => {
             currentAudio={currentAudio} setCurrentAudio={setCurrentAudio}
             currentIndex={currentIndex} setCurrentIndex={setCurrentIndex}
             audioVolume={audioVolume} setAudioVolume={setAudioVolume}
+            isPlaying={isPlaying}
             />
     })
 
@@ -64,7 +67,8 @@ const CommonAudio = (props: PropsType) => {
     const getAudioWithTerm = () => props.getAudio(audioType, term.length > 0 ? term : null)
     
     return <div className={s.videoPage}>
-        <AudioPlayer audioData={props.audioData} getAudio={getAudio} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
+        <AudioPlayer audioData={props.audioData} getAudio={getAudio} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex}
+            isPlaying={isPlaying} setPlaying={setPlaying} />
         <div className={s.videoOptionsBlock}>
             <div className={s.addVideo}>
                 <label htmlFor="addVideo" className={s.addVideoLabel}>
