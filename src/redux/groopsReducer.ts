@@ -7,7 +7,7 @@ const SET_GROOPS = 'Viktor-gif/groops/SET_GROOPS'
 type InitialStateType = typeof initialState
 
 const initialState = {
-    groopsData: null as string | null,
+    groopsData: null as any,
 }
 
 export const groopsReducer = (state: InitialStateType = initialState, action: ActionsTypes) => {
@@ -25,7 +25,7 @@ export const groopsReducer = (state: InitialStateType = initialState, action: Ac
 type ActionsTypes = InferActionsTypes<typeof groopsActions>
 // action-creators
 export const groopsActions = {
-    setGroopsData: (data: string | null) => ({type: SET_GROOPS, data} as const),
+    setGroopsData: (data: any) => ({type: SET_GROOPS, data} as const),
 }
 
 // redux-thunk
@@ -39,3 +39,9 @@ export const getGroops = () => async (dispatch: DispatchType) => {
     dispatch(groopsActions.setGroopsData(response.data))
 }
 
+export const createGroop = (authorId: string, title: string, groopType: string) => async (dispatch: DispatchType) => {
+    // debugger
+    const response = await groopsAPI.createGroop(authorId, title, groopType)
+    console.log(response)
+    // @ts-ignore
+}
