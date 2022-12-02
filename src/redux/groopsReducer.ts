@@ -37,6 +37,7 @@ export const getGroops = () => async (dispatch: DispatchType) => {
     const response = await groopsAPI.getGroops()
     // @ts-ignore
     dispatch(groopsActions.setGroopsData(response.data))
+    console.log(response.data)
 }
 
 export const createGroop = (authorId: string, title: string, groopType: string) => async (dispatch: DispatchType) => {
