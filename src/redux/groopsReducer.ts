@@ -1,13 +1,16 @@
 import { Dispatch } from "react"
 import { groopsAPI } from "../api/groops"
+import { GroopType } from "../ts/groops"
 import { InferActionsTypes } from "./redux-store"
 
 const SET_GROOPS = 'Viktor-gif/groops/SET_GROOPS'
+const SET_GROOP_INFO = 'Viktor-gif/groops/SET_GROOP_INFO'
 
 type InitialStateType = typeof initialState
 
 const initialState = {
     groopsData: null as any,
+    groopInfo: null as GroopType | null
 }
 
 export const groopsReducer = (state: InitialStateType = initialState, action: ActionsTypes) => {
@@ -19,6 +22,12 @@ export const groopsReducer = (state: InitialStateType = initialState, action: Ac
                 ...state,
                 groopsData: action.data
             }
+        case SET_GROOP_INFO:
+            
+            return {
+                ...state,
+                groopInfo: action.info
+            }
         default: return state
     }
 }
@@ -26,6 +35,7 @@ type ActionsTypes = InferActionsTypes<typeof groopsActions>
 // action-creators
 export const groopsActions = {
     setGroopsData: (data: any) => ({type: SET_GROOPS, data} as const),
+    setGroopInfo: (info: GroopType) => ({type: SET_GROOP_INFO, info} as const),
 }
 
 // redux-thunk
@@ -37,6 +47,13 @@ export const getGroops = () => async (dispatch: DispatchType) => {
     const response = await groopsAPI.getGroops()
     // @ts-ignore
     dispatch(groopsActions.setGroopsData(response.data))
+}
+
+export const getGroopInfo = (groopId: string) => async (dispatch: DispatchType) => {
+    // debugger
+    const response = await groopsAPI.getGroopInfo(groopId)
+    
+    dispatch(groopsActions.setGroopInfo(response.data))
     console.log(response.data)
 }
 

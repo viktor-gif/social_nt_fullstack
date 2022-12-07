@@ -65,3 +65,7 @@
 .groop__addIcon span:hover {
     background-color: #c0c0c0;
 }
+.groop__info a, .groop__ava a {
+    color: #000;
+    text-decoration: none;
+}

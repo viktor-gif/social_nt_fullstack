@@ -1,6 +1,7 @@
 import { PersonAdd } from 'react-ionicons'
 import s from './groops.module.css'
 import avaGroop from '../../img/ava_groops.png'
+import { NavLink } from 'react-router-dom'
 
 type PropsType = {
     title: string
@@ -14,12 +15,17 @@ type PropsType = {
 export const Groop = (props: PropsType) => {
     return <div className={s.groop}>
         <div className={s.groop__ava}>
-            <img src={props.mainImg || avaGroop} alt="GroopAva" />
+            <NavLink to={`/groopInfo/${props.id}`}>
+                <img src={props.mainImg || avaGroop} alt="GroopAva" />
+            </NavLink>
         </div>
         <div className={s.groop__info}>
-            <div className={s.groop__title}>
-                {props.title}
-            </div>
+            <NavLink to={`/groopInfo/${props.id}`}>
+                <div className={s.groop__title}>
+                    {props.title}
+                </div>
+            </NavLink>
+            
             <div className={s.groop__typeAndFollowers}>
                 <span>
                     {props.type === 'public' ? 'Відкрита група' : 'Закрита група'}
