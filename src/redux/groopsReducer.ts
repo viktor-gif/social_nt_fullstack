@@ -45,7 +45,7 @@ type DispatchType = Dispatch<ActionsTypes>
 export const getGroops = () => async (dispatch: DispatchType) => {
     // debugger
     const response = await groopsAPI.getGroops()
-    // @ts-ignore
+
     dispatch(groopsActions.setGroopsData(response.data))
 }
 
@@ -54,12 +54,20 @@ export const getGroopInfo = (groopId: string) => async (dispatch: DispatchType) 
     const response = await groopsAPI.getGroopInfo(groopId)
     
     dispatch(groopsActions.setGroopInfo(response.data))
-    console.log(response.data)
 }
 
 export const createGroop = (authorId: string, title: string, groopType: string) => async (dispatch: DispatchType) => {
     // debugger
     const response = await groopsAPI.createGroop(authorId, title, groopType)
-    console.log(response)
-    // @ts-ignore
+}
+
+export const addFollower = (groopId: string) => async (dispatch: DispatchType) => {
+    // debugger
+    const response = await groopsAPI.addFollower(groopId)
+    console.log(response.data)
+}
+export const deleteFollower = (groopId: string) => async (dispatch: DispatchType) => {
+    // debugger
+    const response = await groopsAPI.deleteFollower(groopId)
+    console.log(response.data)
 }

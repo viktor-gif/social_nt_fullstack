@@ -13,15 +13,15 @@
 }
 .posts {
     grid-area: posts;
-    border-radius: 20px;
+    /* border-radius: 20px;
     padding: 20px;
-    background-color: #e9e9ff;
+    background-color: #e9e9ff; */
 }
 .sidebar {
     grid-area: sidebar;
-    border-radius: 20px;
+    /* border-radius: 20px;
     padding: 20px;
-    background-color: #e9e9ff;
+    background-color: #e9e9ff; */
 }
 
 .groop__image {

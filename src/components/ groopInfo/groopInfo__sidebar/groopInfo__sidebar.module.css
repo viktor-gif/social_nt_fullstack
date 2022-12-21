@@ -1,0 +1,19 @@
+.sidebar__item {
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #e9e9ff;
+    margin-bottom: 20px;
+}
+.sidebar__item:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar__followersCount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.sidebar__followersCount span:last-child {
+    font-size: 1.5em;
+}

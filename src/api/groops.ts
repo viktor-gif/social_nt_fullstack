@@ -12,5 +12,11 @@ export const groopsAPI = {
     },
     geleteGroop() {
         return axiosCreate.delete(`/groops`)
+    },
+    addFollower(groopId: string) {
+        return axiosCreate.post(`/groops/${groopId}/addFollower`)
+    },
+    deleteFollower(groopId: string) {
+        return axiosCreate.delete(`/groops/${groopId}/deleteFollower`)
     }
 }
