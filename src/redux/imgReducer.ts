@@ -41,6 +41,16 @@ export const getImg = (imgType: string, term: string | null) => async (dispatch:
     }
 }
 
+export const getImgGroop = (imgType: string, groopImg: string, term: string | null) => async (dispatch: DispatchType) => {
+    try{
+        const res = await imgAPI.getImgGroop(imgType, groopImg, term)
+        console.log(res)
+        dispatch(imgActions.setImgData(res.data))
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 export const addImg = (title: string | null, isPrivat: boolean, file: any) => async (dispatch: DispatchType) => {
     const res = await imgAPI.addImg(title, isPrivat, file)
     if (res) {

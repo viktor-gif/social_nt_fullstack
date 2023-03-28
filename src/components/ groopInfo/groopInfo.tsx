@@ -1,34 +1,42 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { useParams } from "react-router"
 import { AppStateType } from "../../redux/redux-store"
-import { getGroopInfo, deleteFollower, addFollower } from "../../redux/groopsReducer"
+import { getGroopInfo, deleteFollower, addFollower, addPost, deletePost } from "../../redux/groopsReducer"
 import { GroopType } from "../../ts/groops"
 import s from './groopInfo.module.css'
 import avatar from '../../img/ava_groops.png'
 import { AuthDataType } from "../../ts/auth"
 import { GroopInfo__sidebar } from "./groopInfo__sidebar/groopInfo__sidebar"
 import { GroopInfo__posts } from "./groopInfo__posts/groopInfo__posts"
+import { ProfileDataType } from "../../ts/profile"
+import { NavLink, Route, Routes } from "react-router-dom"
+import GroopInfo__img from "./groopInfo__additional/groopInfo__img"
+import { GroopInfo__video } from "./groopInfo__additional/groopInfo__video"
+import { GroopInfo__audio } from "./groopInfo__additional/groopInfo__audio"
 
 type PropsType = {
     authData: AuthDataType | null
     groopInfo: GroopType | null
+    authProfileData: ProfileDataType | null
 
     getGroopInfo: (groopId: string) => void
     addFollower: (groopId: string) => void
     deleteFollower: (groopId: string) => void
+    addPost: (groopId: string, postText: string) => void
+    deletePost: (groopId: string, postId: string) => void
 }
 
 const GroopInfo = (props: PropsType) => {
-    console.log(props.groopInfo)
 
     const params = useParams()
-    console.log(params.groopId)
+    console.log(params)
+
+    const [infoType, setInfoType] = useState('posts')
 
     useEffect(() => {
         params.groopId && props.getGroopInfo(params.groopId)
     }, [])
-
     const isFollower = (props.groopInfo && props.authData) && props.groopInfo.followers.includes(props.authData.id)
 
     return <div className={s.groopInfo}>
@@ -72,9 +80,42 @@ const GroopInfo = (props: PropsType) => {
                 }
                 
             </div>
+
+            <div className={s.groop__nav_wrapper}>
+                <ul className={s.groop__nav}>
+                    <li onClick={() => setInfoType('posts')}>
+                        <NavLink to={``} className={nav => ((nav.isActive && infoType === 'posts') ? s.active_link : " ")}>
+                            Пости
+                        </NavLink>
+                    </li>
+                    <li onClick={() => setInfoType('photo')}>
+                        <NavLink to={`photo`} className={nav => ((nav.isActive && infoType === 'photo') ? s.active_link : " ")}>
+                            Фото
+                        </NavLink>
+                    </li>
+                    <li onClick={() => setInfoType('video')}>
+                        <NavLink to={`video`} className={nav => ((nav.isActive && infoType === 'video') ? s.active_link : " ")}>
+                            Відео
+                        </NavLink>
+                    </li>
+                    <li onClick={() => setInfoType('audio')}>
+                        <NavLink to={`audio`} className={nav => ((nav.isActive && infoType === 'audio') ? s.active_link : " ")}>
+                            Аудіо
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div className={s.posts}>
-            <GroopInfo__posts />
+            <Routes>
+                <Route path='' element={<GroopInfo__posts groopId={params.groopId} addPost={props.addPost}
+                    groopPosts={props.groopInfo?.posts} authProfileData={props.authProfileData}
+                    getGroopInfo={props.getGroopInfo} deletePost={props.deletePost} />} />
+                <Route path='photo' element={<GroopInfo__img groopId={params.groopId} />} />
+                <Route path='video' element={<GroopInfo__video />} />
+                <Route path='audio' element={<GroopInfo__audio />} />
+            </Routes>
+            
         </div>
         <div className={s.sidebar}>
             <GroopInfo__sidebar followersCount={props.groopInfo?.followers.length}
@@ -86,11 +127,14 @@ const GroopInfo = (props: PropsType) => {
 
 const mapStateToProps = (state: AppStateType) => ({
     groopInfo: state.groops.groopInfo,
-    authData: state.auth.authData
+    authData: state.auth.authData,
+    authProfileData: state.auth.authProfileData
 })
 
 export default connect(mapStateToProps, {
     getGroopInfo,
     addFollower,
-    deleteFollower
+    deleteFollower,
+    addPost,
+    deletePost
 })(GroopInfo)

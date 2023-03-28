@@ -18,5 +18,11 @@ export const groopsAPI = {
     },
     deleteFollower(groopId: string) {
         return axiosCreate.delete(`/groops/${groopId}/deleteFollower`)
+    },
+    addPost(groopId: string, postText: string) {
+        return axiosCreate.post(`/groops/${groopId}/post/add?postText=${postText}`)
+    },
+    deletePost(groopId: string, postId: string) {
+        return axiosCreate.post(`/groops/${groopId}/post/${postId}/delete`)
     }
 }

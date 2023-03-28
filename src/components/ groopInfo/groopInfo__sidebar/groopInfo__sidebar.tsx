@@ -16,11 +16,14 @@ export const GroopInfo__sidebar = (props: PropsType) => {
             <span>Підписники: </span>
             <span>{ props.followersCount || '0' }</span>
         </div>
-        <div className={s.sidebar__item}>
-            sidebar__item
+        <div className={s.sidebar__item + " " + s.sidebar__item_img}>
+            sidebar__item images
         </div>
-        <div className={s.sidebar__item}>
-            sidebar__item
+        <div className={s.sidebar__item + " " + s.sidebar__item_video}>
+            sidebar__item video
+        </div>
+        <div className={s.sidebar__item + " " + s.sidebar__item_audio}>
+            sidebar__item audio
         </div>
     </div>
 }

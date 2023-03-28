@@ -41,5 +41,6 @@ export const Groop = (props: PropsType) => {
         <div className={s.groop__addIcon}>
             <PersonAdd />
         </div>
+        
     </div>
 }

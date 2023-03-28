@@ -6,6 +6,10 @@ export const imgAPI = {
        
         return axiosCreate.get(`/img?imgType=${imgType}&term=${term}`)
     },
+    getImgGroop(imgType: string, groopId: string, term: string | null) {
+       
+        return axiosCreate.get(`/img/groop/${groopId}?imgType=${imgType}&groopId=${groopId}&term=${term}`)
+    },
     addImg(title: string | null, isPrivat: boolean = false, file: any) {
         const imgData = new FormData()
         imgData.append('img', file)

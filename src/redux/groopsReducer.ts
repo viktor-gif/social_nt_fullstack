@@ -71,3 +71,22 @@ export const deleteFollower = (groopId: string) => async (dispatch: DispatchType
     const response = await groopsAPI.deleteFollower(groopId)
     console.log(response.data)
 }
+// export const addPost = (groopId: string, postText: string) => async (dispatch: DispatchType) => {
+//     // debugger
+//     const response = await groopsAPI.addPost(groopId, postText)
+//     // @ts-ignore
+//     dispatch(getGroopInfo(groopId))
+// }
+export const addPost = (groopId: string, postText: string) => (dispatch: DispatchType) => {
+    // debugger
+    groopsAPI.addPost(groopId, postText).then(res => {
+        // @ts-ignore
+        dispatch(getGroopInfo(groopId))
+    })
+    
+}
+export const deletePost = (groopId: string, postId: string) => async (dispatch: DispatchType) => {
+    // debugger
+    const response = await groopsAPI.deletePost(groopId, postId)
+    console.log(response.data)
+}
