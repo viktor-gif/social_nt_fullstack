@@ -1,11 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { PersonAdd, PersonRemove } from "react-ionicons";
-
 import { LocationType, PhotosType } from "../../../ts/users";
 import avatar from "../../../img/ava_male.jpeg"
 import s from "./user.module.css"
 import { ProfileDataType } from "../../../ts/profile";
-import { Button } from "../../common/button/Button";
 import { useEffect, useState } from "react";
 import { followAPI } from "../../../api/follow";
 import { AuthDataType } from "../../../ts/auth";

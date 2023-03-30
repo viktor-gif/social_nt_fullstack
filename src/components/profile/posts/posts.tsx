@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react"
 import { PostType } from "../../../ts/posts"
 import { ProfileDataType } from "../../../ts/profile"

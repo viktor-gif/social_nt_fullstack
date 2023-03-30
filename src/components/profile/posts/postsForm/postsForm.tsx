@@ -1,4 +1,3 @@
-
 import s from "./postsForm.module.css"
 import avatar from "../../../../img/ava_male.jpeg"
 import React, { useState } from "react"

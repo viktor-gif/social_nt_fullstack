@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react"
-import { Add, Pause, Play, VolumeHigh, VolumeLow, VolumeMedium, VolumeOff } from "react-ionicons"
+import React from "react"
+import { Add, Play, VolumeHigh } from "react-ionicons"
 import s from "./audioItem.module.css"
 
 

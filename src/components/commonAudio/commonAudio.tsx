@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
 import { addAudio, getAudio, addCommonAudio } from "../../redux/audioReducer"

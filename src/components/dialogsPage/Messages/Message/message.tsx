@@ -1,4 +1,3 @@
-
 import s from "./message.module.css"
 import React, { useEffect, useState } from "react"
 import { ProfileDataType } from "../../../../ts/profile"

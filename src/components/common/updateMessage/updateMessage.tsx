@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Attach } from "react-ionicons"
 import { Button } from "../button/Button"
 

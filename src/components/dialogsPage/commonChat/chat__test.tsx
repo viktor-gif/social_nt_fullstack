@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { io } from "socket.io-client"
 import { AppStateType } from "../../../redux/redux-store"
-import s from "./chat.module.css"
 
 type PropsType = {
 

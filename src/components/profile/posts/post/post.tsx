@@ -7,10 +7,8 @@ import s from "./post.module.css"
 import avatar from "../../../../img/ava_male.jpeg"
 import { BurgerMenu } from "../../../common/burgerMenu/burgerMenu"
 import { PostMenu } from "./postMenu"
-
 import { Comment } from "./comment/comment"
 import { formatDate } from "../../../../utils/formatDate"
-import { Button } from "../../../common/button/Button"
 import { UpdateMessage } from "../../../common/updateMessage/updateMessage"
 
 type PropsType = {

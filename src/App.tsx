@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import './App.css';
 import Users from './components/users/users';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -6,8 +6,7 @@ import Nav from './components/aside/nav/nav';
 import Header from './components/header/header';
 import { CreateUser} from './components/users/createUser /createUser';
 import Login from './components/login/login';
-import { authAPI } from './api/auth';
-import { authActions, authMe } from './redux/authReducer';
+import { authMe } from './redux/authReducer';
 import { connect } from 'react-redux';
 import { AppStateType } from './redux/redux-store';
 import { AuthDataType } from './ts/auth';
