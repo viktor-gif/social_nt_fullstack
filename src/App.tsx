@@ -17,6 +17,7 @@ import CommonAudio from './components/commonAudio/commonAudio';
 import CommonImg from './components/commonImg/commonImg';
 import Groops from './components/groops/groops';
 import GroopInfo from './components/ groopInfo/groopInfo';
+import { usersAPI } from './api/users';
 
 type PropsType = {
   authData: AuthDataType | null

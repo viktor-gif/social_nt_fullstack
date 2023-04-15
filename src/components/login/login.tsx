@@ -29,6 +29,7 @@ export const Login = React.memo((props: PropsType) => {
                 setSignedUp={setSignedUp} />
             : <SignUpForm setSignedUp={setSignedUp} />
         }
+        {/* {props.loginError && <div className={s.login__error}>{ props.loginError }</div>} */}
     </div>
 
 })

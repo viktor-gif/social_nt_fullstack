@@ -10,4 +10,6 @@ export const authAPI = {
     logout() {
         return axiosCreate.delete(`/auth/login`)
     }
+
+    
 }

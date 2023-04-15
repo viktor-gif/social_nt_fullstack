@@ -7,6 +7,7 @@ import { InferActionsTypes } from "./redux-store"
 
 const SET_AUTH_DATA = 'Viktor-gif/auth/SET_AUTH_DATA'
 const SET_LOGIN_ERROR = 'Viktor-gif/users/SET_LOGIN_ERROR'
+const SET_ERROR_MESSAGE = 'Viktor-gif/users/SET_ERROR_MESSAGE'
 
 type InitialStateType = typeof initialState
 
@@ -14,7 +15,7 @@ const initialState = {
     authData: null as AuthDataType | null,
     authProfileData: null as ProfileDataType | null,
     isAuth: false as boolean,
-    loginError: null as string | null
+    loginError: null as string | null,
 }
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsTypes) => {
@@ -48,7 +49,7 @@ export const authActions = {
                 profileData,
                 isAuth
         } } as const
-    ),
+    )
     // setAuthData: (data: AuthDataType | null, isAuth: boolean = true) => (
     //     {
     //         type: SET_AUTH_DATA, payload: {
@@ -63,9 +64,25 @@ type DispatchType = Dispatch<ActionsTypes>
 
 
 export const authMe = () => async (dispatch: DispatchType) => {
-    const res = await authAPI.me()
-    const resAuthProfile = await profileAPI.getProfile(res.data.id)
-    dispatch(authActions.setAuthData(res.data, resAuthProfile.data, true))
+    try {
+        const res = await authAPI.me()
+
+        const data = res.data.data
+        const resultCode = res.data.resultCode
+    
+        if (resultCode === 0) {
+            const resAuthProfile = await profileAPI.getProfile(data.id)
+            dispatch(authActions.setAuthData(data, resAuthProfile.data, true))
+            dispatch(authActions.setLoginError(null))
+        }
+    } catch (err: any) {
+        if (err.response.status === 403) {
+            dispatch(authActions.setLoginError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else {
+            dispatch(authActions.setLoginError('Помилка сервера'))
+        }
+    } 
+    
 }
 
 export const login = (email: string, password: string) => async (dispatch: DispatchType) => {
