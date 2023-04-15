@@ -88,11 +88,10 @@ const Profile = (props: PropsType) => {
 
     const onUpdatePhoto = (e: any) => {
         if (e.target.files.length && userId) {
-            console.log(e.target.files)
             props.updatePhoto(e.target.files[0], userId)
         } 
     }
-console.log(props.profileData)
+
     return <div className={s.profile}>
         <div className={s.profile__aside}>
             <div className={s.profile__avatar}>

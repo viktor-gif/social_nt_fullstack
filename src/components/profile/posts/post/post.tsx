@@ -41,8 +41,6 @@ type PropsType = {
 
 export const Post = React.memo((props: PropsType) => {
 
-    console.log(props.comments)
-
     const [userProfileData, setUserProfileData] = useState<ProfileDataType | null>(null)
     const [isMenuActive, setMenuActive] = useState(false)
     const [isUpdate, setUpdate] = useState(false)
@@ -62,8 +60,6 @@ export const Post = React.memo((props: PropsType) => {
             })
         }
     }, [])
-
-    console.log(props.commentFile)
 
     const deletePost = () => {
         props.deletePost(props.postId, props.userId)

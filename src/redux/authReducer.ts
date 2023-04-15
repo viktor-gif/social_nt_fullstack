@@ -89,12 +89,16 @@ export const login = (email: string, password: string) => async (dispatch: Dispa
     try {
         dispatch(authActions.setLoginError(null))
         const res = await authAPI.login(email, password)
-        if (res.data.resultCode === 2) {
+        if (res.data.resultCode === 0) {
             // @ts-ignore
             dispatch(authMe())
         } 
     } catch (err: any) {
-        dispatch(authActions.setLoginError(err.response.data.message || "Помилка сервера"))
+        if (err.response.status === 404) {
+            dispatch(authActions.setLoginError(err.response.data.message || "Пароль або логін - не вірний"))
+        } else {
+            dispatch(authActions.setLoginError('Помилка сервера'))
+        }
     }
     
 }
