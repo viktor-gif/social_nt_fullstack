@@ -107,14 +107,12 @@ export const logout = () => async (dispatch: DispatchType) => {
     try {
     const res = await authAPI.logout()
         
-    if (res.data.resultCode === 2) {
+    if (res.data.resultCode === 0) {
         dispatch(authActions.setAuthData(null, null, false))
         //dispatch(authActions.setAuthData(null, false))
-    } else if (res.data.resultCode === 5) {
-        console.log(res.data.message)
     }
         
     } catch (err) {
-        console.log(err);
+        dispatch(authActions.setLoginError('Помилка сервера'))
     }
 }
