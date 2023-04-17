@@ -1,5 +1,6 @@
 import { Dispatch } from "react"
 import { usersAPI } from "../api/users"
+import { login } from "./authReducer"
 import { UserType } from "../ts/users"
 import { InferActionsTypes } from "./redux-store"
 
@@ -44,6 +45,17 @@ type DispatchType = Dispatch<actionsTypes>
 export const getUsers = (pageSize: number, currentPage: number, term: string, friendStatus: string) => (dispatch: DispatchType) => {
     usersAPI.getUsers(pageSize, currentPage, term, friendStatus).then(res => {
         
+      dispatch(usersActions.setUsers(res.data.items))
+      dispatch(usersActions.setTotalUsersCount(res.data.totalCount))
+    })
+}
+export const createUser = (email: string, password: string, fullName: string) => (dispatch: DispatchType) => {
+    usersAPI.createUser(email, password, fullName).then(res => {
+        
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(login(email, password))
+        }
       dispatch(usersActions.setUsers(res.data.items))
       dispatch(usersActions.setTotalUsersCount(res.data.totalCount))
     })

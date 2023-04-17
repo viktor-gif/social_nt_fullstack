@@ -4,7 +4,6 @@ import Users from './components/users/users';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Nav from './components/aside/nav/nav';
 import Header from './components/header/header';
-import { CreateUser} from './components/users/createUser /createUser';
 import Login from './components/login/login';
 import { authMe } from './redux/authReducer';
 import { connect } from 'react-redux';
@@ -42,7 +41,6 @@ function App(props: PropsType) {
         <main className="app__main">
           <Routes>
             <Route path='/users' element={<Users />} />
-            <Route path='/user/add' element={<CreateUser />} />
             <Route path='/login' element={<Login />} />
             <Route path='/profile/:userId' element={<Profile />} />
             <Route path='/dialogs' element={<DialogsPage />} />

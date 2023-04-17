@@ -2,6 +2,7 @@ import s from "./login.module.css"
 import React, { useState } from "react"
 import { Navigate } from "react-router-dom"
 import { login } from "../../redux/authReducer"
+import { createUser } from "../../redux/usersReducer"
 import { connect } from "react-redux"
 import { AppStateType } from "../../redux/redux-store"
 import { AuthDataType } from "../../ts/auth"
@@ -14,6 +15,7 @@ type PropsType = {
     authData: AuthDataType | null
 
     login: (email: string, password: string) => void
+    createUser: (email: string, password: string, fullName: string) => void
 }
 
 export const Login = React.memo((props: PropsType) => {
@@ -27,7 +29,7 @@ export const Login = React.memo((props: PropsType) => {
             ? <LoginForm loginError={props.loginError} isAuth={props.isAuth}
                 authData={props.authData} login={props.login}
                 setSignedUp={setSignedUp} />
-            : <SignUpForm setSignedUp={setSignedUp} />
+            : <SignUpForm setSignedUp={setSignedUp} createUser={props.createUser} />
         }
         {/* {props.loginError && <div className={s.login__error}>{ props.loginError }</div>} */}
     </div>
@@ -41,5 +43,5 @@ const mapStateToProps = (state: AppStateType) => ({
 })
 
 export default connect(mapStateToProps, {
-    login
+    login, createUser
 })(Login)

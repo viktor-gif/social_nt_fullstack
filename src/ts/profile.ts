@@ -19,5 +19,6 @@ export type ProfileDataType = {
     aboutMe: string | null
     lookingForAJob: boolean
     lookingForAJobDescription: string | null
-    created: string
+    created: string,
+    blockedAccaunt: boolean
 }

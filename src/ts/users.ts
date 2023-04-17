@@ -14,5 +14,6 @@ export type UserType = {
     status: string | null,
     location: LocationType,
     photos: PhotosType,
-    followers: string[]
+    followers: string[],
+    blockedAccaunt: boolean
 }
