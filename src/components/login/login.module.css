@@ -94,3 +94,6 @@
   transform: translateY(-1px);
   cursor: pointer;
 }
+.createUser__error {
+  color: red;
+}

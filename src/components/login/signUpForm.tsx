@@ -4,6 +4,8 @@ import {usersAPI} from "../../api/users"
 import { useState } from "react";
 
 type PropsType = {
+    usersError: string | null
+
     setSignedUp: (isSignedUp: boolean) => void
     createUser: (email: string, password: string, fullName: string) => void
 }
@@ -43,7 +45,7 @@ export const SignUpForm = (props: PropsType) => {
                     <div className={s.login__formItem}>
                         <Field type="text" name="fullName" id="fullName" placeholder="Ваше повне ім'я..." />
                     </div>
-                    {error && <div className={s.createUser__error}>{error}</div>}
+                    {props.usersError && <div className={s.createUser__error}>{props.usersError}</div>}
                     <button type="submit">
                         Зареєструватися
                     </button>
