@@ -1,6 +1,6 @@
 import { Dispatch } from "react"
 import { usersAPI } from "../api/users"
-import { login } from "./authReducer"
+import { authMe, login } from "./authReducer"
 import { UserType } from "../ts/users"
 import { InferActionsTypes } from "./redux-store"
 
@@ -77,6 +77,39 @@ export const createUser = (email: string, password: string, fullName: string) =>
         }
     }
 }
+export const deleteUser = () => async (dispatch: DispatchType) => {
+    try {
+        const res = await usersAPI.deleteUser()
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(authMe())
+        }
+    } catch (err: any) {
+        if (err.response.status === 403) {
+            dispatch(usersActions.setUsersError(err.response.data.message))
+        } else {
+        debugger
+            dispatch(usersActions.setUsersError("Помилка сервера"))
+        }
+    }
+}
+export const restoreUser = () => async (dispatch: DispatchType) => {
+    try {
+        const res = await usersAPI.restoreUser()
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(authMe())
+        }
+    } catch (err: any) {
+        if (err.response.status === 403) {
+            dispatch(usersActions.setUsersError(err.response.data.message))
+        } else {
+        debugger
+            dispatch(usersActions.setUsersError("Помилка сервера"))
+        }
+    }
+}
+
 export const getTotalUsersCount = (users: number) => (dispatch: DispatchType) => {
 
 }

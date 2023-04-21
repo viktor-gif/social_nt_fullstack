@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './App.css';
 import Users from './components/users/users';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Nav from './components/aside/nav/nav';
 import Header from './components/header/header';
 import Login from './components/login/login';
@@ -16,11 +16,12 @@ import CommonAudio from './components/commonAudio/commonAudio';
 import CommonImg from './components/commonImg/commonImg';
 import Groops from './components/groops/groops';
 import GroopInfo from './components/ groopInfo/groopInfo';
-import { usersAPI } from './api/users';
+import deletedAccauntAvatar from './img/deleted_accaunt_avatar.jpg'
 
 type PropsType = {
   authData: AuthDataType | null
-  //getAuthData: (data: AuthDataType) => void
+  isAuth: boolean
+
   authMe: () => void
 }
 
@@ -31,6 +32,17 @@ function App(props: PropsType) {
     // }) 
     props.authMe()
   }, [])
+
+  if (!props.isAuth) {
+    return <Navigate replace to={'/login'} />
+  } 
+
+  if (props.authData?.blockedAccaunt) {
+    return <div>
+      <img src={deletedAccauntAvatar} alt="DELETED" />
+      <span>{ props.authData.id }</span>
+    </div>
+  }
 
   return (
     <BrowserRouter>
@@ -63,7 +75,8 @@ function App(props: PropsType) {
 }
 
 const mapStateToProps = (state: AppStateType) => ({
-  authData: state.auth.authData
+  authData: state.auth.authData,
+  isAuth: state.auth.isAuth
 })
 
 export default connect(mapStateToProps, {
