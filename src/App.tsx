@@ -17,12 +17,14 @@ import CommonImg from './components/commonImg/commonImg';
 import Groops from './components/groops/groops';
 import GroopInfo from './components/ groopInfo/groopInfo';
 import deletedAccauntAvatar from './img/deleted_accaunt_avatar.jpg'
+import { restoreUser } from './redux/usersReducer'
 
 type PropsType = {
   authData: AuthDataType | null
   isAuth: boolean
 
   authMe: () => void
+  restoreUser: () => void
 }
 
 function App(props: PropsType) {
@@ -31,18 +33,17 @@ function App(props: PropsType) {
     //   props.getAuthData(res.data)
     // }) 
     props.authMe()
-  }, [])
+  }, [props.authData?.blockedAccaunt])
 
-  if (!props.isAuth) {
-    return <Navigate replace to={'/login'} />
-  } 
+  
 
-  if (props.authData?.blockedAccaunt) {
-    return <div>
-      <img src={deletedAccauntAvatar} alt="DELETED" />
-      <span>{ props.authData.id }</span>
-    </div>
-  }
+  // if (props.authData?.blockedAccaunt) {
+  //   return <div>
+  //     <img src={deletedAccauntAvatar} alt="DELETED" />
+  //     <span>Сторінку {props.authData.id} видалено</span>
+  //     <button onClick={() => props.restoreUser()}>Відновити сторінку</button>
+  //   </div>
+  // }
 
   return (
     <BrowserRouter>
@@ -50,22 +51,33 @@ function App(props: PropsType) {
         <header className="app__header">
           <Header />
         </header>
-        <main className="app__main">
-          <Routes>
-            <Route path='/users' element={<Users />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/profile/:userId' element={<Profile />} />
-            <Route path='/dialogs' element={<DialogsPage />} />
-            <Route path='/commonVideo' element={<CommonVideo />} />
-            <Route path='/commonAudio' element={<CommonAudio />} />
-            <Route path='/commonImg' element={<CommonImg />} />
-            <Route path='/groops' element={<Groops />} />
-            <Route path='/groopInfo/:groopId/*' element={<GroopInfo />} />
-          </Routes>
-        </main>
-        <aside className="app__aside">
+        {props.authData?.blockedAccaunt
+          ?<div>
+            <img src={deletedAccauntAvatar} alt="DELETED" />
+            <span>Сторінку {props.authData.id} видалено</span>
+            <button onClick={() => props.restoreUser()}>Відновити сторінку</button>
+          </div>
+          : <main className="app__main">
+            {!props.isAuth
+              ? <Login />
+              : <Routes>
+                <Route path='/users' element={<Users />} />
+                <Route path='/login' element={<Login />} />
+                <Route path='/profile/:userId' element={<Profile />} />
+                <Route path='/dialogs' element={<DialogsPage />} />
+                <Route path='/commonVideo' element={<CommonVideo />} />
+                <Route path='/commonAudio' element={<CommonAudio />} />
+                <Route path='/commonImg' element={<CommonImg />} />
+                <Route path='/groops' element={<Groops />} />
+                <Route path='/groopInfo/:groopId/*' element={<GroopInfo />} />
+              </Routes>
+            }
+          </main>
+          }
+        {!props.authData?.blockedAccaunt && <aside className="app__aside">
           <Nav />
         </aside>
+        }
         <footer className="app__footer">
           Footer
         </footer>
@@ -81,5 +93,5 @@ const mapStateToProps = (state: AppStateType) => ({
 
 export default connect(mapStateToProps, {
   //getAuthData: authActions.setAuthData
-  authMe
+  authMe, restoreUser
 })(App);

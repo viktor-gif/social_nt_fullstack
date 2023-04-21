@@ -69,7 +69,6 @@ export const authMe = () => async (dispatch: DispatchType) => {
 
         const data = res.data.data
         const resultCode = res.data.resultCode
-    
         if (resultCode === 0) {
             const resAuthProfile = await profileAPI.getProfile(data.id)
             dispatch(authActions.setAuthData(data, resAuthProfile.data, true))

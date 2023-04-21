@@ -4,9 +4,10 @@ import s from "./header.module.css"
 import logo from "../../img/logo.png"
 import { AuthDataType } from "../../ts/auth"
 import { logout } from "../../redux/authReducer"
+import { deleteUser } from "../../redux/usersReducer"
 import avatar from "../../img/ava_male.jpeg"
 import { ProfileDataType } from "../../ts/profile"
-import { Images, LogOut, MusicalNote, Videocam } from "react-ionicons"
+import { Images, LogOut, MusicalNote, Trash, Videocam } from "react-ionicons"
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
 
@@ -16,15 +17,22 @@ type PropsType = {
     authProfileData: ProfileDataType | null
 
     logout: () => void
+    deleteUser: () => void
 }
 const Header = (props: PropsType) => {
     const [isMenuActionsActive, setmenuActionsActive] = useState(false)
+    const [isDeleteMenuActive, setDeleteMenuActive] = useState(false)
     
     const logoutClick = () => {
         props.logout()
     }
     const toggleMenuActions = () => {
         isMenuActionsActive ? setmenuActionsActive(false) : setmenuActionsActive(true)
+    }
+
+    const onDeleteAccaunt = () => {
+        props.deleteUser()
+        setDeleteMenuActive(false)
     }
     
     return <div className={s.header}>
@@ -50,12 +58,25 @@ const Header = (props: PropsType) => {
                 {isMenuActionsActive
 
                 && <ul className={s.actionsList}>
-                    <li onClick={logoutClick} >
-                        <LogOut color={'#555'}/> 
-                        <span>Вийти з свого профілю</span>
-                    </li>
-                </ul> 
+                        <li onClick={logoutClick} >
+                            <LogOut color={'#555'}/> 
+                            <span>Вийти з свого профілю</span>
+                        </li>
+                        {!props.authData?.blockedAccaunt
+                            && <li onClick={() => setDeleteMenuActive(true)} >
+                                <Trash color={'#555'}/> 
+                                <span>Видалити аккаунт</span>
+                            </li>
+                        }
+                    </ul> 
                 }
+                {isDeleteMenuActive && <div>
+                    <div>Ви точно хочете видалити аккаунт {props.authProfileData?.fullName}?</div>
+                    <div>
+                        <button onClick={onDeleteAccaunt}>Так</button>
+                        <button onClick={() => setDeleteMenuActive(false)}>Ні</button>
+                    </div>
+                </div>}
             </div>
         }
     </div>
@@ -68,5 +89,5 @@ const mapStateToProps = (state: AppStateType) => ({
 })
 
 export default connect(mapStateToProps, {
-    logout
+    logout, deleteUser
 })(Header)
