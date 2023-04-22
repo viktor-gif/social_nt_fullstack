@@ -18,10 +18,12 @@ type PropsType = {
 
     logout: () => void
     deleteUser: () => void
+    setBooleanDialogInfo: (info: string) => void
+    setBooleanDialogYesButtonHandler: (handler: (() => void) | null) => void
+    setBooleanDialogWindowActive: (isActive: boolean) => void
 }
 const Header = (props: PropsType) => {
     const [isMenuActionsActive, setmenuActionsActive] = useState(false)
-    const [isDeleteMenuActive, setDeleteMenuActive] = useState(false)
     
     const logoutClick = () => {
         props.logout()
@@ -30,9 +32,12 @@ const Header = (props: PropsType) => {
         isMenuActionsActive ? setmenuActionsActive(false) : setmenuActionsActive(true)
     }
 
-    const onDeleteAccaunt = () => {
-        props.deleteUser()
-        setDeleteMenuActive(false)
+    const dialogInfo = `Ви точно хочете видалити аккаунт юзера ${props.authProfileData && props.authProfileData.fullName}?`
+
+    const dialogWindowActive = () => {
+        props.setBooleanDialogWindowActive(true)
+        props.setBooleanDialogInfo(dialogInfo)
+        props.setBooleanDialogYesButtonHandler(() => props.deleteUser)
     }
     
     return <div className={s.header}>
@@ -63,20 +68,13 @@ const Header = (props: PropsType) => {
                             <span>Вийти з свого профілю</span>
                         </li>
                         {!props.authData?.blockedAccaunt
-                            && <li onClick={() => setDeleteMenuActive(true)} >
+                            && <li onClick={dialogWindowActive} >
                                 <Trash color={'#555'}/> 
                                 <span>Видалити аккаунт</span>
                             </li>
                         }
                     </ul> 
                 }
-                {isDeleteMenuActive && <div>
-                    <div>Ви точно хочете видалити аккаунт {props.authProfileData?.fullName}?</div>
-                    <div>
-                        <button onClick={onDeleteAccaunt}>Так</button>
-                        <button onClick={() => setDeleteMenuActive(false)}>Ні</button>
-                    </div>
-                </div>}
             </div>
         }
     </div>

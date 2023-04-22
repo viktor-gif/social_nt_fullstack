@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Users from './components/users/users';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
@@ -17,6 +17,7 @@ import CommonImg from './components/commonImg/commonImg';
 import Groops from './components/groops/groops';
 import GroopInfo from './components/ groopInfo/groopInfo';
 import DeletedProfile from './components/deletedProfile/deletedProfile';
+import { BooleanDialogWindow } from './components/common/booleanDialogWindow/booleanDialogWindow';
 
 type PropsType = {
   authData: AuthDataType | null
@@ -26,6 +27,11 @@ type PropsType = {
 }
 
 function App(props: PropsType) {
+  const [isBooleanDialogWindowActive, setBooleanDialogWindowActive] = useState(false)
+  const [booleanDialogInfo, setBooleanDialogInfo] = useState('')
+  const [booleanDialogYesButtonHandler, setBooleanDialogYesButtonHandler] = useState<(() => void) | null>(null)
+
+
   useEffect(() => {
     // authAPI.me().then(res => {
     //   props.getAuthData(res.data)
@@ -47,7 +53,8 @@ function App(props: PropsType) {
     <BrowserRouter>
       <div className="app">
         <header className="app__header">
-          <Header />
+          <Header setBooleanDialogInfo={setBooleanDialogInfo} setBooleanDialogYesButtonHandler={setBooleanDialogYesButtonHandler}
+            setBooleanDialogWindowActive={setBooleanDialogWindowActive} />
         </header>
         {props.authData?.blockedAccaunt
           ?<DeletedProfile />
@@ -74,6 +81,10 @@ function App(props: PropsType) {
           <footer className="app__footer">
             Footer
           </footer>
+          {isBooleanDialogWindowActive
+          && <BooleanDialogWindow setDialogWindowActive={setBooleanDialogWindowActive}
+            yesButtonHandler={booleanDialogYesButtonHandler} dialogInfo={booleanDialogInfo} />
+          }
         </div>
     </BrowserRouter>
   );

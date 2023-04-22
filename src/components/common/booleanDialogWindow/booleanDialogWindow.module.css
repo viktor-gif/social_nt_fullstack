@@ -1,0 +1,26 @@
+.dialogWindowContainer {
+    max-width: 50%;
+    background-color: #ffd6d5;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 1000;
+    border: 2px solid #ffa6a6;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    font-size: 1.2em;
+}
+.dialogInfo {
+    font-size: 1.2em;
+    color: #888;
+    text-align: center;
+}
+.buttonsBlock {
+    display: flex;
+    gap: 20px;
+}
