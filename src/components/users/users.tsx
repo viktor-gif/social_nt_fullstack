@@ -11,6 +11,7 @@ import { profileActions } from "../../redux/profileReducer"
 import { SearchInput } from "../common/searchInput/SearchInput"
 import { Button } from "../common/button/Button"
 import { AuthDataType } from "../../ts/auth"
+import { BlockedUser } from "./blockedUser/blockedUser"
 
 type PropsType = {
   users: UserType[] | null
@@ -34,11 +35,16 @@ export const Users = React.memo((props: PropsType) => {
   
   const usersItems = props.users
     ?.filter(u => u.id !== props.authData?.id)
-    .map((u: any) => {
-      return <User id={u.id} key={u.id} fullName={u.fullName}
-        location={u.location} status={u.status} photos={u.photos}
-        getUserProfile={props.getUserProfile} followers={u.followers}
-        authData={props.authData} />
+    .map((u: UserType) => {
+      console.log(u)
+      if (u.blockedAccaunt) {
+        return <BlockedUser id={u.id} key={u.id} fullName={u.fullName} />
+      } else {
+        return <User id={u.id} key={u.id} fullName={u.fullName}
+          location={u.location} status={u.status} photos={u.photos}
+          getUserProfile={props.getUserProfile} followers={u.followers}
+          authData={props.authData} />
+        }
     })
   const resetTerm = () => setTerm('')
   const setNotAllusers = (friendStatus: string) => {
