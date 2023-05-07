@@ -14,6 +14,7 @@ import { useParams, Navigate } from "react-router-dom"
 import { ProfileInfo } from "./profileInfo.tsx/profileInfo"
 import { PostType } from "../../ts/posts"
 import { Posts } from "./posts/posts"
+import { BlockedProfile } from "./blockedProfile/blockedProfile"
 
 type PropsType = {
     ownerId: string | undefined
@@ -61,6 +62,10 @@ const Profile = (props: PropsType) => {
         }
     }, [userId, props.status])
 
+    if (props.profileData?.blockedAccaunt) {
+        return <BlockedProfile userName={props.profileData?.fullName} />
+    }
+
     const saveNewStatus = () => {
         if (profileStatus && userId) {
             props.updateStatus(profileStatus)
@@ -71,10 +76,6 @@ const Profile = (props: PropsType) => {
     const changeStatus = (e: any) => {
         setProfileStatus(e.target.value)
     }
-    
-    if (!props.isAuth) {
-        return <Navigate replace to={'/login'} />
-    } 
         
     
     const profileContacts = profile?.contacts
