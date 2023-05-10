@@ -80,10 +80,21 @@ export const getStatus = (userId: string) => async (dispatch: DispatchType) => {
         }
     }
 }
-export const updateStatus = (status: string) => (dispatch: DispatchType) => {
-    profileAPI.updateStatus(status).then(res => {
-        console.log(res)
-    })
+export const updateStatus = (status: string) => async (dispatch: DispatchType) => {
+    try {
+        const res = await profileAPI.updateStatus(status)
+        if (res.data.resultCode === 0) {
+            console.log('cool updated status')
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 403) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Текст статусу відсутній'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
+    }
 }
 export const getProfile = (userId: string) => async (dispatch: DispatchType) => {
     try {
@@ -102,16 +113,38 @@ export const getProfile = (userId: string) => async (dispatch: DispatchType) => 
         }
     }
 }
-export const updatePhoto = (photoFile: any, userId: string) => (dispatch: DispatchType) => {
-    profileAPI.updateAvatar(photoFile).then(res => {
-        // @ts-ignore
-        dispatch(getProfile(userId))
-    })
+export const updatePhoto = (photoFile: any, userId: string) => async (dispatch: DispatchType) => {
+    try {
+        const res = await profileAPI.updateAvatar(photoFile)
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getProfile(userId))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 403) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Фото відсутнє'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
+    }
 }
-export const updateProfile = (data: ProfileDataType) => (dispatch: DispatchType) => {
-    profileAPI.updateProfile(data).then(res => {
-        console.log(res)
-    })
+export const updateProfile = (data: ProfileDataType) => async (dispatch: DispatchType) => {
+    try {
+        const res = await profileAPI.updateProfile(data)
+        if (res.data.resultCode === 0) {
+            console.log('cool updated profile')
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 403) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Текст статусу відсутній'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
+    }
 }
 export const getPosts = (userId: string) => (dispatch: DispatchType) => {
     postsAPI.getPosts(userId).then(res => {
