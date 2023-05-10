@@ -9,13 +9,15 @@ import { InferActionsTypes } from "./redux-store"
 const SET_PROFILE_DATA = 'Viktor-gif/profile/SET_PROFILE_DATA'
 const SET_STATUS = 'Viktor-gif/profile/SET_STATUS'
 const SET_POSTS = 'Viktor-gif/profile/SET_POSTS'
+const SET_PROFILE_ERROR = 'Viktor-gif/profile/SET_PROFILE_ERROR'
 
 type InitialStateType = typeof initialState
 
 const initialState = {
     profileData: null as ProfileDataType | null,
     status: null as string | null,
-    posts: [] as PostType[]
+    posts: [] as PostType[],
+    profileError: null as string | null
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: actionsTypes) => {
@@ -40,6 +42,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: a
                 ...state,
                 posts: action.payload
             }
+        case SET_PROFILE_ERROR:
+            
+            return {
+                ...state,
+                profileError: action.payload
+            }
         default: return state
     }
 }
@@ -50,24 +58,49 @@ export const profileActions = {
     setProfileData: (data: any) => ({ type: SET_PROFILE_DATA, payload: data } as const),
     setStatus: (status: string) => ({ type: SET_STATUS, payload: status } as const),
     setPosts: (data: PostType[]) => ({ type: SET_POSTS, payload: data } as const),
+    setProfileError: (err: string | null) => ({ type: SET_PROFILE_ERROR, payload: err } as const)
 }
 
 // redux-thunk
 type DispatchType = Dispatch<actionsTypes>
-export const getStatus = (userId: string) => (dispatch: DispatchType) => {
-    profileAPI.getStatus(userId).then(res => {
-        dispatch(profileActions.setStatus(res.data.status))
-    })
+export const getStatus = (userId: string) => async (dispatch: DispatchType) => {
+    try {
+        const res = await profileAPI.getStatus(userId)
+        const data = res.data?.userStatus
+        if (data) {
+            dispatch(profileActions.setStatus(data.status))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Такий користувач відсутній'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
+    }
 }
 export const updateStatus = (status: string) => (dispatch: DispatchType) => {
     profileAPI.updateStatus(status).then(res => {
         console.log(res)
     })
 }
-export const getProfile = (userId: string) => (dispatch: DispatchType) => {
-    profileAPI.getProfile(userId).then(res => {
-        dispatch(profileActions.setProfileData(res.data))
-    })
+export const getProfile = (userId: string) => async (dispatch: DispatchType) => {
+    try {
+        const res = await profileAPI.getProfile(userId)
+        const data = res.data?.data
+        if (data) {
+            dispatch(profileActions.setProfileData(data))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Такий користувач відсутній'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
+    }
 }
 export const updatePhoto = (photoFile: any, userId: string) => (dispatch: DispatchType) => {
     profileAPI.updateAvatar(photoFile).then(res => {

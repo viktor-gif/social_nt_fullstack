@@ -26,14 +26,14 @@ export const Posts = React.memo((props: PropsType) => {
   const [postFile, setPostFile] = useState(null)
 
     useEffect(() => {
-        props.profileData && props.getPosts(props.profileData._id)
+        props.profileData && props.getPosts(props.profileData.userId)
     }, [props.profileData])
     const postsElements = [...props.posts].reverse().map(p => {
         return <Post key={p._id} postId={p._id} postText={p.postText} authorId={p.authorId}
             comments={p.comments} created={p.created} userId={p.profileId}
           authProfileData={props.authProfileData} likesCount={p.likesCount}
           deletePost={props.deletePost} updatePost={props.updatePost}
-          toggleLike={props.toggleLike} liked={p.likedUsers.includes(props.authProfileData?._id || '')}
+          toggleLike={props.toggleLike} liked={p.likedUsers.includes(props.authProfileData?.userId || '')}
           addComment={props.addComment} deleteComment={props.deleteComment}
           updateComment={props.updateComment} toggleCommentLike={props.toggleCommentLike}
           postImg={p.postImg} postVideo={p.postVideo} postAudio={p.postAudio}

@@ -47,7 +47,7 @@ export const ProfileInfoForm = (props: PropsType) => {
             }}
             onSubmit={(val: any) => {
                 props.updateProfile(val)
-                profile && props.getProfile(profile?._id)
+                profile && props.getProfile(profile?.userId)
                 props.setEditProfile(false)
                 props.setPostsActive(true)
             }}

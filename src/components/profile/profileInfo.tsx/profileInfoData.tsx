@@ -29,7 +29,7 @@ export const ProfileInfoData = (props: PropsType) => {
     })
 
     const onWriteMessage = () => {
-        profile && props.createDialog(profile._id)
+        profile && props.createDialog(profile.userId)
         setWriteMessage(true)
     }
 
@@ -47,7 +47,7 @@ export const ProfileInfoData = (props: PropsType) => {
 
         <div className={s.fullname}>{profile?.fullName}</div>
 
-        {(props.ownerId && props.ownerId !== profile?._id)
+        {(props.ownerId && props.ownerId !== profile?.userId)
             // && <button onClick={onWriteMessage}>Надіслати повідомлення</button>
             && <div className={s.buttonSendMessage}>
                 <Button onClick={onWriteMessage} value="Надіслати повідомлення" size="seven" />
@@ -99,7 +99,7 @@ export const ProfileInfoData = (props: PropsType) => {
             </ul>
         </div>
         
-        {(props.ownerId === profile?._id)
+        {(props.ownerId === profile?.userId)
             && <Button value="Редагувати" onClick={() => {
             props.setEditProfile(true)
             props.setPostsActive(false)

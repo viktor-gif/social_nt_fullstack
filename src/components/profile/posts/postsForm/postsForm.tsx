@@ -18,11 +18,12 @@ export const PostsForm = React.memo((props: PropsType) => {
     const [currentPostText, setCurrentPostText] = useState('')
 
     const addPost = () => {
-        props.profileData && props.addPost(props.profileData._id, currentPostText, props.postFile)
+        props.profileData && props.addPost(props.profileData.userId, currentPostText, props.postFile)
         setCurrentPostText('')
         props.setPostFile(null)
     }
 
+    // console.log(props.authProfileData)
   return <div className={s.postsForm}>
     <div className={s.inputBlock}>
       <img src={props.authProfileData?.photos.small || avatar} alt="ava" />

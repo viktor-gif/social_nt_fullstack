@@ -34,7 +34,7 @@ type PropsType = {
 
 
 export const Message = React.memo((props: PropsType) => {
-    const senderIsAuthUser = props.authProfileData?._id === props.senderId
+    const senderIsAuthUser = props.authProfileData?.userId === props.senderId
     const [isActiveMessageOptions, setActiveMessageOptions] = useState(false)
     const [isDeleteMenuActive, setDeleteMenuActive] = useState(false)
     
@@ -55,7 +55,7 @@ export const Message = React.memo((props: PropsType) => {
             }
     }
     useEffect(() => {
-        if (!senderIsAuthUser && (props.userProfileData?._id !== props.senderId)) {
+        if (!senderIsAuthUser && (props.userProfileData?.userId !== props.senderId)) {
             props.getProfile(props.senderId)
         }
         return () => {
@@ -63,7 +63,7 @@ export const Message = React.memo((props: PropsType) => {
         }
     }, [])
     useEffect(() => {
-        if (props.senderId !== props.authProfileData?._id && !props.isViewed) {
+        if (props.senderId !== props.authProfileData?.userId && !props.isViewed) {
             // @ts-ignore
             props.setViewed(props.currentDialogId, props.messageId, props.senderId)
         }
@@ -156,7 +156,7 @@ export const Message = React.memo((props: PropsType) => {
                                     <Ban width="30px" height="30px" color="#e65c5c" />
                                     <span>{props.isSpam ? "Вилучити зі спаму" : "Вважати спамом"}</span>
                                 </div>
-                                {props.senderId === props.authProfileData?._id
+                                {props.senderId === props.authProfileData?.userId
                                     && <div onClick={() => {
                                         setCorrectMode(true)
                                         setActiveMessageOptions(false)

@@ -101,7 +101,7 @@ const CommentItem = React.memo((props: CommentItemPropsType) => {
 
     const [currentTextEdit, setCurrentTextEdit] = useState(props.commentText || "")
 
-    const authIsAuthorOfComment = props.authorId === props.authProfileData?._id
+    const authIsAuthorOfComment = props.authorId === props.authProfileData?.userId
 
     const linkToAnotherComment = props.linkToAnotherComment ? props.linkToAnotherComment : props.commentId
     
@@ -125,7 +125,7 @@ const CommentItem = React.memo((props: CommentItemPropsType) => {
             currentText={currentTextEdit} setCurrentText={setCurrentTextEdit} setFile={props.setCommentFile} />
     }
 
-    const liked = props.likedUsers.includes(props.authProfileData?._id || '')
+    const liked = props.likedUsers.includes(props.authProfileData?.userId || '')
 
     const sendComment = () => {
         props.addComment(props.postId, props.userId, currentCommentText, props.commentFile, linkToAnotherComment)
@@ -137,7 +137,7 @@ const CommentItem = React.memo((props: CommentItemPropsType) => {
     <div className={s.commentItem}>
 
             {isCommentMenuActive && <div className={s.postMenu + " " + s.postMenu__comments}>
-            {props.authorId === props.authProfileData?._id
+            {props.authorId === props.authProfileData?.userId
                 && <div className={s.postMenu__item} onClick={() => {
                     setUpdateMode(true)
                     setCommentMenuActive(false)
@@ -151,7 +151,7 @@ const CommentItem = React.memo((props: CommentItemPropsType) => {
                     <span>Копіювати текст</span>
                 </div>
                 {
-                props.authorId === props.authProfileData?._id
+                props.authorId === props.authProfileData?.userId
                     && <div className={s.postMenu__item} onClick={() => props.deleteComment(props.commentId)}>
                         <img src={deleteIcon} alt="DEL" />
                         <span>Видалити коментар</span>

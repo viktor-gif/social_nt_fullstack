@@ -14,7 +14,7 @@ export type ProfileDataType = {
     photos: PhotosType
     location: LocationType
     contacts: ContactsType
-    _id: string
+    userId: string
     fullName: string
     aboutMe: string | null
     lookingForAJob: boolean

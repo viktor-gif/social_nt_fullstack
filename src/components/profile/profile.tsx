@@ -97,7 +97,7 @@ const Profile = (props: PropsType) => {
         <div className={s.profile__aside}>
             <div className={s.profile__avatar}>
             <img className={s.profile__pic} src={profile?.photos.large || avatar} alt="User-avatar" />
-            {(props.ownerId === profile?._id)
+            {(props.ownerId === profile?.userId)
                 && <div className={s.profile__fileInput}>
                     <label htmlFor="photoChange">Змінити фото</label>
                     <input id="photoChange" type="file" onChange={onUpdatePhoto} />

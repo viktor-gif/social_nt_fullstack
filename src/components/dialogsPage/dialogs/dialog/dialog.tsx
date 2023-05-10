@@ -27,11 +27,11 @@ export const Dialog = (props: DialogPropsType) => {
 
     useEffect(() => {
         profileAPI.getProfile(props.userId).then(res => {
-            setDialogInfo(res.data)
+            setDialogInfo(res.data.data)
         })
         dialogsAPI.getDialogMessages(props.dialogId).then(res => {
             // console.log(res.data)
-            const newMessagesLength = res.data.filter((m: any) => m.viewed === false && (m.sender !== props.authProfileData?._id)).length
+            const newMessagesLength = res.data.filter((m: any) => m.viewed === false && (m.sender !== props.authProfileData?.userId)).length
             const lastMessage = res.data[res.data.length - 1]
             if (lastMessage && lastMessage.image) {
                 setMediaType("Фото...")

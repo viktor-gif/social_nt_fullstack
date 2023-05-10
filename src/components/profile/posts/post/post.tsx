@@ -50,8 +50,8 @@ export const Post = React.memo((props: PropsType) => {
     const [currentCommentText, setCurrentCommentText] = useState('')
     
 
-    const authIsAuthorOfPost = props.authorId === props.authProfileData?._id
-    const isAuthPosts = props.userId === props.authProfileData?._id
+    const authIsAuthorOfPost = props.authorId === props.authProfileData?.userId
+    const isAuthPosts = props.userId === props.authProfileData?.userId
     const canDeletePost = (authIsAuthorOfPost || isAuthPosts)
     useEffect(() => {
         if (!authIsAuthorOfPost) {

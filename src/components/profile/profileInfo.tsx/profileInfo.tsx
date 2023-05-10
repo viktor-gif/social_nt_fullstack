@@ -15,7 +15,7 @@ type PropsType = {
 
 export const ProfileInfo = (props: PropsType) => {
     const [isEditProfile, setEditProfile] = useState(false)
-    if (isEditProfile && props.profile?._id === props.ownerId) {
+    if (isEditProfile && props.profile?.userId === props.ownerId) {
         return <div className={s.profileInfo}>
             <ProfileInfoForm profile={props.profile} setEditProfile={setEditProfile}
                 updateProfile={props.updateProfile} getProfile={props.getProfile}
