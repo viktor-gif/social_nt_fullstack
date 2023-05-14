@@ -80,11 +80,12 @@ export const getStatus = (userId: string) => async (dispatch: DispatchType) => {
         }
     }
 }
-export const updateStatus = (status: string) => async (dispatch: DispatchType) => {
+export const updateStatus = (status: string | null) => async (dispatch: DispatchType) => {
     try {
         const res = await profileAPI.updateStatus(status)
         if (res.data.resultCode === 0) {
             console.log('cool updated status')
+            dispatch(profileActions.setProfileError(null))
         }
     } catch (err: any) {
         if (err.response.status === 401) {
@@ -119,6 +120,7 @@ export const updatePhoto = (photoFile: any, userId: string) => async (dispatch: 
         if (res.data.resultCode === 0) {
             // @ts-ignore
             dispatch(getProfile(userId))
+            dispatch(profileActions.setProfileError(null))
         }
     } catch (err: any) {
         if (err.response.status === 401) {
@@ -135,6 +137,7 @@ export const updateProfile = (data: ProfileDataType) => async (dispatch: Dispatc
         const res = await profileAPI.updateProfile(data)
         if (res.data.resultCode === 0) {
             console.log('cool updated profile')
+            dispatch(profileActions.setProfileError(null))
         }
     } catch (err: any) {
         if (err.response.status === 401) {

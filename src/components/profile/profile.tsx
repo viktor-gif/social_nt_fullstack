@@ -23,11 +23,12 @@ type PropsType = {
     isAuth: boolean
     posts: PostType[]
     authProfileData: ProfileDataType | null
+    profileError: string | null
 
     getPosts: (userId: string) => void
     getProfile: (userId: string) => void
     getStatus: (userId: string) => void
-    updateStatus: (status: string) => void
+    updateStatus: (status: string | null) => void
 
     updatePhoto: (photoFile: any, userId: string) => void
 
@@ -67,7 +68,7 @@ const Profile = (props: PropsType) => {
     }
 
     const saveNewStatus = () => {
-        if (profileStatus && userId) {
+        if (userId) {
             props.updateStatus(profileStatus)
             props.getStatus(userId)
         }
@@ -103,8 +104,8 @@ const Profile = (props: PropsType) => {
                     <input id="photoChange" type="file" onChange={onUpdatePhoto} />
                 </div>}
             </div>
+        {props.profileError && <div className={s.profileError}>{props.profileError}</div>}
         </div>
-        
 
         <div className={s.profile__infoBlock}>
             <div className={s.userStatus}>
@@ -135,7 +136,8 @@ const mapStateToProps = (state: AppStateType) => ({
     status: state.profilePage.status,
     isAuth: state.auth.isAuth,
     posts: state.profilePage.posts,
-    authProfileData: state.auth.authProfileData
+    authProfileData: state.auth.authProfileData,
+    profileError: state.profilePage.profileError
 })
 
 export default connect(mapStateToProps, {

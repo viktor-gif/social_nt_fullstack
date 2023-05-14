@@ -57,3 +57,8 @@
   border-right: 15px solid rgb(255, 255, 173);
   min-height: 100vh;
 }
+
+.profileError {
+  color: red;
+  font-size: 1.5em;
+}

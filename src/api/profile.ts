@@ -12,7 +12,7 @@ export const profileAPI = {
     getStatus(userId: string) {
         return axiosCreate.get(`/profile/status/${userId}`)
     },
-    updateStatus(status: string) {
+    updateStatus(status: string | null) {
         return axiosCreate.put(`/profile/status`, {status})
     },
     updateAvatar(photoFile: any) {
