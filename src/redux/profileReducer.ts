@@ -170,28 +170,28 @@ export const getPosts = (userId: string) => async (dispatch: DispatchType) => {
 }
 export const addPost = (userId: string, postText: string, file: any) => async (dispatch: DispatchType) => {
     const res = await postsAPI.createPost(userId, postText, file)
-    if (res.data.resultCode === 2) {
+    if (res.data.resultCode === 0) {
         // @ts-ignore
         dispatch(getPosts(userId))
     }
 }
 export const deletePost = (postId: string, userId: string) => async (dispatch: DispatchType) => {
     const res = await postsAPI.deletePost(postId)
-    if (res.data.resultCode === 2) {
+    if (res.data.resultCode === 0) {
         // @ts-ignore
         dispatch(getPosts(userId))
     }
 }
 export const updatePost = (postId: string, postText: string, file: any, userId: string) => async (dispatch: DispatchType) => {
     const res = await postsAPI.updatePost(postId, postText, file)
-    if (res.data.resultCode === 2) {
+    if (res.data.resultCode === 0) {
         // @ts-ignore
         dispatch(getPosts(userId))
     }
 }
 export const toggleLike = (postId: string, userId: string) => async (dispatch: DispatchType) => {
     const res = await postsAPI.toggleLike(postId)
-    if (res.data.resultCode === 2) {
+    if (res.data.resultCode === 0) {
         // @ts-ignore
         dispatch(getPosts(userId))
     }
@@ -221,21 +221,21 @@ export const updateComment = (postId: string, commentId: string, commentText: st
     const res = await postsAPI.updateComment(postId, commentId, commentText, file)
     
     console.log(res.data)
-    if (res.data.resultCode === 2) {
+    if (res.data.resultCode === 0) {
         // @ts-ignore
         dispatch(getPosts(userId))
     }
 }
 export const deleteComment = (postId: string, commentId: string, userId: string) => async (dispatch: DispatchType) => {
     const res = await postsAPI.deleteComment(postId, commentId)
-    if (res.data.resultCode === 2) {
+    if (res.data.resultCode === 0) {
         // @ts-ignore
         dispatch(getPosts(userId))
     }
 }
 export const toggleCommentLike = (postId: string, commentId: string, userId: string) => async (dispatch: DispatchType) => {
     const res = await postsAPI.toggleCommentLike(postId, commentId)
-    if (res.data.resultCode === 2) {
+    if (res.data.resultCode === 0) {
         // @ts-ignore
         dispatch(getPosts(userId))
     }

@@ -27,6 +27,7 @@ export const Posts = React.memo((props: PropsType) => {
     useEffect(() => {
         props.profileData && props.getPosts(props.profileData.userId)
     }, [props.profileData])
+  
     const postsElements = [...props.posts].reverse().map(p => {
         return <Post key={p.postId} postId={p.postId} postText={p.postText} authorId={p.authorId}
             comments={p.comments} created={p.created} userId={p.profileId}
