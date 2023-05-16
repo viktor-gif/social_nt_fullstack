@@ -31,6 +31,16 @@ function App(props: PropsType) {
   const [booleanDialogInfo, setBooleanDialogInfo] = useState('')
   const [booleanDialogYesButtonHandler, setBooleanDialogYesButtonHandler] = useState<(() => void) | null>(null)
 
+  const allUnhandledErrors = (error: any) => {
+    console.log(error)
+  }
+
+  useEffect(() => {
+    window.addEventListener("unhandledrejection", allUnhandledErrors)
+    return () => {
+      window.removeEventListener("unhandledrejection", allUnhandledErrors)
+    }
+  }, [])
 
   useEffect(() => {
     // authAPI.me().then(res => {
