@@ -20,8 +20,8 @@ export const GroopInfo__posts = (props: PropsType) => {
 
     const [postInputValue, setPostInputValue] = useState('')
 
-    const groopsItems = props.groopPosts?.map(g => <GroopInfo__post key={g._id} postText={g.postText}
-        postId={g._id} created={g.created} comments={g.comments}
+    const groopsItems = props.groopPosts?.map(g => <GroopInfo__post key={g.postId} postText={g.postText}
+        postId={g.postId} created={g.created} comments={g.comments}
         authorId={g.authorId} likedUsers={g.likedUsers}
         getGroopInfo={props.getGroopInfo} groopId={props.groopId}
         deletePost={props.deletePost} />)

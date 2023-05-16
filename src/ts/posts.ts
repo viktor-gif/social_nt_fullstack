@@ -1,5 +1,5 @@
 export type PostType = {
-    _id: string
+    postId: string
     authorId: string
     profileId: string
     postText: string | null

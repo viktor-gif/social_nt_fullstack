@@ -50,7 +50,6 @@ const Profile = (props: PropsType) => {
     const [isPostsActive, setPostsActive] = useState(true)
     
     const profile = props.profileData
-
     let params = useParams()
     
     let userId = params.userId

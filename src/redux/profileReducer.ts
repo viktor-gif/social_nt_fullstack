@@ -149,10 +149,24 @@ export const updateProfile = (data: ProfileDataType) => async (dispatch: Dispatc
         }
     }
 }
-export const getPosts = (userId: string) => (dispatch: DispatchType) => {
-    postsAPI.getPosts(userId).then(res => {
-        dispatch(profileActions.setPosts(res.data))
-    })
+export const getPosts = (userId: string) => async (dispatch: DispatchType) => {
+    try {
+        const res = await postsAPI.getPosts(userId)
+        const data = res.data
+        if (data) {
+            dispatch(profileActions.setPosts(data.items))
+        }
+    } catch (err: any) {
+        console.log('error__-_---___--__')
+        console.log(err)
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Пости відсутні'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
+    }
 }
 export const addPost = (userId: string, postText: string, file: any) => async (dispatch: DispatchType) => {
     const res = await postsAPI.createPost(userId, postText, file)
@@ -183,12 +197,24 @@ export const toggleLike = (postId: string, userId: string) => async (dispatch: D
     }
 }
 export const addComment = (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null = null) => async (dispatch: DispatchType) => {
-
-    const res = await postsAPI.addComment(postId, commentText, file, linkToAnotherComment)
-    if (res.data.resultCode === 2) {
-        // @ts-ignore
-        dispatch(getPosts(userId))
+    try {
+        const res = await postsAPI.addComment(postId, commentText, file, linkToAnotherComment)
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getPosts(userId))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Такого поста не існує'))
+        } else if (err.response.status === 400) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Даних для створення поста недостатньо'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
     }
+    
 }
 export const updateComment = (postId: string, commentId: string, commentText: string, file: any, userId: string) => async (dispatch: DispatchType) => {
     
