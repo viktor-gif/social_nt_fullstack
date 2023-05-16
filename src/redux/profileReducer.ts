@@ -169,32 +169,76 @@ export const getPosts = (userId: string) => async (dispatch: DispatchType) => {
     }
 }
 export const addPost = (userId: string, postText: string, file: any) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.createPost(userId, postText, file)
-    if (res.data.resultCode === 0) {
-        // @ts-ignore
-        dispatch(getPosts(userId))
+    try {
+        const res = await postsAPI.createPost(userId, postText, file)
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getPosts(userId))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 400) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Даних для створення поста недостатньо'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
     }
+    
 }
 export const deletePost = (postId: string, userId: string) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.deletePost(postId)
-    if (res.data.resultCode === 0) {
-        // @ts-ignore
-        dispatch(getPosts(userId))
+    try {
+        const res = await postsAPI.deletePost(postId)
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getPosts(userId))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Такого поста не існує'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
     }
+    
 }
 export const updatePost = (postId: string, postText: string, file: any, userId: string) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.updatePost(postId, postText, file)
-    if (res.data.resultCode === 0) {
-        // @ts-ignore
-        dispatch(getPosts(userId))
+    try {
+        const res = await postsAPI.updatePost(postId, postText, file)
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getPosts(userId))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Такого поста не існує'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
     }
+    
 }
 export const toggleLike = (postId: string, userId: string) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.toggleLike(postId)
-    if (res.data.resultCode === 0) {
-        // @ts-ignore
-        dispatch(getPosts(userId))
+    try {
+        const res = await postsAPI.toggleLike(postId)
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getPosts(userId))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Такого поста не існує'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
     }
+    
 }
 export const addComment = (postId: string, userId: string, commentText: string, file: any, linkToAnotherComment: string | null = null) => async (dispatch: DispatchType) => {
     try {
@@ -209,7 +253,7 @@ export const addComment = (postId: string, userId: string, commentText: string, 
         } else if (err.response.status === 404) {
             dispatch(profileActions.setProfileError(err.response.data.message || 'Такого поста не існує'))
         } else if (err.response.status === 400) {
-            dispatch(profileActions.setProfileError(err.response.data.message || 'Даних для створення поста недостатньо'))
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Даних для створення коментаря недостатньо'))
         } else {
             dispatch(profileActions.setProfileError('Помилка сервера'))
         }
@@ -217,26 +261,59 @@ export const addComment = (postId: string, userId: string, commentText: string, 
     
 }
 export const updateComment = (postId: string, commentId: string, commentText: string, file: any, userId: string) => async (dispatch: DispatchType) => {
+
+    try {
+        const res = await postsAPI.updateComment(postId, commentId, commentText, file)
     
-    const res = await postsAPI.updateComment(postId, commentId, commentText, file)
-    
-    console.log(res.data)
-    if (res.data.resultCode === 0) {
-        // @ts-ignore
-        dispatch(getPosts(userId))
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getPosts(userId))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Такого коментаря не існує'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
     }
+    
+    
 }
 export const deleteComment = (postId: string, commentId: string, userId: string) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.deleteComment(postId, commentId)
-    if (res.data.resultCode === 0) {
-        // @ts-ignore
-        dispatch(getPosts(userId))
+    try {
+        const res = await postsAPI.deleteComment(postId, commentId)
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getPosts(userId))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Такого коментаря не існує'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
     }
+    
 }
 export const toggleCommentLike = (postId: string, commentId: string, userId: string) => async (dispatch: DispatchType) => {
-    const res = await postsAPI.toggleCommentLike(postId, commentId)
-    if (res.data.resultCode === 0) {
-        // @ts-ignore
-        dispatch(getPosts(userId))
+    try {
+        const res = await postsAPI.toggleCommentLike(postId, commentId)
+        if (res.data.resultCode === 0) {
+            // @ts-ignore
+            dispatch(getPosts(userId))
+        }
+    } catch (err: any) {
+        if (err.response.status === 401) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Ввійдіть, будь ласка, в аккаунт'))
+        } else if (err.response.status === 404) {
+            dispatch(profileActions.setProfileError(err.response.data.message || 'Такого коментаря не існує'))
+        } else {
+            dispatch(profileActions.setProfileError('Помилка сервера'))
+        }
     }
+    
 }
