@@ -49,7 +49,7 @@ export const Dialog = (props: DialogPropsType) => {
         props.getDialogMessages(props.dialogId)
         props.setCurrentDialogId(props.dialogId)
         profileAPI.getProfile(props.userId).then(res => {
-            props.setCurrentDialogInfo(res.data)
+            props.setCurrentDialogInfo(res.data.data)
         })
     }
     return (

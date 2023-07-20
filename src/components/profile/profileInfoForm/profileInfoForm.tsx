@@ -46,6 +46,7 @@ export const ProfileInfoForm = (props: PropsType) => {
                 twitter: profile?.contacts.twitter
             }}
             onSubmit={(val: any) => {
+                console.log(val)
                 props.updateProfile(val)
                 profile && props.getProfile(profile?.userId)
                 props.setEditProfile(false)
